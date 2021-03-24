@@ -2,10 +2,9 @@ package geometries;
 
 import primitives.Point3D;
 
-public class Triangle extends Polygon{
-    double A;
-    double B;
-    double C;
+public class Triangle extends Polygon {
 
-    public Triangle(Point3D... vertices){super(vertices);}
+    public Triangle(Point3D pointA, Point3D pointB, Point3D pointC) {
+        super(pointA, pointB, pointC);
+    }
 }

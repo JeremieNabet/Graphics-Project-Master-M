@@ -1,13 +1,17 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
+import primitives.*;
 
-public class Tube{
-    Ray axisRay;
+public class Tube {
+    protected Ray axisRay;
+    protected double radius;
 
-    public Tube(double _radius){super(_radius);}
+    public Tube(Ray ray, double radius) {
+        this.axisRay = ray;
+        this.radius = radius;
+    }
 
-    @Override
-    public primitives.Vector getNormal(Point3D point){return null;}
+    public Vector getNormal(Point3D point) {
+        return null;
+    }
 }
