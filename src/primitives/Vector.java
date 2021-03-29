@@ -4,40 +4,71 @@ package primitives;
  * Vector class implements a 3-dimensional vector in Cartesian Coordinate System
  */
 public class Vector {
+    /**
+     * The head point about the vector
+     */
     Point3D head;
 
+    /**
+     * first constructor, we receive 3 double
+     */
     public Vector(double x, double y, double z) {
         this.head = new Point3D(x, y, z);
         if (Point3D.ZERO.equals(this.head))
             throw new IllegalArgumentException("Zero vector is not allowed");
     }
 
+    /**
+     * second constructor, we receive on point 3D
+     * that is not the vector 0
+     */
     public Vector(Point3D p) {
         if (Point3D.ZERO.equals(p))
             throw new IllegalArgumentException("Zero vector is not allowed");
         this.head = p;
     }
-
+    /**
+     * we use to the function add of the point 3D who compose the vector that we received
+     */
     public Vector add(Vector vector) {
         return new Vector(this.head.add(vector));
     }
-
+    /**
+     * we use to the function subtract of the point 3D who compose the vector that we received
+     */
     public Vector subtract(Vector vector) {
         return this.head.subtract(vector.head);
     }
-
+    /**
+     * if vector b is collineary with our vector than exception
+     */
     public Vector crossProduct(Vector vector) {
         return new Vector((this.head.y.coord * vector.head.z.coord) - (this.head.z.coord * vector.head.y.coord)
                 , (this.head.z.coord * vector.head.x.coord) - (this.head.x.coord * vector.head.z.coord),
                 (this.head.x.coord * vector.head.y.coord) - (this.head.y.coord * vector.head.x.coord));
     }
 
+    /**
+     * This function allows me to multiply the coordinates of
+     * the vector received
+     * with the vector I have, and add them together
+     *  Xa*Xb+Ya*Yb+Za*Zb
+     *
+     * @param vector
+     * @return the product (double)
+     */
     public double dotProduct(Vector vector) {
         return ((this.head.x.coord) * (vector.head.x.coord)) +
                 (this.head.y.coord * vector.head.y.coord) +
                 (this.head.z.coord * vector.head.z.coord);
     }
 
+    /**
+     *
+     *
+     *
+     * @return
+     */
     public double lengthSquared() {
         return (this.head.x.coord) * (this.head.x.coord)
                 + (this.head.y.coord) * (this.head.y.coord)
@@ -53,7 +84,9 @@ public class Vector {
         head = new Point3D(this.head.x.coord / len, this.head.y.coord / len, this.head.z.coord / len);
         return this;
     }
-
+    /**
+     * we return a new vector that is multiplicate all coordinate of the point 3 D  of our vector
+     */
     public Vector scale(double scalary) {
         return new Vector((scalary * this.head.x.coord), (scalary * this.head.y.coord), (scalary * this.head.z.coord));
     }

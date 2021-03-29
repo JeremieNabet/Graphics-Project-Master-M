@@ -3,7 +3,13 @@ package geometries;
 import primitives.*;
 
 public class Tube {
+    /**
+     * the axis ray about the tube
+     */
     protected Ray axisRay;
+    /**
+     * this radius about the tube
+     */
     protected double radius;
 
     public Tube(Ray ray, double radius) {

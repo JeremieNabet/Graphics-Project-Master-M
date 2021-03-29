@@ -34,11 +34,22 @@ public class Point3D {
                 (this.z.coord + v.head.z.coord));
     }
 
+    /**
+     * The function substract 2 points
+     *
+     * @param obj
+     * @return the new Vector by this result
+     */
     public Vector subtract(Point3D obj) {
 
         return new Vector(this.x.coord - obj.x.coord, this.y.coord - obj.y.coord, this.z.coord - obj.z.coord);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public double distanceSquared(Point3D other) {
         double dx = this.x.coord - other.x.coord;
         double dy = this.y.coord - other.y.coord;
@@ -76,14 +87,25 @@ public class Point3D {
         return "(" + x + "," + y + "," + z +")";
     }
 
+    /**
+     * Function is to get the X from coordinate
+     * @return x
+     */
     public Coordinate getX() {
         return x;
     }
 
+    /**
+     * Function is to get the Y from coordinate
+     * @return y
+     */
     public Coordinate getY() {
         return y;
     }
-
+    /**
+     * Function is to get the Z from coordinate
+     * @return z
+     */
     public Coordinate getZ() {
         return z;
     }
