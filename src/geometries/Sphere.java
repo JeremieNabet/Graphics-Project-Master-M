@@ -4,6 +4,9 @@ import primitives.*;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 public class Sphere implements Geometry {
     /**
      * the point center about the sphere
@@ -54,6 +57,7 @@ public class Sphere implements Geometry {
 
     /**
      * toString override function
+     *
      * @return toString about this class
      */
     @Override
@@ -63,6 +67,41 @@ public class Sphere implements Geometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
+        Point3D P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        if (P0.equals(center)) {
+            return List.of(center.add(v.scale(radius)));
+        }
+        Vector U = center.subtract(P0);
+
+        double tm = alignZero(v.dotProduct(U));
+
+        double d = alignZero(Math.sqrt(U.lengthSquared() - tm * tm));
+        if (d >= radius) {
+            return null;
+            //because there is not intersections : the ray direction is above the sphere
+        }
+        double th = alignZero(Math.sqrt(radius * radius - d * d));
+
+        double t1 = alignZero(tm - th);
+        double t2 = alignZero(tm + th);
+
+        if (t1 > 0 && t2 > 0) {
+            Point3D P1 = P0.add(v.scale(t1));
+            Point3D P2 = P0.add(v.scale(t2));
+
+            return List.of(P1,P2);
+        }
+        if(t1>0){
+            Point3D P1 = P0.add(v.scale(t1));
+            return List.of(P1);
+        }
+        if(t2>0){
+            Point3D P2 = P0.add(v.scale(t2));
+            return List.of(P2);
+        }
+
         return null;
     }
 }
