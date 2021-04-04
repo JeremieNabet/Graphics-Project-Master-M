@@ -10,6 +10,7 @@ public class Vector {
     Point3D head;
 
     /**
+     * primary constructor for Vector class
      * first constructor, we receive 3 double
      */
     public Vector(double x, double y, double z) {
@@ -99,7 +100,8 @@ public class Vector {
     }
 
     /**
-     * we return a new vector that is multiplicative all coordinate of the point 3 D  of our vector
+     * we return a new vector that is multiplicative all
+     * coordinate of the point 3 D  of our vector
      */
     public Vector scale(double scalary) {
         if (Double.compare(scalary, 0d) == 0) {
@@ -135,8 +137,13 @@ public class Vector {
         return head.equals(vector.head);
     }
 
+    /**
+     * function getHead to have the the head about the vector
+     *
+     * @return head
+     */
     public Point3D getHead() {
-        return head;
+        return new Point3D(head.x.coord, head.y.coord, head.z.coord);
     }
 
     /**

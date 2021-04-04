@@ -4,11 +4,11 @@ public class Ray {
     /**
      * the point p0 about the ray
      */
-    private Point3D p0;
+    final Point3D p0;
     /**
      * the vector about the ray
      */
-    private Vector dir;
+    final Vector dir;
 
     public Ray(Point3D p0, Vector dir) {
         this.p0 = p0;
@@ -26,25 +26,31 @@ public class Ray {
 
     /**
      * function get p0 about the Ray
+     *
      * @return p0
      */
     public Point3D getP0() {
+
         return p0;
     }
 
     /**
-     * function get dir about the Ray
+     * function get direction about the Vector
+     *
      * @return dir
      */
     public Vector getDir() {
-        return dir;
+
+        return new Vector(dir.head);
     }
 
+    /**
+     * function toString about the class Ray
+     *
+     * @return string
+     */
     @Override
     public String toString() {
-        return "Ray{" +
-                "p0=" + p0 +
-                ", dir=" + dir +
-                '}';
+        return "Ray{" + "p0=" + p0 + ", dir=" + dir + '}';
     }
 }

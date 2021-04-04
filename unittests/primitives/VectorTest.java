@@ -1,6 +1,7 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
@@ -25,7 +26,7 @@ class VectorTest {
 
         // TC01: Test that length of cross-product is proper (orthogonal vectors taken
         // for simplicity)
-        assertEquals( v1.length() * v2.length(), vr.length(), 0.00001,"crossProduct() wrong result length");
+        assertEquals(v1.length() * v2.length(), vr.length(), 0.00001, "crossProduct() wrong result length");
 
         // TC02: Test cross-product result orthogonality to its operands
         assertTrue(isZero(vr.dotProduct(v1)), "crossProduct() result is not orthogonal to 1st operand");
@@ -58,8 +59,33 @@ class VectorTest {
 
     @Test
     void testNormalize() {
+
+        Vector v = new Vector(3.5, -5, 10);
+        v.normalize();
+        assertEquals(1, v.length(), 1e-10);
+
+        assertThrows(IllegalArgumentException.class,
+                ()-> newVectorZero(v),
+                "cannot be head (0,0,0)");
+
     }
 
+    private Executable newVectorZero(Vector v){
+        v = new Vector(0, 0, 0);
+        return null;
+    }
+    /*
+     *   Vector v = new Vector(1, 2, 3);
+     *         Vector vCopy = new Vector(v.getHead());
+     *         Vector vCopyNormalize = vCopy.normalize();
+     *         assertEquals (vCopy, vCopyNormalize,"ERROR: normalize() function creates a new vector");
+     *
+     *         if (!isZero(vCopyNormalize.length() - 1))
+     *             out.println("ERROR: normalize() result is not a unit vector");
+     *         Vector u = v.normalized();
+     *         if (u == v)
+     *             out.println("ERROR: normalizated() function does not create a new vector");
+     */
     @Test
     void testScale() {
     }

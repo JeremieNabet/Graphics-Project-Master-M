@@ -46,8 +46,8 @@ public class Sphere implements Geometry {
         if (point3D.equals(center)) {
             throw new IllegalArgumentException("Point cannot be the center");
         }
-        Vector O_P = point3D.subtract(center);
-        return O_P.normalize();
+        Vector p0_p = point3D.subtract(center);
+        return p0_p.normalize();
     }
 
     /**

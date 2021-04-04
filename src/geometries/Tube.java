@@ -34,6 +34,10 @@ public class Tube {
             return P0_P.normalize();
         }
         Point3D O = p0.add(v.scale(t));
+
+        if (point.equals(0)) {
+            throw new IllegalArgumentException("Point cannot be on the tube axis");
+        }
         Vector O_P = point.subtract(O);
         return O_P.normalize();
 
@@ -41,6 +45,7 @@ public class Tube {
 
     /**
      * toString override function
+     *
      * @return
      */
     @Override

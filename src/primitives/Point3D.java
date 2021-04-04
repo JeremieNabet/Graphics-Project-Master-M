@@ -82,6 +82,10 @@ public class Point3D {
         return x.equals(p.x) && y.equals(p.y) && z.equals(p.z);
     }
 
+    /**
+     * function toString to impress the result about x y z
+     * @return string
+     */
     @Override
     public String toString() {
         return "(" + x + "," + y + "," + z +")";

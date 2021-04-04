@@ -16,7 +16,9 @@ public class Plane implements Geometry {
 
     /**
      * Constructor 1
-     * Point in Plane
+     * Constructor of Plane from 3 points on its surface
+     * the points are ordered from right to left
+     * forming on arc in right direction
      *
      * @param point1
      * @param point2
@@ -35,18 +37,40 @@ public class Plane implements Geometry {
      * Constructor 2
      *
      * @param p
-     * @param normal
+     * @param normal vector for the normal(will be normalize automatically)
      */
     public Plane(Point3D p, Vector normal) {
         this.point = p;
         this.normal = normal.normalized();
     }
 
+    /**
+     * getNormal from implementation of Geometry interface
+     * @param p dummy point not use for flat geometries
+     *          should be assigned null value
+     * @return normal to the plane
+     */
+    @Override
     public Vector getNormal(Point3D p) {
+
         return normal;
     }
 
+    /**
+     * getter of normal field
+     * @return reference to normal vector to the plane
+     */
     public Vector getNormal() {
+
         return normal;
     }
+
+    /**
+     * getter of point field
+     * @return Point3D point (reference) to the plane
+     */
+    public Point3D getPoint() {
+        return point;
+    }
+
 }
