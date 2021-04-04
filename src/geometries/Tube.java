@@ -2,6 +2,9 @@ package geometries;
 
 import primitives.*;
 
+import static primitives.Util.*;
+
+
 public class Tube {
     /**
      * the axis ray about the tube
@@ -17,7 +20,31 @@ public class Tube {
         this.radius = radius;
     }
 
+    /**
+     * @param point Point3D point
+     * @return
+     */
     public Vector getNormal(Point3D point) {
-        return null;
+        Point3D p0 = axisRay.getP0();
+        Vector v = axisRay.getDir();
+        Vector P0_P = point.subtract(p0);
+        double t = alignZero(P0_P.dotProduct(v));
+
+        if (isZero(t)) {
+            return P0_P.normalize();
+        }
+        Point3D O = p0.add(v.scale(t));
+        Vector O_P = point.subtract(O);
+        return O_P.normalize();
+
+    }
+
+    /**
+     * toString override function
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Tube{" + "axisRay=" + axisRay + ", radius=" + radius + '}';
     }
 }

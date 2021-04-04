@@ -19,6 +19,7 @@ public class Sphere implements Geometry {
 
     /**
      * this function give the center point about the sphere
+     *
      * @return center
      */
     public Point3D getCenter() {
@@ -26,15 +27,35 @@ public class Sphere implements Geometry {
     }
 
     /**
-     *
      * this function give the radius about the sphere
+     *
      * @return radius
      */
     public double getRadius() {
         return radius;
     }
 
+    /**
+     * getNormal Override function
+     *
+     * @param point3D
+     * @return
+     */
+    @Override
     public Vector getNormal(Point3D point3D) {
-        return null;
+        if (point3D.equals(center)) {
+            throw new IllegalArgumentException("Point cannot be the center");
+        }
+        Vector O_P = point3D.subtract(center);
+        return O_P.normalize();
+    }
+
+    /**
+     * toString override function
+     * @return toString about this class
+     */
+    @Override
+    public String toString() {
+        return "Sphere{" + "center=" + center + ", radius=" + radius + '}';
     }
 }
