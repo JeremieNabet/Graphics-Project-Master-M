@@ -2,7 +2,9 @@ package geometries;
 
 import primitives.*;
 
-public class Cylinder extends Tube{
+import java.util.List;
+
+public class Cylinder extends Tube {
     /**
      * the height of the cylinder
      */
@@ -20,4 +22,9 @@ public class Cylinder extends Tube{
                 '}';
     }
     public Vector getNormal(Point3D p){return getNormal(p);}
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return super.findIntersections(ray);
+    }
 }

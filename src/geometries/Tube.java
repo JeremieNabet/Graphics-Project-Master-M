@@ -2,10 +2,12 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 import static primitives.Util.*;
 
 
-public class Tube {
+public class Tube implements Geometry {
     /**
      * the axis ray about the tube
      */
@@ -51,5 +53,10 @@ public class Tube {
     @Override
     public String toString() {
         return "Tube{" + "axisRay=" + axisRay + ", radius=" + radius + '}';
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }

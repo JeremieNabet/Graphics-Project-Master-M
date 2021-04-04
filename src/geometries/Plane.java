@@ -73,4 +73,8 @@ public class Plane implements Geometry {
         return point;
     }
 
+    @Override
+    public java.util.List<Point3D> findIntersections(Ray ray) {
+        return null;
+    }
 }

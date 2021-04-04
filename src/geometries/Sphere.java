@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 public class Sphere implements Geometry {
     /**
      * the point center about the sphere
@@ -57,5 +59,10 @@ public class Sphere implements Geometry {
     @Override
     public String toString() {
         return "Sphere{" + "center=" + center + ", radius=" + radius + '}';
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }
