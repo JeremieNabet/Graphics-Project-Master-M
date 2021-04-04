@@ -11,11 +11,11 @@ public class Sphere implements Geometry {
     /**
      * the point center about the sphere
      */
-    private Point3D center;
+    final Point3D center;
     /**
      * the radius about the sphere
      */
-    private double radius;
+    final double radius;
 
     public Sphere(Point3D center, double radius) {
         this.center = center;
