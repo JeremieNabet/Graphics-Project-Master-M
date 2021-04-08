@@ -10,7 +10,7 @@ public class Cylinder extends Tube {
      */
     private double height;
 
-    public Cylinder(Ray ray, double radius, double height) {
+    public Cylinder(double radius, Ray ray,  double height) {
         super(ray, radius);
         this.height = height;
     }
