@@ -6,9 +6,17 @@ import primitives.Ray;
 import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
+/**
+ * Testing Cylinders
+ *
+ * @author Jeremie and Israel
+ *
+ */
 
 class CylinderTest {
-
+    /**
+     * Test method for {@link Cylinder#getNormal(Point3D)}.
+     */
     @Test
     void testGetNormal() {
 

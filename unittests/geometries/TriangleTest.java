@@ -5,10 +5,17 @@ import org.junit.jupiter.api.Test;
 import primitives.*;
 
 import static org.junit.Assert.assertEquals;
-
+/**
+ * Testing Triangle
+ *
+ * @author Jeremie and Israel
+ *
+ */
 
 class TriangleTest {
-
+    /**
+     * Test method for {@link Triangle#getNormal(Point3D)}.
+     */
     @Test
     void testGetNormal() {
         Triangle tr = new Triangle(new Point3D(0, 0, 1),

@@ -10,10 +10,13 @@ import static org.junit.Assert.assertFalse;
 import static primitives.Util.isZero;
 import static org.junit.Assert.fail;
 
-/**
- * Test method for {@link primitives.Vector#crossProduct(primitives.Vector)}.
- */
 
+/**
+ * Testing Vector
+ *
+ * @author Jeremie and Israel
+ *
+ */
 
 class VectorTest {
 
@@ -21,10 +24,9 @@ class VectorTest {
     Vector v2 = new Vector(-2, -4, -6);
     Vector v3 = new Vector(0, 3, -2);
 
-    @Test
-    public void testCtorVector() {
-
-    }
+    /**
+     * Test method for {@link primitives.Vector#add(Vector)}.
+     */
 
     @Test
     void testAdd() {
@@ -44,7 +46,9 @@ class VectorTest {
         } catch (Exception e) {
         }
     }
-
+    /**
+     * Test method for {@link primitives.Vector#subtract(Vector)}.
+     */
     @Test
     void testSubtract() {
         Vector v1 = new Vector(1, 2, 3);
@@ -63,6 +67,9 @@ class VectorTest {
         } catch (Exception e) {
         }
     }
+    /**
+     * Test method for {@link primitives.Vector#crossProduct(Vector)}.
+     */
 
     @Test
     void testCrossProduct() {
@@ -92,7 +99,9 @@ class VectorTest {
         // } catch (Exception e) {}
 
     }
-
+    /**
+     * Test method for {@link primitives.Vector#dotProduct(Vector)}.
+     */
     @Test
     void testDotProduct() {
         if (!isZero(v1.dotProduct(v3)))
@@ -100,21 +109,27 @@ class VectorTest {
         if (!isZero(v1.dotProduct(v2) + 28))
             fail("ERROR: dotProduct() wrong value");
     }
-
+    /**
+     * Test method for {@link Vector#lengthSquared()}.
+     */
     @Test
     void testLengthSquared() {
         if (!isZero(v1.lengthSquared() - 14))
             fail("ERROR: wrong value");
 
     }
-
+    /**
+     * Test method for {@link Vector#length()}.
+     */
     @Test
     void testLength() {
         if (!isZero(new Vector(0, 3, 4).length() - 5))
             fail("ERROR: length() wrong value");
 
     }
-
+    /**
+     * Test method for {@link Vector#normalize()}.
+     */
     @Test
     void testNormalize() {
 
@@ -132,7 +147,9 @@ class VectorTest {
         v = new Vector(0, 0, 0);
         return null;
     }
-
+    /**
+     * Test method for {@link primitives.Vector#scale(double)}.
+     */
     @Test
     void testScale() {
 
@@ -154,7 +171,9 @@ class VectorTest {
         } catch (Exception e) {
         }
     }
-
+    /**
+     * Test method for {@link Vector#normalized()}.
+     */
     @Test
     void testNormalized() {
 

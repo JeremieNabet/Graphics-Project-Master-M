@@ -2,8 +2,15 @@ package geometries;
 
 import org.junit.jupiter.api.Test;
 import primitives.Point3D;
+import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
+/**
+ * Testing Plane
+ *
+ * @author Jeremie and Israel
+ *
+ */
 
 class PlaneTest {
 
@@ -11,6 +18,9 @@ class PlaneTest {
             new Point3D(0, 0, 1),
             new Point3D(0, 2, 0),
             new Point3D(1, 0, 0));
+    /**
+     * Test method for {@link Plane#Plane(Point3D, Vector)}.
+     */
 
     @Test
     void testPlane() {
@@ -23,17 +33,19 @@ class PlaneTest {
         } catch (IllegalArgumentException e) {
         }
     }
-
     /**
-     *tests for {@link geometries.Plane#getNormal(primitives.Point3D)}.
-     * */
+     * Test method for {@link Plane#getNormal()}.
+     */
     @Test
-    void getNormal1() {
+    void testGetNormal1() {
         assertEquals(1, plane.getNormal(null).length());
     }
 
+    /**
+     * Test method for {@link Plane#getNormal(Point3D)}.
+     */
     @Test
-    void getNormal2() {
+    void testGetNormal2() {
         Plane p1 = new Plane(
                 new Point3D(0,1,0),
                 new Point3D(1,0,0),
@@ -47,8 +59,5 @@ class PlaneTest {
         assertEquals(p1.getNormal(null), p2.getNormal(null));
     }
 
-    @Test
-    void testGetNormal() {
 
-    }
 }

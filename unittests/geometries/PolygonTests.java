@@ -18,7 +18,7 @@ import primitives.*;
 public class PolygonTests {
 
     /**
-     * Test method for
+     * Test method for Constructor
      *
      * */
     @Test
@@ -80,7 +80,7 @@ public class PolygonTests {
     }
 
     /**
-     * Test method for {@link geometries.Polygon#getNormal(primitives.Point3D)}.
+     * Test method for {@link Polygon#getNormal(Point3D)}.
      */
     @Test
     public void testGetNormal() {
