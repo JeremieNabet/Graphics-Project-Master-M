@@ -31,6 +31,8 @@ public class Vector {
 
     /**
      * we use to the function add of the point 3D who compose the vector that we received
+     * @param vector
+     * @return
      */
     public Vector add(Vector vector) {
         return new Vector(this.head.add(vector));
@@ -92,9 +94,6 @@ public class Vector {
      */
     public Vector normalize() {
         double len = length();
-        if (len == 0) {
-            throw new ArithmeticException("divide by zero");
-        }
         head = new Point3D(this.head.x.coord / len, this.head.y.coord / len, this.head.z.coord / len);
         return this;
     }
@@ -104,9 +103,6 @@ public class Vector {
      * coordinate of the point 3 D  of our vector
      */
     public Vector scale(double scalary) {
-        if (Double.compare(scalary, 0d) == 0) {
-            throw new IllegalArgumentException("scalar cannot be zero");
-        }
         return new Vector((scalary * this.head.x.coord), (scalary * this.head.y.coord),
                 (scalary * this.head.z.coord));
     }
@@ -117,7 +113,6 @@ public class Vector {
      * @return a new vector
      */
     public Vector normalized() {
-
         return new Vector(this.head).normalize();
     }
 
@@ -143,7 +138,7 @@ public class Vector {
      * @return head
      */
     public Point3D getHead() {
-        return new Point3D(head.x.coord, head.y.coord, head.z.coord);
+        return head;
     }
 
     /**

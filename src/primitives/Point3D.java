@@ -35,13 +35,12 @@ public class Point3D {
     }
 
     /**
-     * The function substract 2 points
+     * The function subtract 2 points
      *
      * @param obj
      * @return the new Vector by this result
      */
     public Vector subtract(Point3D obj) {
-
         return new Vector(this.x.coord - obj.x.coord, this.y.coord - obj.y.coord, this.z.coord - obj.z.coord);
     }
 
@@ -95,8 +94,8 @@ public class Point3D {
      * Function is to get the X from coordinate
      * @return x
      */
-    public Coordinate getX() {
-        return x;
+    public double getX() {
+        return x.coord;
     }
 
     /**

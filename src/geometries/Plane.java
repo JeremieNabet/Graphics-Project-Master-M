@@ -1,17 +1,14 @@
 package geometries;
 
 import primitives.*;
-
-import java.awt.*;
-
-import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
+import java.util.List;
+import static primitives.Util.*;
 
 public class Plane implements Geometry {
     /**
      * the plane is composed of a point and of vector
      */
-    final Point3D point;
+    private final Point3D point;
     /**
      * the vector normal of the plane
      */
@@ -26,14 +23,14 @@ public class Plane implements Geometry {
      * @param point1
      * @param point2
      * @param point3
+     * @throws IllegalArgumentException if the points are on the same line
      */
     //constructor 1
     public Plane(Point3D point1, Point3D point2, Point3D point3) {
         this.point = point1;
         Vector v1 = point2.subtract(point1); //vector from point1 towards point2
         Vector v2 = point3.subtract(point1); //vector from point1 towards point3
-        Vector n = v1.crossProduct(v2);
-        this.normal = n.normalize();
+        this.normal = v1.crossProduct(v2).normalize();
     }
 
     /**
@@ -49,14 +46,12 @@ public class Plane implements Geometry {
 
     /**
      * getNormal from implementation of Geometry interface
-     *
+     * the same at any point in the plane
      * @param p dummy point not use for flat geometries
-     *          should be assigned null value
      * @return normal to the plane
      */
     @Override
     public Vector getNormal(Point3D p) {
-
         return normal;
     }
 
@@ -66,7 +61,6 @@ public class Plane implements Geometry {
      * @return reference to normal vector to the plane
      */
     public Vector getNormal() {
-
         return normal;
     }
 
@@ -80,32 +74,26 @@ public class Plane implements Geometry {
     }
 
     @Override
-    public java.util.List<Point3D> findIntersections(Ray ray) {
+    public List<Point3D> findIntersections(Ray ray) {
         Point3D P0 = ray.getP0();
         Vector v = ray.getDir();
-        Vector n = normal;
 
-        if (point.equals(P0)) {
+        Vector p0MinusQ0;
+        try {
+            p0MinusQ0= point.subtract(P0);
+        } catch (IllegalArgumentException e) {
             return null;
         }
-
-        Vector P0_Q0 = point.subtract(P0);
-        double denominator = alignZero(normal.dotProduct(P0_Q0));
-
-        if (isZero(denominator)) {
-            return null;
-        }
+        double denominator = normal.dotProduct(p0MinusQ0);
+        if (isZero(denominator)) return null;
 
         //monet
-        double nv = alignZero(n.dotProduct(v));
-
+        double nv = normal.dotProduct(v);
         // ray is lying in the plane axis
-        if (isZero(nv)) {
+        if (isZero(nv))
             return null;
-        }
 
         double t = alignZero(denominator/nv);
-        Point3D P = P0.add(v.scale(t));
-        return java.util.List.of(P);
+        return t <= 0 ? null : List.of(ray.getPoint(t));
     }
 }

@@ -4,8 +4,7 @@ import primitives.*;
 
 import java.util.List;
 
-import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
+import static primitives.Util.*;
 
 public class Sphere implements Geometry {
     /**
@@ -48,11 +47,7 @@ public class Sphere implements Geometry {
      */
     @Override
     public Vector getNormal(Point3D point3D) {
-        if (point3D.equals(center)) {
-            throw new IllegalArgumentException("Point cannot be the center");
-        }
-        Vector p0_p = point3D.subtract(center);
-        return p0_p.normalize();
+        return point3D.subtract(center).normalize();
     }
 
     /**
@@ -71,37 +66,23 @@ public class Sphere implements Geometry {
         Vector v = ray.getDir();
 
         if (P0.equals(center)) {
-            return List.of(center.add(v.scale(radius)));
+            return List.of(ray.getPoint(radius));
         }
         Vector U = center.subtract(P0);
 
         double tm = alignZero(v.dotProduct(U));
 
         double d = alignZero(Math.sqrt(U.lengthSquared() - tm * tm));
-        if (d >= radius) {
-            return null;
-            //because there is not intersections : the ray direction is above the sphere
-        }
-        double th = alignZero(Math.sqrt(radius * radius - d * d));
+        if (alignZero(d - radius) >= 0)
+            return null; //because there is not intersections : the ray direction is tangent or out of the sphere
 
+        double th = Math.sqrt(radius * radius - d * d);
+        if (isZero(th)) return null; // ray's line is tangent to sphere
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th);
 
-        if (t1 > 0 && t2 > 0) {
-            Point3D P1 = P0.add(v.scale(t1));
-            Point3D P2 = P0.add(v.scale(t2));
-
-            return List.of(P1,P2);
-        }
-        if(t1>0){
-            Point3D P1 = P0.add(v.scale(t1));
-            return List.of(P1);
-        }
-        if(t2>0){
-            Point3D P2 = P0.add(v.scale(t2));
-            return List.of(P2);
-        }
-
-        return null;
+        // t1 < t2 ALWAYS
+        if (t2 <= 0) return null; // both t1 and t2 are <=0
+        return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1),ray.getPoint(t2));
     }
 }

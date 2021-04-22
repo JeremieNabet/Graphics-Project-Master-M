@@ -30,7 +30,6 @@ public class Ray {
      * @return p0
      */
     public Point3D getP0() {
-
         return p0;
     }
 
@@ -40,8 +39,7 @@ public class Ray {
      * @return dir
      */
     public Vector getDir() {
-
-        return new Vector(dir.head);
+        return dir;
     }
 
     /**
@@ -52,5 +50,14 @@ public class Ray {
     @Override
     public String toString() {
         return "Ray{" + "p0=" + p0 + ", dir=" + dir + '}';
+    }
+
+    /**
+     *
+     * @param t
+     * @return
+     */
+    public Point3D getPoint(double t) {
+        return p0.add(dir.scale(t));
     }
 }

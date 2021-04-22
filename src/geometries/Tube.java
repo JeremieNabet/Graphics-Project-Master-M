@@ -30,19 +30,12 @@ public class Tube implements Geometry {
         Point3D p0 = axisRay.getP0();
         Vector v = axisRay.getDir();
         Vector P0_P = point.subtract(p0);
-        double t = alignZero(P0_P.dotProduct(v));
+        double t = P0_P.dotProduct(v);
 
-        if (isZero(t)) {
-            return P0_P.normalize();
-        }
+        if (isZero(t)) return P0_P.normalize();
+
         Point3D O = p0.add(v.scale(t));
-
-        if (point.equals(0)) {
-            throw new IllegalArgumentException("Point cannot be on the tube axis");
-        }
-        Vector O_P = point.subtract(O);
-        return O_P.normalize();
-
+        return point.subtract(O).normalize();
     }
 
     /**

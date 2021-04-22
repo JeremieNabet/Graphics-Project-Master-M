@@ -10,28 +10,30 @@ import static primitives.Util.isZero;
 
 public class Camera {
 
-     Point3D p0;
+    private Point3D p0;
      Vector vUp;
      Vector vTo;
      Vector vRight;
 
-     double width;
-     double height;
-     double distance;
+     double width = 1;
+     double height = 1;
+     double distance = 1;
 
     public Camera(Point3D p0, Vector vTo, Vector vUp) {
+        if (!isZero(vUp.dotProduct(vTo)))
+            throw new IllegalArgumentException("the vectors must be");
 
-        if (vUp.dotProduct(vTo) != 0)
-            throw new IllegalArgumentException("the vectors must be orthogonal");
-
-        this.p0 = new Point3D(p0.getX(), p0.getY(),p0.getZ());
+        this.p0 = p0;
         this.vTo = vTo.normalized();
         this.vUp = vUp.normalized();
 
         vRight = this.vTo.crossProduct(this.vUp).normalize();
-
     }
 
+    /**
+     * Upwards vector getter
+     * @return upwards vector
+     */
     public Vector getvUp() { return vUp; }
 
     public Vector getvTo() { return vTo; }
@@ -44,38 +46,23 @@ public class Camera {
 
     public double getDistance() { return distance;}
 
-    public Ray constructRay(int nX, int nY, int j, int i){
-        return new Ray();
-    }
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
+        Point3D pC = p0.add(vTo.scale(distance));
 
-        int screenDistance = 1;
-        int screenHeight = 1;
-        int screenWidth = 1;
+        double Ry = height / nY;
+        double Rx = width / nX;
 
-        if (screenDistance == 0 && screenHeight == 0) {
-            throw new IllegalArgumentException("distance cannot be 0");
-        }
-
-        Point3D Pc = p0.add(vTo.scale(screenDistance));
-
-        double Ry = screenHeight / nY;
-        double Rx = screenWidth / nX;
-
-        double yi = ((i - nY / 2d) * Ry + Ry / 2d);
+        double yi = -((i - nY / 2d) * Ry + Ry / 2d);
         double xj = ((j - nX / 2d) * Rx + Rx / 2d);
 
-        Point3D Pij = Pc;
+        Point3D Pij = pC;
 
-        if (!isZero(xj)) {
+        if (!isZero(xj))
             Pij = Pij.add(vRight.scale(xj).normalize());
-        }
-        if (!isZero(yi)) {
+        if (!isZero(yi))
             Pij = Pij.add(vUp.scale(yi).normalize());
-        }
 
         Vector Vij = Pij.subtract(p0);
-
         return new Ray(p0, Vij);
 
     }
@@ -85,7 +72,8 @@ public class Camera {
         return this;
     }
 
-    public Camera setVpDistance(int i) {
+    public Camera setVpDistance(int d) {
+        distance = d;
         return this;
     }
 }
