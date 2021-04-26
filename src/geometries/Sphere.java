@@ -63,7 +63,7 @@ public class Sphere implements Geometry {
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Point3D P0 = ray.getP0();
-        Vector v = ray.getDir();
+        Vector v = ray.getDirection();
 
         if (P0.equals(center)) {
             return List.of(ray.getPoint(radius));

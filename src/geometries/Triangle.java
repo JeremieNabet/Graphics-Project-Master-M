@@ -26,7 +26,7 @@ public class Triangle extends Polygon {
         Vector n2 = v2.crossProduct(v3);
         Vector n3 = v3.crossProduct(v1);
 
-        Vector v = ray.getDir();
+        Vector v = ray.getDirection();
         double s1 = n1.dotProduct(v);
         if (isZero(s1)) return null;
         double s2 = n2.dotProduct(v);

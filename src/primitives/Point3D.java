@@ -21,7 +21,21 @@ public class Point3D {
     /**
      * Point of coordinate system center
      */
-    public static final Point3D ZERO = new Point3D(0, 0, 0);
+    public static final Point3D ZERO = new Point3D(0d, 0d, 0d);
+
+    /**
+     * primary constructor for Point3D
+     *
+     * @param x coordinate value for X axis
+     * @param y coordinate value for Y axis
+     * @param z coordinate value for Z axis
+     */
+    public Point3D(double x, double y, double z) {
+        this.x = new Coordinate(x);
+        this.y = new Coordinate(y);
+        this.z = new Coordinate(z);
+    }
+
 
     /**
      * The function creates a new point as a result of moving this point by a vector
@@ -45,9 +59,10 @@ public class Point3D {
     }
 
     /**
+     * Calculate the distance squared
      *
      * @param other
-     * @return
+     * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2
      */
     public double distanceSquared(Point3D other) {
         double dx = this.x.coord - other.x.coord;
@@ -57,7 +72,7 @@ public class Point3D {
     }
 
     /**
-     * distance between this point and another point
+     * Distance between this point and another point
      *
      * @param other another point
      * @return the calculated distance
@@ -66,12 +81,35 @@ public class Point3D {
         return Math.sqrt(distanceSquared(other));
     }
 
-    public Point3D(double x, double y, double z) {
-        this.x = new Coordinate(x);
-        this.y = new Coordinate(y);
-        this.z = new Coordinate(z);
+    /**
+     * Function is to get the X from coordinate
+     *
+     * @return x
+     */
+    public double getX() {
+        return x.coord;
     }
 
+    /**
+     * Function is to get the Y from coordinate
+     *
+     * @return y
+     */
+    public double getY() {
+        return y.coord;
+    }
+
+    /**
+     * Function is to get the Z from coordinate
+     *
+     * @return z
+     */
+    public double getZ() {
+        return z.coord;
+    }
+
+
+    /*************** Admin *****************/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,35 +119,10 @@ public class Point3D {
         return x.equals(p.x) && y.equals(p.y) && z.equals(p.z);
     }
 
-    /**
-     * function toString to impress the result about x y z
-     * @return string
-     */
     @Override
     public String toString() {
-        return "(" + x + "," + y + "," + z +")";
+        return "(" + x + "," + y + "," + z + ")";
     }
 
-    /**
-     * Function is to get the X from coordinate
-     * @return x
-     */
-    public double getX() {
-        return x.coord;
-    }
 
-    /**
-     * Function is to get the Y from coordinate
-     * @return y
-     */
-    public Coordinate getY() {
-        return y;
-    }
-    /**
-     * Function is to get the Z from coordinate
-     * @return z
-     */
-    public Coordinate getZ() {
-        return z;
-    }
 }

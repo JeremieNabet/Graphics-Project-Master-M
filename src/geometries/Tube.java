@@ -11,7 +11,7 @@ public class Tube implements Geometry {
     /**
      * the axis ray about the tube
      */
-    protected Ray axisRay;
+     Ray axisRay;
     /**
      * this radius about the tube
      */
@@ -28,7 +28,7 @@ public class Tube implements Geometry {
      */
     public Vector getNormal(Point3D point) {
         Point3D p0 = axisRay.getP0();
-        Vector v = axisRay.getDir();
+        Vector v = axisRay.getDirection();
         Vector P0_P = point.subtract(p0);
         double t = P0_P.dotProduct(v);
 
