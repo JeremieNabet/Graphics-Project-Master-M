@@ -3,8 +3,6 @@ package elements;
 
 import primitives.*;
 
-import java.awt.geom.Arc2D;
-
 import static primitives.Util.isZero;
 
 
@@ -18,6 +16,16 @@ public class Camera {
     private double width = 1;
     private double height = 1;
     private double distance = 1;
+
+    public Camera(BuilderCamera builder) {
+        this.p0 = builder._p0;
+        this.vUp = builder._vUp;
+        this.vTo = builder._vTo;
+        this.vRight = builder._vRight;
+        this.width = builder._width;
+        this.height = builder._height;
+        this.distance = builder._distance;
+    }
 
     public Camera(Point3D p0, Vector vTo, Vector vUp) {
         if (!isZero(vUp.dotProduct(vTo)))
@@ -152,7 +160,7 @@ public class Camera {
      * Builder Class for Camera
      *
      */
-/*
+
     public static class BuilderCamera {
         final private Point3D _p0;
         final private Vector _vTo;
@@ -198,5 +206,5 @@ public class Camera {
 
         }
     }
-    */
+
 }
