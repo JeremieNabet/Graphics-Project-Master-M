@@ -23,8 +23,10 @@ public class Tube implements Geometry {
     }
 
     /**
-     * @param point Point3D point
-     * @return
+     * function which returns me the value of Tube normalize
+     *
+     * @param point subtract 0
+     * @return the value normalized
      */
     public Vector getNormal(Point3D point) {
         Point3D p0 = axisRay.getP0();
@@ -39,9 +41,9 @@ public class Tube implements Geometry {
     }
 
     /**
-     * toString override function
+     * function to string that give me the value type about my class
      *
-     * @return
+     * @return value string about this class
      */
     @Override
     public String toString() {
@@ -57,6 +59,7 @@ public class Tube implements Geometry {
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
+        //TODO
         return null;
     }
 }

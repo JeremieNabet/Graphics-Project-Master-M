@@ -40,25 +40,16 @@ public class Sphere implements Geometry {
     }
 
     /**
-     * getNormal Override function
+     * function which returns me the value of Sphere normalized
      *
-     * @param point3D
-     * @return
+     * @param point3D subtract center
+     * @return the value normalized
      */
     @Override
     public Vector getNormal(Point3D point3D) {
         return point3D.subtract(center).normalize();
     }
 
-    /**
-     * toString override function
-     *
-     * @return toString about this class
-     */
-    @Override
-    public String toString() {
-        return "Sphere{" + "center=" + center + ", radius=" + radius + '}';
-    }
 
     /**
      * allows me to find the intersection points of my sphere
@@ -90,6 +81,16 @@ public class Sphere implements Geometry {
 
         // t1 < t2 ALWAYS
         if (t2 <= 0) return null; // both t1 and t2 are <=0
-        return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1),ray.getPoint(t2));
+        return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
+    }
+
+    /**
+     * function to string that give me the value type about my class
+     *
+     * @return value string about this class
+     */
+    @Override
+    public String toString() {
+        return "Sphere{" + "center=" + center + ", radius=" + radius + '}';
     }
 }

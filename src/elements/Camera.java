@@ -106,6 +106,14 @@ public class Camera {
         return distance;
     }
 
+    /**
+     *
+     * @param nX
+     * @param nY
+     * @param j
+     * @param i
+     * @return
+     */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         Point3D pC = p0.add(vTo.scale(distance));
 

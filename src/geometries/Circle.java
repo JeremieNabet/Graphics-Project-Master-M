@@ -44,7 +44,13 @@ public class Circle extends RadialGeometry implements FlatGeometry {
     public Vector getNormal(Point3D p) {
         return _plane.getNormal(null);
     }
-
+    /**
+     * allows me to find the intersection points of my Circle
+     * if the points are not found, the function returns null
+     *
+     * @param ray
+     * @return list of intersection points
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         List<Point3D> intersections = _plane.findIntersections(ray);

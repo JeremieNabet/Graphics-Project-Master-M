@@ -8,11 +8,11 @@ import java.util.List;
 
 public class Triangle extends Polygon {
     /**
-     * Construcor
+     * Constructor a of my triangle
      *
-     * @param pointA
-     * @param pointB
-     * @param pointC
+     * @param pointA point a of my triangle
+     * @param pointB point a of my triangle
+     * @param pointC point a of my triangle
      */
     public Triangle(Point3D pointA, Point3D pointB, Point3D pointC) {
         super(pointA, pointB, pointC);
@@ -48,5 +48,14 @@ public class Triangle extends Polygon {
         if (isZero(s3)) return null;
 
         return (s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0) ? planeInts : null;
+    }
+    /**
+     * function to string that give me the value type about my class
+     *
+     * @return value string about this class
+     */
+    @Override
+    public String toString() {
+        return "Triangle{" + "plane=" + plane + '}';
     }
 }
