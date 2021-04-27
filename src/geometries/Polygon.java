@@ -83,11 +83,24 @@ public class Polygon implements Geometry {
         }
     }
 
+    /**
+     * function which returns me the value of plane normalize
+     *
+     * @param point point on the surface of geom.body
+     * @return plane.getNormal();
+     */
     @Override
     public Vector getNormal(Point3D point) {
         return plane.getNormal();
     }
 
+    /**
+     * allows me to find the intersection points of my Polygon
+     * if the points are not found, the function returns null
+     *
+     * @param ray
+     * @return list of intersection points
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         if (plane.findIntersections(ray) == null) {

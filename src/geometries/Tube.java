@@ -11,7 +11,7 @@ public class Tube implements Geometry {
     /**
      * the axis ray about the tube
      */
-     Ray axisRay;
+    Ray axisRay;
     /**
      * this radius about the tube
      */
@@ -48,6 +48,13 @@ public class Tube implements Geometry {
         return "Tube{" + "axisRay=" + axisRay + ", radius=" + radius + '}';
     }
 
+    /**
+     * allows me to find the intersection points of my tube
+     * if the points are not found, the function returns null
+     *
+     * @param ray
+     * @return list of intersection points
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         return null;

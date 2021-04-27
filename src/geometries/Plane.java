@@ -35,6 +35,7 @@ public class Plane implements Geometry {
 
     /**
      * Constructor 2
+     * formed from p and the vector normal
      *
      * @param p
      * @param normal vector for the normal(will be normalize automatically)
@@ -73,7 +74,13 @@ public class Plane implements Geometry {
         return point;
     }
 
-
+    /**
+     * allows me to find the intersection points of my Plane
+     * if the points are not found, the function returns null
+     *
+     * @param ray
+     * @return list of intersection points
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Point3D P0 = ray.getP0();

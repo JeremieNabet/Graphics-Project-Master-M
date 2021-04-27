@@ -10,19 +10,41 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 public class Cylinder extends Tube {   // implements Geometry
-
+    /**
+     * the height of my cylinder
+     */
     final double height;
+    /**
+     * the base of my cylinder
+     */
     final Plane base1;
+    /**
+     * the base of my cylinder
+     */
     final Plane base2;
 
-    public Cylinder(double radius,Ray _axisRay, double height) {
+    /**
+     * Constructor which gives me the basics of my cylinder as well as the direction
+     * and the height
+     *
+     * @param radius of the cylinder
+     * @param _axisRay abscess de mon cylinder
+     * @param height of my cylinder
+     */
+    public Cylinder(double radius, Ray _axisRay, double height) {
         super(_axisRay, radius);
         this.height = height;
         Vector v = axisRay.getDirection();
-        base1 = new Plane(axisRay.getP0(),v);
-        base2 = new Plane(axisRay.getPoint(this.height),v);
+        base1 = new Plane(axisRay.getP0(), v);
+        base2 = new Plane(axisRay.getPoint(this.height), v);
     }
 
+    /**
+     * Function that allows me to receive all my values normalized
+     *
+     * @param p (an point3D)
+     * @return all my normalized values
+     */
     @Override
     public Vector getNormal(Point3D p) {
         Point3D o = axisRay.getP0();
@@ -43,6 +65,7 @@ public class Cylinder extends Tube {   // implements Geometry
         o = o.add(v.scale(t));
         return p.subtract(o).normalize();
     }
+
     /**
      * implemented by Dan zilberstein
      */
@@ -73,7 +96,8 @@ public class Cylinder extends Tube {   // implements Geometry
             try {
                 vAxis.crossProduct(v); // if ray and axis are parallel - throw exception
                 return null; // they are not parallel - the ray is outside the cylinder
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
 
             // The rays are parallel
             Vector vP0PC;

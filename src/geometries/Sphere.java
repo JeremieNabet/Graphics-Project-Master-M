@@ -8,11 +8,11 @@ import static primitives.Util.*;
 
 public class Sphere implements Geometry {
     /**
-     * the point center about the sphere
+     * the point center of the sphere
      */
     final Point3D center;
     /**
-     * the radius about the sphere
+     * the radius of the sphere
      */
     final double radius;
 
@@ -22,7 +22,7 @@ public class Sphere implements Geometry {
     }
 
     /**
-     * this function give the center point about the sphere
+     * this function give the center point of the sphere
      *
      * @return center
      */
@@ -31,7 +31,7 @@ public class Sphere implements Geometry {
     }
 
     /**
-     * this function give the radius about the sphere
+     * this function give the radius of the sphere
      *
      * @return radius
      */
@@ -60,6 +60,13 @@ public class Sphere implements Geometry {
         return "Sphere{" + "center=" + center + ", radius=" + radius + '}';
     }
 
+    /**
+     * allows me to find the intersection points of my sphere
+     * if the points are not found, the function returns null
+     *
+     * @param ray
+     * @return list of intersection points
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Point3D P0 = ray.getP0();

@@ -17,6 +17,12 @@ public class Camera {
     private double height = 1;
     private double distance = 1;
 
+    /**
+     * Constructeur for the class BuilderCamera
+     *
+     * @param builder
+     * @author Yona
+     */
     public Camera(BuilderCamera builder) {
         this.p0 = builder._p0;
         this.vUp = builder._vUp;
@@ -27,6 +33,14 @@ public class Camera {
         this.distance = builder._distance;
     }
 
+    /**
+     * Constructor which checks that my variables are not equal to zero
+     * copier builder
+     *
+     * @param p0
+     * @param vTo
+     * @param vUp
+     */
     public Camera(Point3D p0, Vector vTo, Vector vUp) {
         if (!isZero(vUp.dotProduct(vTo)))
             throw new IllegalArgumentException("the vectors must be");
@@ -112,6 +126,7 @@ public class Camera {
         return new Ray(p0, Vij);
 
     }
+
     /**
      * The movement of the camera
      *
@@ -142,23 +157,34 @@ public class Camera {
         this.vTo.rotateVector(axis, theta);
         return this;
     }
+
+    /**
+     * Function set size allow me to change the size
+     *
+     * @param width
+     * @param height
+     * @return the new values
+     */
     public Camera setVpSize(double width, double height) {
         this.width = width;
         this.height = height;
         return this;
     }
 
+    /**
+     * Allows me to change the distance value
+     *
+     * @param d
+     * @return the distance value modify
+     */
     public Camera setVpDistance(int d) {
         distance = d;
         return this;
     }
 
 
-
     /**
-     *
      * Builder Class for Camera
-     *
      */
 
     public static class BuilderCamera {

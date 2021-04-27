@@ -8,11 +8,11 @@ import primitives.Vector;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Testing Tube
  *
  * @author Jeremie and Israel
- *
  */
 
 class TubeTest {
@@ -24,23 +24,28 @@ class TubeTest {
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: There is a simple single test here
-        Ray ray = new Ray(new Point3D(0,1,0), new Vector(0,1,0));
+        Ray ray = new Ray(new Point3D(0, 1, 0), new Vector(0, 1, 0));
         Tube tb = new Tube(ray, 2);
 
         //TC11
-        assertEquals(tb.getNormal(new Point3D(2,0,0)) ,new Vector(1,0,0));
+        assertEquals(tb.getNormal(new Point3D(2, 0, 0)), new Vector(1, 0, 0));
         //TC12
-        assertEquals(tb.getNormal(new Point3D(2,1,0)) ,new Vector(1,0,0));
+        assertEquals(tb.getNormal(new Point3D(2, 1, 0)), new Vector(1, 0, 0));
 
     }
+
     /**
      * Test method for {@link geometries.Tube#findIntersections(primitives.Ray)}.
      */
     @Test
     public void testFindIntersectionsRay() {
+
         Tube tube1 = new Tube(new Ray(new Point3D(1, 0, 0), new Vector(0, 1, 0)), 1d);
+
         Vector vAxis = new Vector(0, 0, 1);
+
         Tube tube2 = new Tube(new Ray(new Point3D(1, 1, 1), vAxis), 1d);
+
         Ray ray;
 
         // ============ Equivalence Partitions Tests ==============
@@ -63,6 +68,7 @@ class TubeTest {
         // TC03: Ray's starts within tube and crosses the tube (1 point)
         ray = new Ray(new Point3D(1, 0.5, 0.5), new Vector(2, 1, 1));
         result = tube2.findIntersections(ray);
+
 
         assertNotNull(result, "must be intersections");
         assertEquals(1, result.size(), "must be 1 intersections");
@@ -334,47 +340,47 @@ class TubeTest {
         // TC74: Ray's begins at the surface and goes inside crossing the axis
         ray = new Ray(new Point3D(value1, value1, 2 + value1), new Vector(1, 1, 1));
         result = tube2.findIntersections(ray);
-        assertNotNull( result,"must be intersections");
-        assertEquals( 1, result.size(),"must be 1 intersections");
-        assertEquals(List.of(new Point3D(value2, value2, 2 + value2)), result,"Bad intersections");
+        assertNotNull(result, "must be intersections");
+        assertEquals(1, result.size(), "must be 1 intersections");
+        assertEquals(List.of(new Point3D(value2, value2, 2 + value2)), result, "Bad intersections");
         // TC75: Ray's begins at the surface and goes inside crossing the axis head
         ray = new Ray(new Point3D(value1, value1, value1), new Vector(1, 1, 1));
         result = tube2.findIntersections(ray);
-        assertNotNull( result,"must be intersections");
-        assertEquals( 1, result.size(),"must be 1 intersections");
-        assertEquals(List.of(new Point3D(value2, value2, value2)), result,"Bad intersections");
+        assertNotNull(result, "must be intersections");
+        assertEquals(1, result.size(), "must be 1 intersections");
+        assertEquals(List.of(new Point3D(value2, value2, value2)), result, "Bad intersections");
         // TC76: Ray's begins inside and the line crosses the axis
         ray = new Ray(new Point3D(0.5, 0.5, 2.5), new Vector(1, 1, 1));
         result = tube2.findIntersections(ray);
-        assertNotNull( result,"must be intersections");
-        assertEquals( 1, result.size(),"must be 1 intersections");
-        assertEquals(List.of(new Point3D(value2, value2, 2 + value2)), result,"Bad intersections");
+        assertNotNull(result, "must be intersections");
+        assertEquals(1, result.size(), "must be 1 intersections");
+        assertEquals(List.of(new Point3D(value2, value2, 2 + value2)), result, "Bad intersections");
         // TC77: Ray's begins inside and the line crosses the axis head
         ray = new Ray(new Point3D(0.5, 0.5, 0.5), new Vector(1, 1, 1));
         result = tube2.findIntersections(ray);
-        assertNotNull( result,"must be intersections");
-        assertEquals(1, result.size(),"must be 1 intersections");
-        assertEquals( List.of(new Point3D(value2, value2, value2)), result,"Bad intersections");
+        assertNotNull(result, "must be intersections");
+        assertEquals(1, result.size(), "must be 1 intersections");
+        assertEquals(List.of(new Point3D(value2, value2, value2)), result, "Bad intersections");
         // TC78: Ray's begins at the axis
         ray = new Ray(new Point3D(1, 1, 3), new Vector(1, 1, 1));
         result = tube2.findIntersections(ray);
-        assertNotNull( result,"must be intersections");
-        assertEquals( 1, result.size(),"must be 1 intersections");
-        assertEquals(List.of(new Point3D(value2, value2, 2 + value2)), result,"Bad intersections");
+        assertNotNull(result, "must be intersections");
+        assertEquals(1, result.size(), "must be 1 intersections");
+        assertEquals(List.of(new Point3D(value2, value2, 2 + value2)), result, "Bad intersections");
         // TC79: Ray's begins at the surface and goes outside
         ray = new Ray(new Point3D(2, 1, 2), new Vector(2, 1, 1));
         result = tube2.findIntersections(ray);
-        assertNull( result,"Bad intersections");
+        assertNull(result, "Bad intersections");
         // TC80: Ray's begins at the surface and goes outside and the line crosses the
         // axis
         ray = new Ray(new Point3D(value2, value2, 2 + value2), new Vector(1, 1, 1));
         result = tube2.findIntersections(ray);
-        assertNull( result,"Bad intersections");
+        assertNull(result, "Bad intersections");
         // TC81: Ray's begins at the surface and goes outside and the line crosses the
         // axis head
         ray = new Ray(new Point3D(value2, value2, value2), new Vector(1, 1, 1));
         result = tube2.findIntersections(ray);
-        assertNull( result,"Bad intersections");
+        assertNull(result, "Bad intersections");
 
     }
 

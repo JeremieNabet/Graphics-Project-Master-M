@@ -50,7 +50,7 @@ public class Circle extends RadialGeometry implements FlatGeometry {
         List<Point3D> intersections = _plane.findIntersections(ray);
         if (intersections == null) return null;
 
-        double pToEdge = alignZero(_radius - _center.distance(intersections.get(0)));
+        double pToEdge = alignZero(radius - _center.distance(intersections.get(0)));
         if (pToEdge <=0 ) return null;
         return intersections;
     }

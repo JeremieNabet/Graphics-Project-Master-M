@@ -7,11 +7,24 @@ import static primitives.Util.*;
 import java.util.List;
 
 public class Triangle extends Polygon {
-
+    /**
+     * Construcor
+     *
+     * @param pointA
+     * @param pointB
+     * @param pointC
+     */
     public Triangle(Point3D pointA, Point3D pointB, Point3D pointC) {
         super(pointA, pointB, pointC);
     }
 
+    /**
+     * allows me to find the intersection points of my triangle
+     * if the points are not found, the function returns null
+     *
+     * @param ray
+     * @return list of intersection points
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         var planeInts = plane.findIntersections(ray);
