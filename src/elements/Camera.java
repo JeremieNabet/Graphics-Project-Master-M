@@ -13,25 +13,10 @@ public class Camera {
     final private Vector vTo;
     final private Vector vRight;
 
-    private double width = 1;
-    private double height = 1;
-    private double distance = 1;
+    private double width;
+    private double height;
+    private double distance;
 
-    /**
-     * Constructeur for the class BuilderCamera
-     *
-     * @param builder
-     * @author Yona
-     */
-    public Camera(BuilderCamera builder) {
-        this.p0 = builder._p0;
-        this.vUp = builder._vUp;
-        this.vTo = builder._vTo;
-        this.vRight = builder._vRight;
-        this.width = builder._width;
-        this.height = builder._height;
-        this.distance = builder._distance;
-    }
 
     /**
      * Constructor which checks that my variables are not equal to zero
@@ -107,6 +92,9 @@ public class Camera {
     }
 
     /**
+     * This methods calculate the ray
+     * the starting camera and the intercept the view plane and the center
+     * of the pixel's square
      *
      * @param nX
      * @param nY
@@ -190,55 +178,5 @@ public class Camera {
         return this;
     }
 
-
-    /**
-     * Builder Class for Camera
-     */
-
-    public static class BuilderCamera {
-        final private Point3D _p0;
-        final private Vector _vTo;
-        final private Vector _vUp;
-        final private Vector _vRight;
-
-        private double _distance = 10;
-        private double _width = 1;
-        private double _height = 1;
-
-        public BuilderCamera setDistance(double distance) {
-            _distance = distance;
-            return this;
-        }
-
-
-        public BuilderCamera setViewPlaneWidth(double width) {
-            _width = width;
-            return this;
-        }
-
-        public BuilderCamera setViewPlaneHeight(double height) {
-            _height = height;
-            return this;
-        }
-
-        public Camera build() {
-            Camera camera = new Camera(this);
-            return camera;
-        }
-
-        public BuilderCamera(Point3D p0, Vector vTo, Vector vUp) {
-            _p0 = p0;
-
-            if (!isZero(vTo.dotProduct(vUp))) {
-                throw new IllegalArgumentException("vto and vup are not orthogonal");
-            }
-
-            _vTo = vTo.normalized();
-            _vUp = vUp.normalized();
-
-            _vRight = _vTo.crossProduct(_vUp);
-
-        }
-    }
 
 }

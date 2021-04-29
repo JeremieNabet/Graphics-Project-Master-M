@@ -18,6 +18,7 @@ public class Geometries implements Intersectable {
 
     /**
      * Constructor Geometries which uses the add function in recursive
+     *
      * @param geos
      */
     public Geometries(Intersectable... geos) {
@@ -25,7 +26,8 @@ public class Geometries implements Intersectable {
     }
 
     /**
-     * Add function which allows me to add all my values ​​to my list
+     * Add function which allows me to add all my values to my list
+     *
      * @param geos
      */
     public void add(Intersectable... geos) {
@@ -45,6 +47,7 @@ public class Geometries implements Intersectable {
         for (Intersectable item : intersectables) {
             //get intersections points of a particular item from intersectables
             List<Point3D> itemPoints = item.findIntersections(ray);
+
             if (itemPoints != null) {
                 //first time initialize result to new LinkedList
                 if (result == null) {

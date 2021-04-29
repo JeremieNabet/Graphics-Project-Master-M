@@ -19,7 +19,7 @@ public class Ray {
 
 
     /**
-     * function get p0 about the Ray
+     * function get p0 of the Ray
      *
      * @return p0
      */
@@ -28,7 +28,7 @@ public class Ray {
     }
 
     /**
-     * function get direction about the Vector
+     * function get direction of the Vector
      *
      * @return dir
      */
@@ -37,10 +37,12 @@ public class Ray {
     }
 
     /**
-     * Have the point and his direction
+     * Calculate all the point on the Ray
+     * Take start point and additional his direction vector multiplication
+     * by scalar
      *
-     * @param t
-     * @return
+     * @param t he scalar
+     * @return the all point that is on the Ray
      */
     public Point3D getPoint(double t) {
         return p0.add(dir.scale(t));
