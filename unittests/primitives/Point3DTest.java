@@ -45,8 +45,20 @@ class Point3DTest {
 
     @Test
     void testDistance() {
-        Point3D p3 = new Point3D(0, 0.5, 2.5);
-        assertEquals(1.5, p3.distance(p2));
+       // Point3D p3 = new Point3D(0, 0.5, 2.5);
+       // assertEquals(1.5, p3.distance(p2));
+
+        Point3D point0 = new Point3D(1, 1, -100);
+        Point3D point1 = new Point3D(-1, 1, -99);
+        Point3D point2 = new Point3D(0, 0, -100);
+        Point3D point3 = new Point3D(0.5, 0, -100);
+        double resultsquared;
+        double result;
+
+        resultsquared = point3.distanceSquared(new Point3D(0,0,-100));
+        System.out.println(resultsquared);
+        result = point3.distance(new Point3D(0,0,-100));
+        System.out.println(result);
     }
 
     /**
