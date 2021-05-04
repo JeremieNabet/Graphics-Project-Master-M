@@ -61,6 +61,17 @@ public class Camera {
     }
 
     /**
+     * Camera setter chaining methods
+     *
+     * @param distance
+     * @return
+     */
+    public Camera setDistance(double distance) {
+        distance = distance;
+        return this;
+    }
+
+    /**
      * Upwards vector getter
      *
      * @return upwards vector
