@@ -154,6 +154,7 @@ public class Vector {
 
 
     /**
+     * This function allows me to know the rotation of my vector
      * @param axis axis of rotation
      * @param theta angle of rotation
      */

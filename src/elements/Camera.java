@@ -37,6 +37,29 @@ public class Camera {
         vRight = this.vTo.crossProduct(this.vUp).normalize();
     }
 
+    private Camera(BuilderCamera builder) {
+        p0 = builder._p0;
+        vTo = builder._vTo;
+        vUp = builder._vUp;
+        vRight = builder._vRight;
+        height = builder._height;
+        width = builder._width;
+        distance = builder._distance;
+    }
+
+    /**
+     * set view plane size
+     *
+     * @param width
+     * @param height
+     * @return the new width and the new height
+     */
+    public Camera setViewPlaneSize(double width, double height) {
+        width = this.width;
+        height = this.height;
+        return this;
+    }
+
     /**
      * Upwards vector getter
      *
@@ -47,9 +70,9 @@ public class Camera {
     }
 
     /**
-     * to vector getter
+     * vto vector getter
      *
-     * @return to vector
+     * @return vto vector
      */
     public Vector getVTo() {
         return vTo;
@@ -100,7 +123,7 @@ public class Camera {
      * @param nY
      * @param j
      * @param i
-     * @return
+     * @return the new ray
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         Point3D pC = p0.add(vTo.scale(distance));
@@ -178,5 +201,51 @@ public class Camera {
         return this;
     }
 
+
+    public static class BuilderCamera {
+        final private Point3D _p0;
+        final private Vector _vTo;
+        final private Vector _vUp;
+        final private Vector _vRight;
+
+        private double _distance = 10;
+        private double _width = 1;
+        private double _height = 1;
+
+        public BuilderCamera setDistance(double distance) {
+            _distance = distance;
+            return this;
+        }
+
+
+        public BuilderCamera setViewPlaneWidth(double width) {
+            _width = width;
+            return this;
+        }
+
+        public BuilderCamera setViewPlaneHeight(double height) {
+            _height = height;
+            return this;
+        }
+
+        public Camera build() {
+            Camera camera = new Camera(this);
+            return camera;
+        }
+
+        public BuilderCamera(Point3D p0, Vector vTo, Vector vUp) {
+            _p0 = p0;
+
+            if (!isZero(vTo.dotProduct(vUp))) {
+                throw new IllegalArgumentException("vto and vup are not orthogonal");
+            }
+
+            _vTo = vTo.normalized();
+            _vUp = vUp.normalized();
+
+            _vRight = _vTo.crossProduct(_vUp);
+
+        }
+    }
 
 }
