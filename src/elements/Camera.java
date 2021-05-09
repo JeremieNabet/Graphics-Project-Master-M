@@ -212,7 +212,10 @@ public class Camera {
         return this;
     }
 
-
+    /**
+     * WE need to check if Dan accept this class
+     * because we found this on Eliezer's github
+     */
     public static class BuilderCamera {
         final private Point3D _p0;
         final private Vector _vTo;

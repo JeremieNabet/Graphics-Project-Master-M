@@ -14,7 +14,7 @@ public class Vector {
      * first constructor, we receive 3 double
      */
     public Vector(double x, double y, double z) {
-        this.head = new Point3D(x, y, z);
+        this(new Point3D(x, y, z));
         if (Point3D.ZERO.equals(this.head))
             throw new IllegalArgumentException("Zero vector is not allowed");
     }
@@ -26,6 +26,7 @@ public class Vector {
     public Vector(Point3D p) {
         if (Point3D.ZERO.equals(p))
             throw new IllegalArgumentException("Zero vector is not allowed");
+
         this.head = p;
     }
 

@@ -5,7 +5,8 @@ import primitives.*;
 import java.util.List;
 
 /**
- * interface for all the intersections
+ * Intersectable is a common interface for all geometries that are able
+ * to intersect from a ray to their entity
  */
 public interface Intersectable {
 

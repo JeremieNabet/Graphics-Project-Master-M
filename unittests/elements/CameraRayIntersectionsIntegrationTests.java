@@ -112,7 +112,7 @@ public class CameraRayIntersectionsIntegrationTests {
                 .build();
 
         // TC01: Small triangle 1 point
-        assertCountIntersections(cam, new Triangle(new Point3D(1, 1, -2), new Point3D(-1, 1, -2), new Point3D(0, -1, -2)), 1);
+         assertCountIntersections(cam, new Triangle(new Point3D(1, 1, -2), new Point3D(-1, 1, -2), new Point3D(0, -1, -2)), 1);
 
         // TC02: Medium triangle 2 points
         assertCountIntersections(cam, new Triangle(new Point3D(1, 1, -2), new Point3D(-1, 1, -2), new Point3D(0, -20, -2)), 2);
