@@ -57,7 +57,7 @@ public class Sphere implements Geometry {
      * allows me to find the intersection points of my sphere
      * if the points are not found, the function returns null
      *
-     * @param ray
+     * @param ray the ray that enter in the excel table
      * @return list of intersection points
      */
     @Override

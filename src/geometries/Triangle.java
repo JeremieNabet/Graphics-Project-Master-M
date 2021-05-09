@@ -22,7 +22,7 @@ public class Triangle extends Polygon {
      * allows me to find the intersection points of my triangle
      * if the points are not found, the function returns null
      *
-     * @param ray
+     * @param ray the ray that may be the vector that enter in the table
      * @return list of intersection points
      */
     @Override
