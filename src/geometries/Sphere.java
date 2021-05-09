@@ -15,10 +15,12 @@ public class Sphere implements Geometry {
      * the radius of the sphere
      */
     final double radius;
+    final double radiusSqr;
 
     public Sphere(Point3D center, double radius) {
         this.center = center;
         this.radius = radius;
+        this.radiusSqr = radius * radius;
     }
 
     /**
@@ -61,26 +63,28 @@ public class Sphere implements Geometry {
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Point3D P0 = ray.getP0();
-        Vector v = ray.getDirection();
 
-        if (P0.equals(center)) {
+        Vector U;
+        try {
+            U = center.subtract(P0);
+        } catch (IllegalArgumentException e) {
             return List.of(ray.getPoint(radius));
         }
-        Vector U = center.subtract(P0);
 
+        Vector v = ray.getDirection();
         double tm = alignZero(v.dotProduct(U));
 
-        double d = alignZero(Math.sqrt(U.lengthSquared() - tm * tm));
-        if (alignZero(d - radius) >= 0)
+        double dSqr = U.lengthSquared() - tm * tm;
+        double thSqr = alignZero(radiusSqr - dSqr);
+        if (thSqr <= 0)
             return null; //because there is not intersections : the ray direction is tangent or out of the sphere
 
-        double th = Math.sqrt(radius * radius - d * d);
-        if (isZero(th)) return null; // ray's line is tangent to sphere
-        double t1 = alignZero(tm - th);
+        double th = Math.sqrt(thSqr);
         double t2 = alignZero(tm + th);
-
         // t1 < t2 ALWAYS
         if (t2 <= 0) return null; // both t1 and t2 are <=0
+
+        double t1 = alignZero(tm - th);
         return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
 

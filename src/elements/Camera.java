@@ -5,7 +5,10 @@ import primitives.*;
 
 import static primitives.Util.isZero;
 
-
+/**
+ * Camera class is it the representation of a real camera
+ * and to put yourself in the shoes of a photographer
+ */
 public class Camera {
 
     final private Point3D p0;
@@ -50,24 +53,24 @@ public class Camera {
     /**
      * set view plane size
      *
-     * @param width
-     * @param height
+     * @param width  of the camera plane size
+     * @param height of camera plane size
      * @return the new width and the new height
      */
     public Camera setViewPlaneSize(double width, double height) {
-        width = this.width;
-        height = this.height;
+        this.width = width;
+        this.height = height;
         return this;
     }
 
     /**
      * Camera setter chaining methods
      *
-     * @param distance
-     * @return
+     * @param distance between a camera and the goal
+     * @return the new distance
      */
     public Camera setDistance(double distance) {
-        distance = distance;
+        this.distance = distance;
         return this;
     }
 
@@ -139,22 +142,20 @@ public class Camera {
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         Point3D pC = p0.add(vTo.scale(distance));
 
-        double Ry = height / nY;
-        double Rx = width / nX;
+        double rY = height / nY;
+        double rX = width / nX;
 
-        double yi = -((i - nY / 2d) * Ry + Ry / 2d);
-        double xj = ((j - nX / 2d) * Rx + Rx / 2d);
+        double yI = ((nY - 1) / 2d - i) * rY;
+        double xJ = (j - (nX - 1) / 2d) * rX;
 
-        Point3D Pij = pC;
+        Point3D pIJ = pC;
+        if (!isZero(xJ))
+            pIJ = pIJ.add(vRight.scale(xJ).normalize());
+        if (!isZero(yI))
+            pIJ = pIJ.add(vUp.scale(yI).normalize());
 
-        if (!isZero(xj))
-            Pij = Pij.add(vRight.scale(xj).normalize());
-        if (!isZero(yi))
-            Pij = Pij.add(vUp.scale(yi).normalize());
-
-        Vector Vij = Pij.subtract(p0);
-        return new Ray(p0, Vij);
-
+        Vector vIJ = pIJ.subtract(p0);
+        return new Ray(p0, vIJ);
     }
 
     /**

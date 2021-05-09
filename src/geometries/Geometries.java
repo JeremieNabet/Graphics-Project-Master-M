@@ -50,11 +50,11 @@ public class Geometries implements Intersectable {
 
             if (itemPoints != null) {
                 //first time initialize result to new LinkedList
-                if (result == null) {
-                    result = new LinkedList<>();
-                }
-                //add all item points to the resulting list
-                result.addAll(itemPoints);
+                if (result == null)
+                    result = new LinkedList<>(itemPoints);
+                else
+                    //add all item points to the resulting list
+                    result.addAll(itemPoints);
             }
         }
         return result;

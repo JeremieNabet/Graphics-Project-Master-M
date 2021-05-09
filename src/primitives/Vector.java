@@ -41,6 +41,8 @@ public class Vector {
 
     /**
      * we use to the function subtract of the point 3D who compose the vector that we received
+     * @param vector
+     * @return
      */
     public Vector subtract(Vector vector) {
         return this.head.subtract(vector.head);

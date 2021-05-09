@@ -41,13 +41,12 @@ public class Ray {
      * Take start point and additional his direction vector multiplication
      * by scalar
      *
-     * @param t he scalar
+     * @param t he scalar - must be a positive value
      * @return the all point that is on the Ray
      */
     public Point3D getPoint(double t) {
         return p0.add(dir.scale(t));
     }
-
 
     /**
      * Find the closest Point to Ray origin
@@ -56,12 +55,11 @@ public class Ray {
      * @return closest point
      */
     public Point3D findClosestPoint(List<Point3D> pointsList) {
-        Point3D result = null;
-        double closestDistance = Double.MAX_VALUE;
-
-        if (pointsList == null) {
+        if (pointsList == null)
             return null;
-        }
+
+        Point3D result = null;
+        double closestDistance = Double.POSITIVE_INFINITY;
 
         for (Point3D p : pointsList) {
             double temp = p.distance(p0);

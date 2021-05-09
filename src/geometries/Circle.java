@@ -14,7 +14,7 @@ import static primitives.Util.alignZero;
  *
  * @author Dan
  */
-public class Circle extends RadialGeometry implements FlatGeometry {
+public class Circle extends RadialGeometry implements Geometry {
     private final Point3D _center;
     private final Plane _plane;
 
@@ -22,11 +22,11 @@ public class Circle extends RadialGeometry implements FlatGeometry {
      * Circle constructor given its center, radius and orthogonal unit vector
      * (normal)
      *
-     * @param center      center point
+     * @param center center point
      * @param radius
      * @param n      orthogonal vector (will be normalized)
      */
-    public Circle( double radius,Point3D center, Vector n) {
+    public Circle(double radius, Point3D center, Vector n) {
         super(radius);
         _center = center;
         _plane = new Plane(center, n);
@@ -34,6 +34,7 @@ public class Circle extends RadialGeometry implements FlatGeometry {
 
     /**
      * Center getter for the circle
+     *
      * @return the center point
      */
     public Point3D getCenter() {
@@ -44,6 +45,7 @@ public class Circle extends RadialGeometry implements FlatGeometry {
     public Vector getNormal(Point3D p) {
         return _plane.getNormal(null);
     }
+
     /**
      * allows me to find the intersection points of my Circle
      * if the points are not found, the function returns null
@@ -56,8 +58,7 @@ public class Circle extends RadialGeometry implements FlatGeometry {
         List<Point3D> intersections = _plane.findIntersections(ray);
         if (intersections == null) return null;
 
-        double pToEdge = alignZero(radius - _center.distance(intersections.get(0)));
-        if (pToEdge <=0 ) return null;
+        if (alignZero(radius - _center.distance(intersections.get(0))) <= 0) return null;
         return intersections;
     }
 }

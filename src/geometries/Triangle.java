@@ -33,22 +33,24 @@ public class Triangle extends Polygon {
         Point3D p0 = ray.getP0();
         Vector v1 = vertices.get(0).subtract(p0);
         Vector v2 = vertices.get(1).subtract(p0);
-        Vector v3 = vertices.get(2).subtract(p0);
-
-        Vector n1 = v1.crossProduct(v2);
-        Vector n2 = v2.crossProduct(v3);
-        Vector n3 = v3.crossProduct(v1);
 
         Vector v = ray.getDirection();
+        Vector n1 = v1.crossProduct(v2);
         double s1 = n1.dotProduct(v);
         if (isZero(s1)) return null;
-        double s2 = n2.dotProduct(v);
-        if (isZero(s2)) return null;
-        double s3 = n3.dotProduct(v);
-        if (isZero(s3)) return null;
 
-        return (s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0) ? planeInts : null;
+        Vector v3 = vertices.get(2).subtract(p0);
+        Vector n2 = v2.crossProduct(v3);
+        double s2 = n2.dotProduct(v);
+        if (alignZero(s1 * s2) <= 0) return null;
+
+        Vector n3 = v3.crossProduct(v1);
+        double s3 = n3.dotProduct(v);
+        if (alignZero(s1 * s3) <= 0) return null;
+
+        return planeInts;
     }
+
     /**
      * function to string that give me the value type about my class
      *
