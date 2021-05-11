@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Ray {
     /**
-     * the point p0 about the ray
+     * the point p0 of the ray
      */
     final Point3D p0;
     /**
-     * the vector about the ray
+     * the direction vector of the ray
      */
     final Vector dir;
 
@@ -49,6 +49,8 @@ public class Ray {
 
     /**
      * Find the closest Point to Ray origin
+     * Find the point with minimal distance from the
+     * ray head point and return it
      *
      * @param pointsList intersections point List
      * @return closest point
@@ -81,7 +83,7 @@ public class Ray {
     }
 
     /**
-     * Function toString about the class Ray
+     * Function toString of the class Ray
      *
      * @return string
      */

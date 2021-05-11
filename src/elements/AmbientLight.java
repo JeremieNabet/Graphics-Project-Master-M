@@ -3,7 +3,8 @@ package elements;
 import primitives.Color;
 
 /**
- * Ambient Light Color
+ * An ambient light source represents a fixed-intensity and fixed color
+ * light source that affects all objects in the scene equally.
  */
 public class AmbientLight {
     /**

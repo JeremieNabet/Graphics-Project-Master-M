@@ -3,6 +3,7 @@ package elements;
 
 import primitives.*;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -163,17 +164,17 @@ public class Camera {
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         Point3D pC = p0.add(vTo.scale(distance));
 
-        double rY = height / nY;
-        double rX = width / nX;
+        double rY = alignZero(height / nY) ;
+        double rX =  alignZero(width / nX) ;
 
-        double yI = ((nY - 1) / 2d - i) * rY;
-        double xJ = (j - (nX - 1) / 2d) * rX;
+        double yI = alignZero(-(i - ((nY - 1) / 2d)) * rY);
+        double xJ = alignZero((j - ((nX - 1) / 2d)) * rX);
 
         Point3D pIJ = pC;
         if (!isZero(xJ))
-            pIJ = pIJ.add(vRight.scale(xJ).normalize());
+            pIJ = pIJ.add(vRight.scale(xJ));
         if (!isZero(yI))
-            pIJ = pIJ.add(vUp.scale(yI).normalize());
+            pIJ = pIJ.add(vUp.scale(yI));
 
         Vector vIJ = pIJ.subtract(p0);
         return new Ray(p0, vIJ);

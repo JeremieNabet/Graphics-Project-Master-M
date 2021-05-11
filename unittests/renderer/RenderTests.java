@@ -30,10 +30,11 @@ public class RenderTests {
 				.setBackground(new Color(75, 127, 90));
 
 		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
-				new Triangle(new Point3D(-90, 0, -100), new Point3D(0, 90, -100), new Point3D(-90, 90, -100)), // up left
+				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up left
 				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
 				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down left
 				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100))); // down right
+
 
 		ImageWriter imageWriter = new ImageWriter("base render test 222", 1000, 1000);
 		Render render = new Render() //
