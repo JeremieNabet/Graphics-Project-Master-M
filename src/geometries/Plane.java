@@ -20,9 +20,9 @@ public class Plane implements Geometry {
      * the points are ordered from right to left
      * forming on arc in right direction
      *
-     * @param point1
-     * @param point2
-     * @param point3
+     * @param point1 first point of my plane
+     * @param point2 second point of my plane
+     * @param point3 third point of my plane
      * @throws IllegalArgumentException if the points are on the same line
      */
     //constructor 1
@@ -78,17 +78,17 @@ public class Plane implements Geometry {
      * allows me to find the intersection points of my Plane
      * if the points are not found, the function returns null
      *
-     * @param ray
+     * @param ray the ray to check the intersection
      * @return list of intersection points
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        Point3D P0 = ray.getP0();
+        Point3D p0 = ray.getP0();
         Vector v = ray.getDirection();
 
         Vector p0MinusQ0;
         try {
-            p0MinusQ0= point.subtract(P0);
+            p0MinusQ0= point.subtract(p0);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -96,12 +96,12 @@ public class Plane implements Geometry {
         if (isZero(denominator)) return null;
 
         //monet
-        double nv = normal.dotProduct(v);
+        double nV = normal.dotProduct(v);
         // ray is lying in the plane axis
-        if (isZero(nv))
+        if (isZero(nV))
             return null;
 
-        double t = alignZero(denominator/nv);
+        double t = alignZero(denominator/nV);
         return t <= 0 ? null : List.of(ray.getPoint(t));
     }
 }

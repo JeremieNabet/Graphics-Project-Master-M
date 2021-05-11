@@ -15,21 +15,27 @@ import static primitives.Util.alignZero;
  * @author Dan
  */
 public class Circle extends RadialGeometry implements Geometry {
-    private final Point3D _center;
-    private final Plane _plane;
+    /**
+     * the center of the circle
+     */
+    private final Point3D center;
+    /**
+     * plane
+     */
+    private final Plane plane;
 
     /**
      * Circle constructor given its center, radius and orthogonal unit vector
      * (normal)
      *
      * @param center center point
-     * @param radius
+     * @param radius the radius of the circle
      * @param n      orthogonal vector (will be normalized)
      */
     public Circle(double radius, Point3D center, Vector n) {
         super(radius);
-        _center = center;
-        _plane = new Plane(center, n);
+        this.center = center;
+        plane = new Plane(center, n);
     }
 
     /**
@@ -38,27 +44,27 @@ public class Circle extends RadialGeometry implements Geometry {
      * @return the center point
      */
     public Point3D getCenter() {
-        return _center;
+        return center;
     }
 
     @Override
     public Vector getNormal(Point3D p) {
-        return _plane.getNormal(null);
+        return plane.getNormal(null);
     }
 
     /**
      * allows me to find the intersection points of my Circle
      * if the points are not found, the function returns null
      *
-     * @param ray
+     * @param ray the of the circle
      * @return list of intersection points
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> intersections = _plane.findIntersections(ray);
+        List<Point3D> intersections = plane.findIntersections(ray);
         if (intersections == null) return null;
 
-        if (alignZero(radius - _center.distance(intersections.get(0))) <= 0) return null;
+        if (alignZero(radius - center.distance(intersections.get(0))) <= 0) return null;
         return intersections;
     }
 }

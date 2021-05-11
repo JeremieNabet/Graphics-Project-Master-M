@@ -6,18 +6,39 @@ import primitives.*;
 import static primitives.Util.isZero;
 
 /**
+ *
  * Camera class is it the representation of a real camera
  * and to put yourself in the shoes of a photographer
  */
 public class Camera {
 
+    /**
+     * p0
+     */
     final private Point3D p0;
+    /**
+     * vUp
+     */
     final private Vector vUp;
+    /**
+     * vTo vector that exit behind
+     */
     final private Vector vTo;
+    /**
+     * vRight
+     */
     final private Vector vRight;
-
+    /**
+     * width of my camera place
+     */
     private double width;
+    /**
+     * height of my camera place
+     */
     private double height;
+    /**
+     * distance of my camera
+     */
     private double distance;
 
 
@@ -133,10 +154,10 @@ public class Camera {
      * the starting camera and the intercept the view plane and the center
      * of the pixel's square
      *
-     * @param nX
-     * @param nY
-     * @param j
-     * @param i
+     * @param nX row of the pixel
+     * @param nY column of the pixel
+     * @param j pixel
+     * @param i pixel
      * @return the new ray
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
@@ -192,8 +213,8 @@ public class Camera {
     /**
      * Function set size allow me to change the size
      *
-     * @param width
-     * @param height
+     * @param width of the camera
+     * @param height of the camera
      * @return the new values
      */
     public Camera setVpSize(double width, double height) {
@@ -205,7 +226,7 @@ public class Camera {
     /**
      * Allows me to change the distance value
      *
-     * @param d
+     * @param d distance
      * @return the distance value modify
      */
     public Camera setVpDistance(int d) {

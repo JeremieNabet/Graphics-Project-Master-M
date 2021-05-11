@@ -9,11 +9,11 @@ import static primitives.Util.*;
 
 public class Tube implements Geometry {
     /**
-     * the axis ray about the tube
+     * the axis ray of the tube
      */
     Ray axisRay;
     /**
-     * this radius about the tube
+     * this radius of the tube
      */
     protected double radius;
 

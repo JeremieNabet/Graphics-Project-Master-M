@@ -56,9 +56,9 @@ class Point3DTest {
         double result;
 
         resultsquared = point3.distanceSquared(new Point3D(0,0,-100));
-        System.out.println(resultsquared);
+
         result = point3.distance(new Point3D(0,0,-100));
-        System.out.println(result);
+
     }
 
     /**
@@ -77,16 +77,6 @@ class Point3DTest {
     @Test
     void testEquals() {
         assertEquals(p1, p2);
-    }
-
-    /**
-     * Test method for{@link Point3D#toString()}
-     */
-
-    @Test
-    void testToString() {
-        System.out.println("p1 = " + p1);
-        System.out.println("p2 = " + p2);
     }
 
 

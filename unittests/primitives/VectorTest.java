@@ -160,8 +160,6 @@ class VectorTest {
 
         vector = vector.scale(scale);
         double lenght = vector.length();
-        System.out.println("the length of the new vector is :");
-        System.out.println(lenght);
 
         // =============== Boundary Values Tests ==================
 

@@ -67,11 +67,11 @@ public class Render {
     public void printGrid(int interval, Color color) {
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
+        int g = 1;
         for (int i = 0; i < nY; i++) {
-            for (int j = 0; j < nX; j++) {
-                if (i % interval == 0 || j % interval == 0) {
+            g = i % interval == 0 ? 1 : interval;
+            for (int j = 0; j < nX; j += g) {
                     _imageWriter.writePixel(j, i, color);
-                }
             }
         }
     }

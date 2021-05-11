@@ -17,7 +17,6 @@ public class Ray {
         this.dir = dir.normalized();
     }
 
-
     /**
      * function get p0 of the Ray
      *
