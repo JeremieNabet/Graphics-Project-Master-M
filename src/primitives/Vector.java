@@ -32,6 +32,7 @@ public class Vector {
 
     /**
      * we use to the function add of the point 3D who compose the vector that we received
+     *
      * @param vector
      * @return
      */
@@ -41,6 +42,7 @@ public class Vector {
 
     /**
      * we use to the function subtract of the point 3D who compose the vector that we received
+     *
      * @param vector
      * @return
      */
@@ -155,10 +157,10 @@ public class Vector {
     }
 
 
-
     /**
      * This function allows me to know the rotation of my vector
-     * @param axis axis of rotation
+     *
+     * @param axis  axis of rotation
      * @param theta angle of rotation
      */
     public void rotateVector(Vector axis, double theta) {

@@ -13,8 +13,8 @@ public class Color {
      * The internal fields tx`o maintain RGB components as double numbers from 0 to
      * whatever...
      */
-    private  double r = 0.0;
-    private  double g = 0.0;
+    private double r = 0.0;
+    private double g = 0.0;
     private double b = 0.0;
 
     public static final Color BLACK = new Color();

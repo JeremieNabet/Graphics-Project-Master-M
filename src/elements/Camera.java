@@ -7,7 +7,6 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
- *
  * Camera class is it the representation of a real camera
  * and to put yourself in the shoes of a photographer
  */
@@ -157,15 +156,15 @@ public class Camera {
      *
      * @param nX row of the pixel
      * @param nY column of the pixel
-     * @param j pixel
-     * @param i pixel
+     * @param j  pixel
+     * @param i  pixel
      * @return the new ray
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         Point3D pC = p0.add(vTo.scale(distance));
 
-        double rY = alignZero(height / nY) ;
-        double rX =  alignZero(width / nX) ;
+        double rY = alignZero(height / nY);
+        double rX = alignZero(width / nX);
 
         double yI = alignZero(-(i - ((nY - 1) / 2d)) * rY);
         double xJ = alignZero((j - ((nX - 1) / 2d)) * rX);
@@ -214,7 +213,7 @@ public class Camera {
     /**
      * Function set size allow me to change the size
      *
-     * @param width of the camera
+     * @param width  of the camera
      * @param height of the camera
      * @return the new values
      */

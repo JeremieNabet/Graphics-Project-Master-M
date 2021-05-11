@@ -14,6 +14,7 @@ public class AmbientLight {
 
     /**
      * Constructor
+     *
      * @param Ia intensity color
      * @param Ka constant for intensity
      */
@@ -23,6 +24,7 @@ public class AmbientLight {
 
     /**
      * get intensity color
+     *
      * @return intensity
      */
     public Color getIntensity() {
