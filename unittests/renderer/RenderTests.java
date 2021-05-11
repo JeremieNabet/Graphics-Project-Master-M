@@ -36,7 +36,7 @@ public class RenderTests {
 				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100))); // down right
 
 
-		ImageWriter imageWriter = new ImageWriter("base render test 222", 1000, 1000);
+		ImageWriter imageWriter = new ImageWriter("baseRenderTest", 1000, 1000);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setScene(scene) //
