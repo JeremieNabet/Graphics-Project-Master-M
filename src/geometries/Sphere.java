@@ -96,6 +96,11 @@ public class Sphere extends Geometry {
         return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
 
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
+    }
+
     /**
      * function to string that give me the value type about my class
      *

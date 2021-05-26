@@ -59,4 +59,26 @@ public class Geometries implements Intersectable {
         }
         return result;
     }
+
+    /**
+     * check ray Geo intersections
+     *
+     * @param ray given ray
+     * @return list that includes all the Geo Intersection points
+     */
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        List<GeoPoint> result = null;
+        for (Intersectable item : this.intersectables) {
+            List<GeoPoint> itemPoints = item.findGeoIntersections(ray);
+            if (itemPoints != null) {
+                if (result == null) {
+                    result = new LinkedList<>();
+                }
+                result.addAll(itemPoints);
+            }
+        }
+        return result;
+    }
+
 }

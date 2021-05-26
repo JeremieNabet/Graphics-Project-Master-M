@@ -14,7 +14,7 @@ import static primitives.Util.alignZero;
  *
  * @author Dan
  */
-public class Circle extends RadialGeometry {//extends Geometry{
+public class Circle extends RadialGeometry {
     /**
      * the center of the circle
      */
@@ -66,5 +66,10 @@ public class Circle extends RadialGeometry {//extends Geometry{
 
         if (alignZero(radius - center.distance(intersections.get(0))) <= 0) return null;
         return intersections;
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
     }
 }

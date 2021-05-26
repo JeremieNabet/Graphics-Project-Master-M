@@ -1,6 +1,9 @@
 package primitives;
 
 import java.util.List;
+import static geometries.Intersectable.GeoPoint;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 public class Ray {
     /**
@@ -90,5 +93,46 @@ public class Ray {
     @Override
     public String toString() {
         return "Ray{" + "p0=" + p0 + ", dir=" + dir + '}';
+    }
+
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointList){
+        GeoPoint minPoint = null;
+        if(geoPointList != null) {
+            double distance = Double.POSITIVE_INFINITY;
+            for (var geoPoint : geoPointList) {
+                double temp = geoPoint._point3D.distance(p0);
+                if (temp < distance) {
+                    distance = temp;
+                    minPoint = geoPoint;
+                }
+            }
+        }
+        return minPoint;
+    }
+    public Point3D getTargetPoint(double t) {
+        if (!isZero(alignZero(t))){
+            return p0.add(dir.scale(alignZero(t)));
+        }
+        return p0;
+
+    }
+    /**
+     * calculate and return closest point from the list of points to the head of the ray
+     * @param points list of points in 3D
+     * @return closest point from the list of points to the head of the ray
+     */
+    public Point3D getClosestPoint(List<Point3D> points){
+        Point3D minPoint = null;
+        if(points != null) {
+            double distance = Double.POSITIVE_INFINITY;
+            for (Point3D p : points) {
+                double temp = p.distance(p0);
+                if (temp < distance) {
+                    distance = temp;
+                    minPoint = p;
+                }
+            }
+        }
+        return minPoint;
     }
 }

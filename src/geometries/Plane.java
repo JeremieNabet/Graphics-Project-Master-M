@@ -104,4 +104,9 @@ public class Plane extends Geometry {
         double t = alignZero(denominator/nV);
         return t <= 0 ? null : List.of(ray.getPoint(t));
     }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
+    }
 }

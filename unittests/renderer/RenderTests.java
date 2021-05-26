@@ -223,7 +223,7 @@ class RenderTests {
 		Render.RenderBuilder renderBuilder =
 				new Render.RenderBuilder()
 						.setImageWriter(imageWriter)
-//                        .setScene(scene)
+                        //.setScene(scene)
 						.setCamera(camera)
 						.setRayTracer(new BasicRayTracer(scene));
 		Render render = renderBuilder.build();
