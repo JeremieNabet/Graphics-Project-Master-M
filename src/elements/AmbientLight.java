@@ -6,29 +6,34 @@ import primitives.Color;
  * An ambient light source represents a fixed-intensity and fixed color
  * light source that affects all objects in the scene equally.
  */
-public class AmbientLight {
+public class AmbientLight  extends Light {
     /**
      * intensity of ambient light color
      */
-    final private Color intensity;
+    //final private Color intensity;
+
+    public AmbientLight() {
+        super(Color.BLACK);
+    }
 
     /**
-     * Constructor
+     * ctor
      *
-     * @param Ia intensity color
-     * @param Ka constant for intensity
+     * @param iA color of light
+     * @param kA light intensity
      */
-    public AmbientLight(Color Ia, double Ka) {
-        intensity = Ia.scale(Ka);
+    public AmbientLight(Color iA, double kA) {
+        super(iA.scale(kA));
     }
+
 
     /**
      * get intensity color
      *
      * @return intensity
      */
-    public Color getIntensity() {
-        return intensity;
-    }
+   // public Color getIntensity() {
+ //   return intensity;
+   //  }
 
 }

@@ -14,7 +14,7 @@ import static primitives.Util.alignZero;
  *
  * @author Dan
  */
-public class Circle extends RadialGeometry implements Geometry {
+public class Circle extends RadialGeometry {//extends Geometry{
     /**
      * the center of the circle
      */

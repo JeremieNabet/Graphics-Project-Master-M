@@ -4,7 +4,7 @@ import primitives.*;
 import java.util.List;
 import static primitives.Util.*;
 
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     /**
      * the plane is composed of a point and of vector
      */

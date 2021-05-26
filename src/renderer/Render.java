@@ -1,130 +1,148 @@
 package renderer;
 
-import elements.Camera;
-import primitives.Color;
-import primitives.Ray;
-import scene.Scene;
+import elements.*;
+import primitives.*;
+import scene.*;
 
-import java.util.MissingResourceException;
+import java.util.*;
 
+/**
+ * Class which create the color matrix of the image from the scene
+ * @author jerem and israel
+ */
 public class Render {
-    /**
-     * image writer
-     */
-    ImageWriter imageWriter = null;
-    /**
-     * scene
-     */
-    Scene scene = null;
-    /**
-     * camera
-     */
-    Camera camera = null;
-    /**
-     * the ray tracer base
-     */
-    RayTracerBase rayTracerBase = null;
+    private ImageWriter _imageWriter;
+    //    private Scene _scene;
+    private Camera _camera;
+    private BasicRayTracer _basicRayTracer;
 
     /**
-     * setter of image writer
+     * ctor
      *
-     * @param imageWriter the image writer
-     * @return the image writer calculated
+     * @param renderBuilder
      */
-    public Render setImageWriter(ImageWriter imageWriter) {
-        this.imageWriter = imageWriter;
-        return this;
+    public Render(RenderBuilder renderBuilder) {
+        _imageWriter = renderBuilder._imageWriter;
+//        _scene = renderBuilder._scene;
+        _basicRayTracer = renderBuilder._basicRayTracer;
+        _camera = renderBuilder._camera;
+    }
+
+    public static class RenderBuilder {
+        private ImageWriter _imageWriter;
+        //        private Scene _scene;
+        private Camera _camera;
+        private BasicRayTracer _basicRayTracer;
+
+        /**
+         * imageWriter setter
+         *
+         * @param imageWriter the given imageWriter
+         * @return Render
+         */
+        public RenderBuilder setImageWriter(ImageWriter imageWriter) {
+            this._imageWriter = imageWriter;
+            return this;
+        }
+
+        /**
+         * scene setter
+         * @param scene the given scene
+         * @return Render
+         */
+//        public RenderBuilder setScene(Scene scene) {
+//            this._scene = scene;
+//            return this;
+//        }
+
+        /**
+         * camera setter
+         *
+         * @param camera the given camera
+         * @return Render
+         */
+        public RenderBuilder setCamera(Camera camera) {
+            this._camera = camera;
+            return this;
+        }
+
+        /**
+         * rayTracer setter
+         *
+         * @param basicRayTracer the given rayTracer
+         * @return Render
+         */
+        public RenderBuilder setRayTracer(BasicRayTracer basicRayTracer) {
+            this._basicRayTracer = basicRayTracer;
+            return this;
+        }
+
+        /**
+         * render builder
+         *
+         * @return the built render
+         */
+        public Render build() {
+            return new Render(this);
+        }
     }
 
     /**
-     * set a scene
+     * building a ray to all the view plane's pixels and get each ray's color
+     * and put it in the right pixel for him.
      *
-     * @param scene the scene
-     * @return the new scene
-     */
-    public Render setScene(Scene scene) {
-        this.scene = scene;
-        return this;
-    }
-
-    /**
-     * set camera
-     *
-     * @param camera the camera
-     * @return the new camera
-     */
-    public Render setCamera(Camera camera) {
-        this.camera = camera;
-        return this;
-    }
-
-    /**
-     * set ray tracer
-     *
-     * @param rayTracer the raytracer
-     * @return the new ray tracer
-     */
-    public Render setRayTracer(RayTracerBase rayTracer) {
-        rayTracerBase = rayTracer;
-        return this;
-    }
-
-    /**
-     * We are checking if image Writer, scene, camera and rayTracer base is not null
-     * we are creating a render image
+     * @throws MissingResourceException if one field is null
      */
     public void renderImage() {
-        try {
-            if (imageWriter == null) {
-                throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
-            }
-            if (scene == null) {
-                throw new MissingResourceException("missing resource", Scene.class.getName(), "");
-            }
-            if (camera == null) {
-                throw new MissingResourceException("missing resource", Camera.class.getName(), "");
-            }
-            if (rayTracerBase == null) {
-                throw new MissingResourceException("missing resource", RayTracerBase.class.getName(), "");
-            }
+        if (_imageWriter == null)
+            throw new MissingResourceException("imageWriter is null", "Render", "imageWriter");
+//        else if(_scene == null)
+//            throw new MissingResourceException("scene is null","Render","scene");
+        else if (_camera == null)
+            throw new MissingResourceException("camera is null", "Render", "camera");
+        else if (_basicRayTracer == null)
+            throw new MissingResourceException("basicRayTracer is null", "Render", "basicRayTracer");
 
-            //rendering the image
-            int nX = imageWriter.getNx();
-            int nY = imageWriter.getNy();
-            for (int i = 0; i < nY; i++) {
-                for (int j = 0; j < nX; j++) {
-                    Ray ray = camera.constructRayThroughPixel(nX, nY, j, i);
-                    Color pixelColor = rayTracerBase.traceRay(ray);
-                    imageWriter.writePixel(j, i, pixelColor);
-                }
+        for (int i = 0; i < _imageWriter.getNy(); i++) {
+            for (int j = 0; j < _imageWriter.getNx(); j++) {
+                Ray ray = _camera.constructRayThroughPixel(_imageWriter.getNx(), _imageWriter.getNy(), j, i);
+//                BasicRayTracer basicRayTracer = new BasicRayTracer(_scene);
+                Color pixelColor = _basicRayTracer.traceRay(ray);
+                _imageWriter.writePixel(j, i, pixelColor);
             }
-        } catch (MissingResourceException e) {
-            throw new UnsupportedOperationException("Not implemented yet" + e.getClassName());
+            //_imageWriter.writeToImage();
         }
     }
 
     /**
-     * This use to print a grid by the interval and the color
+     * create grid of lines
      *
-     * @param interval interval
-     * @param color    color
+     * @param interval Indicates for which quantity of pixels a grid line is passed,
+     *                 both horizontally and vertically
+     * @param color    the grid's color
+     * @throws MissingResourceException if imageWriter is null
      */
     public void printGrid(int interval, Color color) {
-        int nX = imageWriter.getNx();
-        int nY = imageWriter.getNy();
-        int g = 1;
-        for (int i = 0; i < nY; i++) {
-            g = i % interval == 0 ? 1 : interval;
-            for (int j = 0; j < nX; j += g) {
-                imageWriter.writePixel(j, i, color);
+        if (_imageWriter == null)
+            throw new MissingResourceException("imageWriter is null", "Render", "imageWriter");
+        for (int i = 0; i < _imageWriter.getNy(); i++) {
+            for (int j = 0; j < _imageWriter.getNx(); j++) {
+                if (i % interval == 0 || j % interval == 0) {
+                    _imageWriter.writePixel(j, i, color);
+                }
             }
+            //this.writeToImage();
         }
     }
 
     /**
-     * Use to write to image
+     * Activates the appropriate image maker's method
+     *
+     * @throws MissingResourceException if imageWriter is null
      */
     public void writeToImage() {
-        imageWriter.writeToImage();
+        if (_imageWriter == null)
+            throw new MissingResourceException("imageWriter is null", "Render", "imageWriter");
+        _imageWriter.writeToImage();
     }
 }

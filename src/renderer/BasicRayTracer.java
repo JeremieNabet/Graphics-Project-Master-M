@@ -11,13 +11,13 @@ import java.util.List;
  * Ray tracer basic is a class that extends from ray tracer base
  * that help me to trace the new ray in my figure
  */
-public class RayTracerBasic extends RayTracerBase {
+public class BasicRayTracer extends RayTracerBase {
     /**
      * Constructor
      *
      * @param scene the scene
      */
-    public RayTracerBasic(Scene scene) {
+    public BasicRayTracer(Scene scene) {
         super(scene);
     }
 
@@ -47,6 +47,6 @@ public class RayTracerBasic extends RayTracerBase {
      * @return the color of my scene
      */
     private Color calcColor(Point3D point) {
-        return scene.ambientlight.getIntensity();
+        return scene.ambientLight.getIntensity();
     }
 }

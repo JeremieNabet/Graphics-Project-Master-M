@@ -7,7 +7,7 @@ import java.util.List;
 import static primitives.Util.*;
 
 
-public class Tube implements Geometry {
+public class Tube extends Geometry {
     /**
      * the axis ray of the tube
      */

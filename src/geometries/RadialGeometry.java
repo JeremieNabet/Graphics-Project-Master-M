@@ -3,7 +3,7 @@ package geometries;
 /**
  * abstract class which implements Geometry
  */
-public abstract class RadialGeometry implements Geometry {
+public abstract class RadialGeometry extends Geometry {
     /**
      * Radius fields of my geometry forms which will inherit from my class
      */

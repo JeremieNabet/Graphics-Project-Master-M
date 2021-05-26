@@ -13,19 +13,20 @@ import static primitives.Util.isZero;
 public class Camera {
 
     /**
-     * p0
+     * the camera location
      */
     final private Point3D p0;
     /**
-     * vUp
+     * vector up
      */
     final private Vector vUp;
     /**
      * vTo vector that exit behind
+     * vector toward
      */
     final private Vector vTo;
     /**
-     * vRight
+     * vector right
      */
     final private Vector vRight;
     /**
@@ -61,7 +62,10 @@ public class Camera {
         vRight = this.vTo.crossProduct(this.vUp).normalize();
     }
 
-    private Camera(BuilderCamera builder) {
+    /**
+     * ctor
+     */
+    private Camera(CameraBuilder builder) {
         p0 = builder._p0;
         vTo = builder._vTo;
         vUp = builder._vUp;
@@ -238,7 +242,7 @@ public class Camera {
      * WE need to check if Dan accept this class
      * because we found this on Eliezer's github
      */
-    public static class BuilderCamera {
+    public static class CameraBuilder {
         final private Point3D _p0;
         final private Vector _vTo;
         final private Vector _vUp;
@@ -248,18 +252,18 @@ public class Camera {
         private double _width = 1;
         private double _height = 1;
 
-        public BuilderCamera setDistance(double distance) {
+        public CameraBuilder setDistance(double distance) {
             _distance = distance;
             return this;
         }
 
 
-        public BuilderCamera setViewPlaneWidth(double width) {
+        public CameraBuilder setViewPlaneWidth(double width) {
             _width = width;
             return this;
         }
 
-        public BuilderCamera setViewPlaneHeight(double height) {
+        public CameraBuilder setViewPlaneHeight(double height) {
             _height = height;
             return this;
         }
@@ -269,7 +273,20 @@ public class Camera {
             return camera;
         }
 
-        public BuilderCamera(Point3D p0, Vector vTo, Vector vUp) {
+        /**
+         * view plane size setter
+         *
+         * @param width  view plane's width
+         * @param height view plane's height
+         * @return new entity from type of camera builder
+         */
+        public CameraBuilder setViewPlaneSize(double width, double height) {
+            this._width = width;
+            this._height = height;
+            return this;
+        }
+
+        public CameraBuilder(Point3D p0, Vector vTo, Vector vUp) {
             _p0 = p0;
 
             if (!isZero(vTo.dotProduct(vUp))) {

@@ -19,7 +19,7 @@ class CameraTest {
      */
     @Test
     public void testConstructRayThroughPixel() {
-        Camera camera = new Camera.BuilderCamera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera = new Camera.CameraBuilder(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0))
                 .setDistance(10)
                 .setViewPlaneHeight(6)
                 .setViewPlaneWidth(6)
