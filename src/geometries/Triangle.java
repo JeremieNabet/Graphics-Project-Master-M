@@ -51,13 +51,4 @@ public class Triangle extends Polygon {
         return planeInts;
     }
 
-    /**
-     * function to string that give me the value type about my class
-     *
-     * @return value string about this class
-     */
-    @Override
-    public String toString() {
-        return "Triangle{" + "plane=" + plane + '}';
-    }
 }

@@ -16,7 +16,6 @@ public class Material {
     /**
      * How glossy the shape is
      */
-
     public int nShininess;
 
     /**
@@ -70,5 +69,16 @@ public class Material {
     public Material setNShininess(int nShininess) {
         this.nShininess = nShininess;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "kd=" + kd +
+                ", ks=" + ks +
+                ", kr=" + kr +
+                ", kt=" + kt +
+                ", nShininess=" + nShininess +
+                '}';
     }
 }

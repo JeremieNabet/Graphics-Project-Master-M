@@ -1,16 +1,12 @@
 package geometries;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Testing Sphere
@@ -29,7 +25,7 @@ class SphereTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: There is a simple single test here
         Sphere sph = new Sphere(new Point3D(0, 0, 1), 1.0);
-        Assertions.assertEquals(new Vector(0, 0, 1), sph.getNormal(new Point3D(0, 0, 2)), "Bad normal to sphere");
+        assertEquals(new Vector(0, 0, 1), sph.getNormal(new Point3D(0, 0, 2)), "Bad normal to sphere");
     }
 
     /**
@@ -51,12 +47,12 @@ class SphereTest {
                 "Ray's line out of sphere");
         // TC02: Ray starts before and crosses the sphere (2 points)
         List<Point3D> result = sphere.findIntersections(new Ray(new Point3D(-1, 0, 0), new Vector(3, 1, 0)));
-        Assertions.assertEquals(2, result.size(), "Wrong number of points");
+        assertEquals(2, result.size(), "Wrong number of points");
         if (result.get(0).getX() > result.get(1).getX())
             result = List.of(result.get(1), result.get(0));
-        Assertions.assertEquals(exp, result, "Ray crosses sphere");
+        assertEquals(exp, result, "Ray crosses sphere");
         // TC03: Ray starts inside the sphere (1 point)
-        Assertions.assertEquals(
+        assertEquals(
                 List.of(gp2),
                 sphere.findIntersections(
                         new Ray(
@@ -71,7 +67,7 @@ class SphereTest {
         // =============== Boundary Values Tests ==================
         // **** Group: Ray's line crosses the sphere (but not the center)
         // TC11: Ray starts at sphere and goes inside (1 points)
-        Assertions.assertEquals(List.of(new Point3D(2, 0, 0)),
+        assertEquals(List.of(new Point3D(2, 0, 0)),
                 sphere.findIntersections(new Ray(new Point3D(1, -1, 0), new Vector(1, 1, 0))),
                 "Ray from sphere inside");
         // TC12: Ray starts at sphere and goes outside (0 points)
@@ -82,22 +78,22 @@ class SphereTest {
         // **** Group: Ray's line goes through the center
         // TC13: Ray starts before the sphere (2 points)
         result = sphere.findIntersections(new Ray(new Point3D(1, -2, 0), new Vector(0, 1, 0)));
-        Assertions.assertEquals(2, result.size(), "Wrong number of points");
+        assertEquals(2, result.size(), "Wrong number of points");
         if (result.get(0).getY() > result.get(1).getY())
             result = List.of(result.get(1), result.get(0));
-        Assertions.assertEquals(List.of(new Point3D(1, -1, 0), new Point3D(1, 1, 0)),
+        assertEquals(List.of(new Point3D(1, -1, 0), new Point3D(1, 1, 0)),
                 result,
                 "Line through O, ray crosses sphere");
         // TC14: Ray starts at sphere and goes inside (1 points)
-        Assertions.assertEquals(List.of(new Point3D(1, 1, 0)),
+        assertEquals(List.of(new Point3D(1, 1, 0)),
                 sphere.findIntersections(new Ray(new Point3D(1, -1, 0), new Vector(0, 1, 0))),
                 "Line through O, ray from and crosses sphere");
         // TC15: Ray starts inside (1 points)
-        Assertions.assertEquals(List.of(new Point3D(1, 1, 0)),
+        assertEquals(List.of(new Point3D(1, 1, 0)),
                 sphere.findIntersections(new Ray(new Point3D(1, 0.5, 0), new Vector(0, 1, 0))),
                 "Line through O, ray from inside sphere");
         // TC16: Ray starts at the center (1 points)
-        Assertions.assertEquals(List.of(new Point3D(1, 1, 0)),
+        assertEquals(List.of(new Point3D(1, 1, 0)),
                 sphere.findIntersections(new Ray(new Point3D(1, 0, 0), new Vector(0, 1, 0))),
                 "Line through O, ray from O");
         // TC17: Ray starts at sphere and goes outside (0 points)

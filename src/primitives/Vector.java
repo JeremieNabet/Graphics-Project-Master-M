@@ -15,8 +15,6 @@ public class Vector {
      */
     public Vector(double x, double y, double z) {
         this(new Point3D(x, y, z));
-        if (Point3D.ZERO.equals(this.head))
-            throw new IllegalArgumentException("Zero vector is not allowed");
     }
 
     /**
@@ -26,7 +24,6 @@ public class Vector {
     public Vector(Point3D p) {
         if (Point3D.ZERO.equals(p))
             throw new IllegalArgumentException("Zero vector is not allowed");
-
         this.head = p;
     }
 
@@ -69,17 +66,17 @@ public class Vector {
      * @return the product (double)
      */
     public double dotProduct(Vector vector) {
-        return ((this.head.x.coord) * (vector.head.x.coord)) +
-                (this.head.y.coord * vector.head.y.coord) +
-                (this.head.z.coord * vector.head.z.coord);
+        return ((this.head.x.coord * vector.head.x.coord) + //
+                (this.head.y.coord * vector.head.y.coord) + //
+                (this.head.z.coord * vector.head.z.coord));
     }
 
     /**
      * @return
      */
     public double lengthSquared() {
-        return (this.head.x.coord) * (this.head.x.coord)
-                + (this.head.y.coord) * (this.head.y.coord)
+        return (this.head.x.coord) * (this.head.x.coord) //
+                + (this.head.y.coord) * (this.head.y.coord) //
                 + (this.head.z.coord) * (this.head.z.coord);
     }
 
@@ -107,9 +104,11 @@ public class Vector {
      * we return a new vector that is multiplicative all
      * coordinate of the point 3 D  of our vector
      */
-    public Vector scale(double scalary) {
-        return new Vector((scalary * this.head.x.coord), (scalary * this.head.y.coord),
-                (scalary * this.head.z.coord));
+    public Vector scale(double scalar) {
+        return new Vector( //
+                (scalar * this.head.x.coord), //
+                (scalar * this.head.y.coord), //
+                (scalar * this.head.z.coord));
     }
 
     /**
@@ -127,7 +126,6 @@ public class Vector {
      * @param o object to compare
      * @return true or false
      */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -156,38 +154,13 @@ public class Vector {
         return "Vector{" + "head=" + head + '}';
     }
 
-
     /**
      * This function allows me to know the rotation of my vector
      *
      * @param axis  axis of rotation
      * @param theta angle of rotation
      */
-    public void rotateVector(Vector axis, double theta) {
-        double x = this.head.getX();
-        double y = this.head.getY();
-        double z = this.head.getZ();
-
-        double u = axis.head.getX();
-        double v = axis.head.getY();
-        double w = axis.head.getZ();
-
-        double v1 = u * x + v * y + w * z;
-
-        double thetaRad = Math.toRadians(theta);
-
-        double xPrime = u * v1 * (1d - Math.cos(thetaRad))
-                + x * Math.cos(thetaRad)
-                + (-w * y + v * z) * Math.sin(thetaRad);
-
-        double yPrime = v * v1 * (1d - Math.cos(thetaRad))
-                + y * Math.cos(thetaRad)
-                + (w * x - u * z) * Math.sin(thetaRad);
-
-        double zPrime = w * v1 * (1d - Math.cos(thetaRad))
-                + z * Math.cos(thetaRad)
-                + (-v * x + u * y) * Math.sin(thetaRad);
-
-        this.head = new Point3D(xPrime, yPrime, zPrime);
+    public void rotate(Vector axis, double theta) {
+        this.head = this.head.rotate(axis,theta);
     }
 }

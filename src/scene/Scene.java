@@ -9,21 +9,34 @@ import java.util.List;
 
 /**
  * scene class for the background lighting and the 3D shapes.
+ *
  * @author Jeremie Nabet and Israel Bellaiche
  */
 public class Scene {
-    //scene's name
-    public String name;
-    //scene's background
-    public Color background = Color.BLACK;
-    //scene's ambient light
-    public AmbientLight ambientLight;
-    // List of the shapes in the scene
-    public Geometries geometries;
-    //list of light source in the scene
-    public List<LightSource> lights;
     /**
-     * ctor
+     * scene's name
+     */
+    public String name;
+    /**
+     * scene's background
+     */
+    public Color background = Color.BLACK;
+    /**
+     * scene's ambient light
+     */
+    public AmbientLight ambientLight;
+    /**
+     * List of the shapes in the scene
+     */
+    public Geometries geometries;
+    /**
+     * list of light source in the scene
+     */
+    public List<LightSource> lights;
+
+    /**
+     * Constructor
+     *
      * @param sceneBuilder
      */
     public Scene(SceneBuilder sceneBuilder) {
@@ -41,15 +54,17 @@ public class Scene {
         //scene's name
         public final String _name;
         //scene's background
-        public Color _background=Color.BLACK;
+        public Color _background = Color.BLACK;
         //scene's ambient light
         public AmbientLight _ambientLight;
         // List of the shapes in the scene
         public Geometries _geometries;
         //list of light source in the scene
         public List<LightSource> _lights;
+
         /**
-         * ctor
+         * Constructor
+         *
          * @param name
          */
         public SceneBuilder(String name) {
@@ -61,6 +76,7 @@ public class Scene {
 
         /**
          * background setter
+         *
          * @param background the given background
          * @return Scene
          */
@@ -71,6 +87,7 @@ public class Scene {
 
         /**
          * ambientLight setter
+         *
          * @param ambientLight the given ambientLight
          * @return Scene
          */
@@ -81,6 +98,7 @@ public class Scene {
 
         /**
          * geometries setter
+         *
          * @param geometries the given geometries
          * @return Scene
          */
@@ -91,6 +109,7 @@ public class Scene {
 
         /**
          * lights setter
+         *
          * @param lights given lights list
          * @return this
          */
@@ -98,8 +117,10 @@ public class Scene {
             this._lights = lights;
             return this;
         }
+
         /**
          * build the scene
+         *
          * @return the built scene
          */
         public Scene build() {

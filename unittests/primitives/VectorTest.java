@@ -1,21 +1,16 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
 import static primitives.Util.isZero;
-import static org.junit.Assert.fail;
 
 
 /**
  * Testing Vector
  *
  * @author Jeremie and Israel
- *
  */
 
 class VectorTest {
@@ -37,15 +32,14 @@ class VectorTest {
         Vector vr = v1.add(v3);
         // =============== Boundary Values Tests =================
 
-
         try { //vector Zero
-
             Vector vector = new Vector(0, 0, 0);
             Vector temp = v1.add(vector);
-           fail("salut");
+            fail("salut");
         } catch (Exception e) {
         }
     }
+
     /**
      * Test method for {@link primitives.Vector#subtract(Vector)}.
      */
@@ -56,9 +50,9 @@ class VectorTest {
         // ============ Equivalence Partitions Tests ==============
         Vector v3 = new Vector(0, 3, -2);
         Vector vr = v1.subtract(v3);
+        // TODO missing test
+
         // =============== Boundary Values Tests =================
-
-
         try {/** verrifie about vector ZERO
          */
             Vector vector = new Vector(0, 0, 0);
@@ -67,6 +61,7 @@ class VectorTest {
         } catch (Exception e) {
         }
     }
+
     /**
      * Test method for {@link primitives.Vector#crossProduct(Vector)}.
      */
@@ -81,7 +76,7 @@ class VectorTest {
 
         // TC01: Test that length of cross-product is proper (orthogonal vectors taken
         // for simplicity)
-        //assertEquals(v1.length() * v2.length(), vr.length(), 0.00001, "crossProduct() wrong result length");
+        assertEquals(v1.length() * v2.length(), vr.length(), 0.00001, "crossProduct() wrong result length");
 
         // TC02: Test cross-product result orthogonality to its operands
         assertTrue(isZero(vr.dotProduct(v1)), "crossProduct() result is not orthogonal to 1st operand");
@@ -93,12 +88,8 @@ class VectorTest {
         assertThrows(
                 IllegalArgumentException.class, () -> v1.crossProduct(v3),
                 "crossProduct() for parallel vectors does not throw an exception");
-        // try {
-        //     v1.crossProduct(v2);
-        //     fail("crossProduct() for parallel vectors does not throw an exception");
-        // } catch (Exception e) {}
-
     }
+
     /**
      * Test method for {@link primitives.Vector#dotProduct(Vector)}.
      */
@@ -109,6 +100,7 @@ class VectorTest {
         if (!isZero(v1.dotProduct(v2) + 28))
             fail("ERROR: dotProduct() wrong value");
     }
+
     /**
      * Test method for {@link Vector#lengthSquared()}.
      */
@@ -116,50 +108,50 @@ class VectorTest {
     void testLengthSquared() {
         if (!isZero(v1.lengthSquared() - 14))
             fail("ERROR: wrong value");
-
     }
+
     /**
      * Test method for {@link Vector#length()}.
      */
     @Test
     void testLength() {
-        if (!isZero(new Vector(0, 3, 4).length() - 5))
-            fail("ERROR: length() wrong value");
-
+        assertEquals(5.0, new Vector(0, 3, 4).length(), 0.00001, "ERROR: length() wrong value");
     }
+
     /**
      * Test method for {@link Vector#normalize()}.
      */
     @Test
     void testNormalize() {
-
         Vector v = new Vector(3.5, -5, 10);
-        v.normalize();
-        assertEquals(1, v.length(), 1e-10);
+        Vector vCopy = new Vector(v.getHead());
+        Vector u = v.normalize();
+        // Check that no new vector is generated!
+        assertSame(u, v);
+        // Check the result is a unit vector
+        assertEquals(1.0, u.length(), 0.00001, "not length 1");
+        // check the result is co-lined with the original vector
+        assertThrows(IllegalArgumentException.class, () -> u.crossProduct(vCopy), "not co-directed");
+        // check the result is co-directed with the original vector
+        assertTrue(u.dotProduct(vCopy) > 0);
 
+        // TODO move to function testing the constructor!
         assertThrows(IllegalArgumentException.class,
-                () -> newVectorZero(v),
+                () -> new Vector(0, 0, 0),
                 "cannot be head (0,0,0)");
-
     }
 
-    private Executable newVectorZero(Vector v) {
-        v = new Vector(0, 0, 0);
-        return null;
-    }
     /**
      * Test method for {@link primitives.Vector#scale(double)}.
      */
     @Test
     void testScale() {
-
         double scale = 12;
         Vector vector = new Vector(1, 2, 3);
 
         // ============ Equivalence Partitions Tests ==============
 
         vector = vector.scale(scale);
-        double lenght = vector.length();
 
         // =============== Boundary Values Tests ==================
 
@@ -169,17 +161,21 @@ class VectorTest {
         } catch (Exception e) {
         }
     }
+
     /**
      * Test method for {@link Vector#normalized()}.
      */
     @Test
     void testNormalized() {
-
         Vector v = new Vector(1, 2, 3);
-        Vector vCopy = new Vector(v.head);
         Vector u = v.normalized();
-        assertFalse("ERROR: normalizated() function does not create a new vector", u == v);
-
-
+        // Check that new vector is generated!
+        assertNotSame(u, v);
+        // Check the result is a unit vector
+        assertEquals(1.0, u.length(), 0.00001, "not length 1");
+        // check the result is co-lined with the original vector
+        assertThrows(IllegalArgumentException.class, () -> u.crossProduct(v), "not co-directed");
+        // check the result is co-directed with the original vector
+        assertTrue(u.dotProduct(v) > 0);
     }
 }

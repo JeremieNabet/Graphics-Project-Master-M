@@ -108,6 +108,6 @@ public class Sphere extends Geometry {
      */
     @Override
     public String toString() {
-        return "Sphere{" + "center=" + center + ", radius=" + radius + '}';
+        return super.toString() + " {" + "o=" + center + ", r=" + radius + '}';
     }
 }

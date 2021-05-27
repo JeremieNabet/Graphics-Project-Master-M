@@ -4,7 +4,6 @@ import primitives.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Intersectable is a common interface for all geometries that are able
@@ -16,22 +15,22 @@ public interface Intersectable {
      * this one allows me to find the intersections of each
      * class which will inherit this interface
      *
-     * @param ray
+     * @param ray of the intersection
      * @return list of intersection points
      */
     List<Point3D> findIntersections(Ray ray);
     public static class GeoPoint{
-        public Geometry _geometry;
-        public Point3D _point3D;
+        public Geometry geometry;
+        public Point3D point;
 
         /**
          * ctor
          * @param geometry shape
-         * @param point3D intersection point
+         * @param point intersection point
          */
-        public GeoPoint(Geometry geometry, Point3D point3D) {
-            _geometry = geometry;
-            _point3D = point3D;
+        public GeoPoint(Geometry geometry, Point3D point) {
+            this.geometry = geometry;
+            this.point = point;
         }
 
         @Override
@@ -39,7 +38,12 @@ public interface Intersectable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             GeoPoint geoPoint = (GeoPoint) o;
-            return Objects.equals(_geometry, geoPoint._geometry) && Objects.equals(_point3D, geoPoint._point3D);
+            return Objects.equals(geometry, geoPoint.geometry) && Objects.equals(point, geoPoint.point);
+        }
+
+        @Override
+        public String toString() {
+            return "GeoPoint{" + geometry + ": " + point + '}';
         }
     }
 

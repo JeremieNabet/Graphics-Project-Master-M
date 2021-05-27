@@ -2,7 +2,6 @@ package renderer;
 
 import elements.*;
 import primitives.*;
-import scene.*;
 
 import java.util.*;
 
@@ -11,10 +10,10 @@ import java.util.*;
  * @author jerem and israel
  */
 public class Render {
-    private ImageWriter _imageWriter;
-    //    private Scene _scene;
-    private Camera _camera;
-    private BasicRayTracer _basicRayTracer;
+    private ImageWriter imageWriter;
+    //    private Scene scene;
+    private Camera camera;
+    private BasicRayTracer basicRayTracer;
 
     /**
      * ctor
@@ -22,10 +21,10 @@ public class Render {
      * @param renderBuilder
      */
     public Render(RenderBuilder renderBuilder) {
-        _imageWriter = renderBuilder._imageWriter;
+        imageWriter = renderBuilder._imageWriter;
 //        _scene = renderBuilder._scene;
-        _basicRayTracer = renderBuilder._basicRayTracer;
-        _camera = renderBuilder._camera;
+        basicRayTracer = renderBuilder._basicRayTracer;
+        camera = renderBuilder._camera;
     }
 
     public static class RenderBuilder {
@@ -94,21 +93,21 @@ public class Render {
      * @throws MissingResourceException if one field is null
      */
     public void renderImage() {
-        if (_imageWriter == null)
+        if (imageWriter == null)
             throw new MissingResourceException("imageWriter is null", "Render", "imageWriter");
 //        else if(_scene == null)
 //            throw new MissingResourceException("scene is null","Render","scene");
-        else if (_camera == null)
+        else if (camera == null)
             throw new MissingResourceException("camera is null", "Render", "camera");
-        else if (_basicRayTracer == null)
+        else if (basicRayTracer == null)
             throw new MissingResourceException("basicRayTracer is null", "Render", "basicRayTracer");
 
-        for (int i = 0; i < _imageWriter.getNy(); i++) {
-            for (int j = 0; j < _imageWriter.getNx(); j++) {
-                Ray ray = _camera.constructRayThroughPixel(_imageWriter.getNx(), _imageWriter.getNy(), j, i);
+        for (int i = 0; i < imageWriter.getNy(); i++) {
+            for (int j = 0; j < imageWriter.getNx(); j++) {
+                Ray ray = camera.constructRayThroughPixel(imageWriter.getNx(), imageWriter.getNy(), j, i);
 //                BasicRayTracer basicRayTracer = new BasicRayTracer(_scene);
-                Color pixelColor = _basicRayTracer.traceRay(ray);
-                _imageWriter.writePixel(j, i, pixelColor);
+                Color pixelColor = basicRayTracer.traceRay(ray);
+                imageWriter.writePixel(j, i, pixelColor);
             }
             //_imageWriter.writeToImage();
         }
@@ -123,12 +122,12 @@ public class Render {
      * @throws MissingResourceException if imageWriter is null
      */
     public void printGrid(int interval, Color color) {
-        if (_imageWriter == null)
+        if (imageWriter == null)
             throw new MissingResourceException("imageWriter is null", "Render", "imageWriter");
-        for (int i = 0; i < _imageWriter.getNy(); i++) {
-            for (int j = 0; j < _imageWriter.getNx(); j++) {
+        for (int i = 0; i < imageWriter.getNy(); i++) {
+            for (int j = 0; j < imageWriter.getNx(); j++) {
                 if (i % interval == 0 || j % interval == 0) {
-                    _imageWriter.writePixel(j, i, color);
+                    imageWriter.writePixel(j, i, color);
                 }
             }
             //this.writeToImage();
@@ -141,8 +140,8 @@ public class Render {
      * @throws MissingResourceException if imageWriter is null
      */
     public void writeToImage() {
-        if (_imageWriter == null)
+        if (imageWriter == null)
             throw new MissingResourceException("imageWriter is null", "Render", "imageWriter");
-        _imageWriter.writeToImage();
+        imageWriter.writeToImage();
     }
 }

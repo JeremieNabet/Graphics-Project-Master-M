@@ -6,17 +6,19 @@ import primitives.Vector;
 
 /**
  * spot light class
+ *
  * @author Jeremie Nabet and Israel Bellaiche
  */
-public class SpotLight extends PointLight implements LightSource{
+public class SpotLight extends PointLight implements LightSource {
 
     //spot aimed direction
     private final Vector direction;
 
     /**
      * ctor
+     *
      * @param intensity spot intensity
-     * @param position spot position
+     * @param position  spot position
      * @param direction spot direction
      */
     public SpotLight(Color intensity, Point3D position, Vector direction) {
@@ -26,6 +28,7 @@ public class SpotLight extends PointLight implements LightSource{
 
     /**
      * spot color getter
+     *
      * @param p given point
      * @return color at this point
      */

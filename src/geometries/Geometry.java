@@ -7,10 +7,14 @@ import primitives.*;
  */
 public abstract class Geometry implements Intersectable {
 
-    //color of shape
+    /**
+     * color of shape
+     */
     protected Color emission = Color.BLACK;
 
-    //material of shape
+    /**
+     * material of shape
+     */
     private Material material = new Material();
 
     /**
@@ -62,4 +66,12 @@ public abstract class Geometry implements Intersectable {
      * @return the normal to the geometry
      */
     public abstract Vector getNormal(Point3D point);
+
+    @Override
+    public String toString() {
+        return super.toString() + " {" +
+                "emission=" + emission +
+                ", material=" + material +
+                '}';
+    }
 }

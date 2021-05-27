@@ -17,7 +17,7 @@ public class AmbientLight  extends Light {
     }
 
     /**
-     * ctor
+     * Constructor
      *
      * @param iA color of light
      * @param kA light intensity

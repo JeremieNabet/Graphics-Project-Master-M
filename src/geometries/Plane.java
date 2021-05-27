@@ -109,4 +109,12 @@ public class Plane extends Geometry {
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " {" +
+                ", Q=" + point +
+                ", n=" + normal +
+                '}';
+    }
 }

@@ -30,13 +30,11 @@ class RayTest {
         list.add(new Point3D(0.5, 0, -100));
 
         assertEquals(list.get(2), ray.findClosestPoint(list));
-
     }
 
     /**
      * Test method for {@link primitives.Ray#findClosestPoint(List)}.
      */
-
     @Test
     void testFindClosestPoint2() {
         Ray ray = new Ray(new Point3D(0, 0, 10), new Vector(1, 10, -100));

@@ -29,6 +29,11 @@ public class Color {
         r = g = b = 0.0;
     }
 
+    @Override
+    public String toString() {
+        return "[" + r + "," + g + "," + b + "]";
+    }
+
     /**
      * Constructor to generate a color according to RGB components Each component in
      * range 0..255 (for printed white color) or more [for lights]

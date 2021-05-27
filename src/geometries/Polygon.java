@@ -114,4 +114,12 @@ public class Polygon extends Geometry {
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " {" +
+                "vertices=" + vertices +
+                ", plane=" + plane +
+                '}';
+    }
 }
