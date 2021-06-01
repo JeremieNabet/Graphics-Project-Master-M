@@ -122,20 +122,6 @@ public class Vector {
         return new Vector(this.head).normalize();
     }
 
-    /**
-     * equals override function
-     *
-     * @param o object to compare
-     * @return true or false
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        if (!(o instanceof Vector)) return false;
-        Vector vector = (Vector) o;
-        return head.equals(vector.head);
-    }
 
     /**
      * function getHead to have the the head about the vector
@@ -146,23 +132,19 @@ public class Vector {
         return head;
     }
 
-    /**
-     * function toString
-     *
-     * @return the head of the Vector
-     */
+    /*************** Admin *****************/
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (!(o instanceof Vector)) return false;
+        Vector vector = (Vector) o;
+        return head.equals(vector.head);
+    }
+
     @Override
     public String toString() {
         return "Vector{" + "head=" + head + '}';
     }
 
-    /**
-     * This function allows me to know the rotation of my vector
-     *
-     * @param axis  axis of rotation
-     * @param theta angle of rotation
-     */
-    public void rotate(Vector axis, double theta) {
-        this.head = this.head.rotate(axis, theta);
-    }
 }

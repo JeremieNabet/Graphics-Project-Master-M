@@ -4,14 +4,18 @@ import primitives.Color;
 
 /**
  * light class for lightning source with intensity
+ *
  * @author Jeremie Nabet and Israel Bellaiche
  */
 abstract class Light {
-    //light intensity
+    /**
+     * light intensity
+     */
     private final Color intensity;
 
     /**
      * ctor
+     *
      * @param intensity light intensity
      */
     protected Light(Color intensity) {
@@ -20,6 +24,7 @@ abstract class Light {
 
     /**
      * intensity getter
+     *
      * @return original light intensity
      */
     public Color getIntensity() {

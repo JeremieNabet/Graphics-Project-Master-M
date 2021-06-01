@@ -8,25 +8,23 @@ import primitives.Vector;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * unittests for sphere class
- *
- * @author Jeremie Nabet and Israel Bellaiche
+ * @author elchanan bloom & israel azoulay
  */
 class SphereTest {
     /**
-     * Test method for {@link.geometries.Sphere#getNormal(geometries.Sphere)}.
+     * Test method for {@link geometries.Sphere#getNormal(Point3D)}.
      */
     @Test
     void getNormal() {
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: simple test
-        Sphere sphere = new Sphere(new Point3D(0, 0, 0), 1);
+        Sphere sphere = new Sphere(new Point3D(0,0,0), 1);
         assertEquals(
-                new Vector(new Point3D(0, 0, 1)),
-                sphere.getNormal(new Point3D(0, 0, 1)),
+                new Vector(new Point3D(0,0,1)),
+                sphere.getNormal(new Point3D(0,0,1)),
                 "ERROR - TC01: bad normal to sphere");
     }
 

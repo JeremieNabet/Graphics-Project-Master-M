@@ -42,26 +42,6 @@ public class Camera {
      */
     private double distance;
 
-
-    /**
-     * Constructor which checks that my variables are not equal to zero
-     * copier builder
-     *
-     * @param p0
-     * @param vTo
-     * @param vUp
-     */
-    public Camera(Point3D p0, Vector vTo, Vector vUp) {
-        if (!isZero(vUp.dotProduct(vTo)))
-            throw new IllegalArgumentException("the vectors must be");
-
-        this.p0 = p0;
-        this.vTo = vTo.normalized();
-        this.vUp = vUp.normalized();
-
-        vRight = this.vTo.crossProduct(this.vUp).normalize();
-    }
-
     /**
      * ctor
      */
@@ -99,59 +79,6 @@ public class Camera {
         return this;
     }
 
-    /**
-     * Upwards vector getter
-     *
-     * @return upwards vector
-     */
-    public Vector getVUp() {
-        return vUp;
-    }
-
-    /**
-     * vto vector getter
-     *
-     * @return vto vector
-     */
-    public Vector getVTo() {
-        return vTo;
-    }
-
-    /**
-     * right vector getter
-     *
-     * @return right vector
-     */
-    public Vector getVRight() {
-        return vRight;
-    }
-
-    /**
-     * width vector getter
-     *
-     * @return width vector
-     */
-    public double getWidth() {
-        return width;
-    }
-
-    /**
-     * height vector getter
-     *
-     * @return height vector
-     */
-    public double getHeight() {
-        return height;
-    }
-
-    /**
-     * distance vector getter
-     *
-     * @return distance vector
-     */
-    public double getDistance() {
-        return distance;
-    }
 
     /**
      * This methods calculate the ray
@@ -184,61 +111,6 @@ public class Camera {
     }
 
     /**
-     * The movement of the camera
-     *
-     * @param up    delta for _vUp vector
-     * @param right delta for _vRight vector
-     * @param to    delta for _vTo vector
-     * @return the movement
-     */
-    public Camera moveCamera(double up, double right, double to) {
-        if (up == 0 && right == 0 && to == 0) return this;
-        if (up != 0) this.p0.add(vUp.scale(up));
-        if (right != 0) this.p0.add(vRight.scale(right));
-        if (to != 0) this.p0.add(vTo.scale(to));
-        return this;
-    }
-
-    /**
-     * The turn of the camera
-     *
-     * @param axis  turning axis
-     * @param theta angle to turn the camera
-     * @return turn of the camera
-     */
-    public Camera turnCamera(Vector axis, double theta) {
-        if (theta == 0) return this;
-        this.vUp.rotate(axis, theta);
-        this.vRight.rotate(axis, theta);
-        this.vTo.rotate(axis, theta);
-        return this;
-    }
-
-    /**
-     * Function set size allow me to change the size
-     *
-     * @param width  of the camera
-     * @param height of the camera
-     * @return the new values
-     */
-    public Camera setVpSize(double width, double height) {
-        this.width = width;
-        this.height = height;
-        return this;
-    }
-
-    /**
-     * Allows me to change the distance value
-     *
-     * @param d distance
-     * @return the distance value modify
-     */
-    public Camera setVpDistance(int d) {
-        distance = d;
-        return this;
-    }
-
-    /**
      * WE need to check if Dan accept this class
      * because we found this on Eliezer's github
      */
@@ -248,26 +120,46 @@ public class Camera {
         final private Vector _vUp;
         final private Vector _vRight;
 
-        private double _distance = 10;
-        private double _width = 1;
-        private double _height = 1;
+        private double _distance;
+        private double _width;
+        private double _height;
 
+        /**
+         * Constructor which checks that my variables are not equal to zero
+         * copier builder
+         *
+         * @param p0
+         * @param vTo
+         * @param vUp
+         */
+
+        public CameraBuilder(Point3D p0, Vector vTo, Vector vUp) {
+            if (!isZero(vUp.dotProduct(vTo)))
+                throw new IllegalArgumentException("the vectors must be");
+
+            this._p0 = p0;
+            this._vTo = vTo.normalized();
+            this._vUp = vUp.normalized();
+
+            _vRight = this._vTo.crossProduct(this._vUp).normalize();
+        }
+
+        /**
+         * distance setter
+         *
+         * @param distance distance from camera to view plane
+         * @return camera
+         */
         public CameraBuilder setDistance(double distance) {
             _distance = distance;
             return this;
         }
 
-
-        public CameraBuilder setViewPlaneWidth(double width) {
-            _width = width;
-            return this;
-        }
-
-        public CameraBuilder setViewPlaneHeight(double height) {
-            _height = height;
-            return this;
-        }
-
+        /**
+         * build the camera
+         *
+         * @return camera
+         */
         public Camera build() {
             Camera camera = new Camera(this);
             return camera;
@@ -286,19 +178,60 @@ public class Camera {
             return this;
         }
 
-        public CameraBuilder(Point3D p0, Vector vTo, Vector vUp) {
-            _p0 = p0;
-
-            if (!isZero(vTo.dotProduct(vUp))) {
-                throw new IllegalArgumentException("vto and vup are not orthogonal");
-            }
-
-            _vTo = vTo.normalized();
-            _vUp = vUp.normalized();
-
-            _vRight = _vTo.crossProduct(_vUp);
-
+        /**
+         * Upwards vector getter
+         *
+         * @return upwards vector
+         */
+        public Vector getVUp() {
+            return _vUp;
         }
-    }
 
+        /**
+         * vto vector getter
+         *
+         * @return vto vector
+         */
+        public Vector getVTo() {
+            return _vTo;
+        }
+
+        /**
+         * right vector getter
+         *
+         * @return right vector
+         */
+        public Vector getVRight() {
+            return _vRight;
+        }
+
+        /**
+         * width vector getter
+         *
+         * @return width vector
+         */
+        public double getWidth() {
+            return _width;
+        }
+
+        /**
+         * height vector getter
+         *
+         * @return height vector
+         */
+        public double getHeight() {
+            return _height;
+        }
+
+        /**
+         * distance vector getter
+         *
+         * @return distance vector
+         */
+        public double getDistance() {
+            return _distance;
+        }
+
+
+    }
 }

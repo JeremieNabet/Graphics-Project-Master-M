@@ -30,7 +30,26 @@ public class Tube extends Geometry {
      */
     public Tube(Ray ray, double radius) {
         this.axisRay = ray;
-        this.radius = radius;
+        this.radius = alignZero(radius);
+    }
+
+
+    /**
+     * the func is for getting the axisRay.
+     *
+     * @return the ray of my tube.
+     */
+    public Ray getAxisRay() {
+        return axisRay;
+    }
+
+    /**
+     * the func is for getting the radius.
+     *
+     * @return the radius of my tube.
+     */
+    public double getRadius() {
+        return radius;
     }
 
     /**
@@ -49,35 +68,6 @@ public class Tube extends Geometry {
 
         Point3D O = p0.add(v.scale(t));
         return point.subtract(O).normalize();
-    }
-
-    /**
-     * the func is for getting the axisRay.
-     *
-     * @return the ray of my tube.
-     */
-    public Ray getAxisRay() {
-        return axisRay;
-    }
-    /**
-     * the func is for getting the radius.
-     *
-     * @return the radius of my tube.
-     */
-    public double getRadius() {
-        return radius;
-    }
-
-    @Override
-    public String toString() {
-        return "Tube{" + "axisRay=" + axisRay + ", radius=" + radius + '}';
-    }
-
-
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        //TODO
-        return null;
     }
 
     @Override
@@ -175,4 +165,10 @@ public class Tube extends Geometry {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Tube{" + "axisRay=" + axisRay + ", radius=" + radius + '}';
+    }
+
 }

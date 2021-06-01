@@ -7,11 +7,8 @@ package primitives;
  */
 public class Material {
     public double kd;
-
     public double ks;
-
     public double kr;
-
     public double kt;
     /**
      * How glossy the shape is
@@ -71,14 +68,4 @@ public class Material {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "kd=" + kd +
-                ", ks=" + ks +
-                ", kr=" + kr +
-                ", kt=" + kt +
-                ", nShininess=" + nShininess +
-                '}';
-    }
 }

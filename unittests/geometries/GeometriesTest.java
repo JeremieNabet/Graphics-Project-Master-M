@@ -1,58 +1,52 @@
 package geometries;
 
 import org.junit.jupiter.api.Test;
-import primitives.*;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-
-
+/**
+ * unittest for geometries class.
+ */
 class GeometriesTest {
+    /**
+     * Test method for {@link geometries.Geometries#findIntersections(Ray)}.
+     */
+    @Test
+    void findIntersections() {
+        Plane plane = new Plane(new Point3D(0,0,1),new Vector(0,0,1));
+        Sphere sphere = new Sphere(new Point3D(1, 0, 0), 1d);
+        Triangle tri = new Triangle(new Point3D(1,0,0),new Point3D(1,1,0),new Point3D(2,0,0));
+        Geometries geometries = new Geometries(plane,sphere,tri);
+        Geometries geometriesEmpty = new Geometries();
 
-        /**
-         * Test method for
-         * {@link geometries.Geometries#findIntersections(primitives.Ray)}.
-         */
-        @Test
-        public void testFindIntersections() {
-            Geometries g = new Geometries();
+        // ============ Equivalence Partitions Tests ==============
 
-            // =============== Boundary Values Tests ==================
+        // TC01: some shapes but not all intersect
+        Ray ray1 = new Ray(new Point3D(0.5,0,2),new Vector(0,0,-1));
+        assertEquals(3, geometries.findIntersections(ray1).size(), "ERROR - TC01: some shapes but not all intersect");
 
-            // TC01 empty list (0 point)
-            assertNull( g.findIntersections(null),"Empty list");
+        // =============== Boundary Values Tests ==================
 
-            Point3D e = new Point3D(1, 0, 2);
-            Plane pln = new Plane(e, new Vector(3, 3, 0));
-            Sphere sphere = new Sphere(new Point3D(1, 0, 0), 1d);
-            Triangle t = new Triangle(e, new Point3D(-3, -1, 2), new Point3D(-2, 3, 2));
-            g.add(pln, sphere, t);
+        // TC02: geometries is empty
+        assertNull(geometriesEmpty.findIntersections(ray1), "ERROR - TC02: geometries is empty");
 
-            // ============ Equivalence Partitions Tests ==============
+        // TC03: no shapes intersect
+        Ray ray3 = new Ray(new Point3D(0.5,0,2),new Vector(0,0,1));
+        assertNull(geometries.findIntersections(ray3), "ERROR - TC03: no shapes intersect");
 
-            Ray r = new Ray(new Point3D(0.5,0.5,3.2), new Vector(2.5,-4.5,-3.2));
+        // TC04: only one shape intersects
+        Ray ray4 = new Ray(new Point3D(0.5,0,0),new Vector(0,0,-1));
+        assertEquals(1,
+                geometries.findIntersections(ray4).size(),
+                "ERROR - TC04: only one shape intersects");
 
-            //TC02 There are no intersections with any shape(0 point)
-            assertNull( g.findIntersections(r),"There are no intersections with any shape");
-
-            Point3D p = new Point3D(-2, 0, 3.2);
-            r = new Ray(p, new Vector(-1, -1, -4.2));
-
-            //TC03 There are intersection with one shape(1 point)
-            assertEquals(1 ,g.findIntersections(r).size(),"There are intersection with one shape");
-
-            r = new Ray(new Point3D(2, 3, 3.2), new Vector(-0.2, -4 , -4.2));
-            // TC04 There are intersections with some shapes(3 point)
-            assertEquals( 3 , g.findIntersections(r).size(),"There are intersections with same shapes");
-
-            r = new Ray(p, new Vector(3.8, -1 , -4.2));
-            // TC05 There are intersections with all the shapes(4 point)
-            assertEquals( 4 , g.findIntersections(r).size(),"There are intersections with all the shapes");
-
-        }
-
-
-
+        // TC05: all shapes intersect
+        Ray ray5 = new Ray(new Point3D(1.1,0.1,2),new Vector(0,0,-1));
+        assertEquals(4,
+                geometries.findIntersections(ray5).size(),
+                "ERROR - TC05: all shapes intersect");
     }
-
+}

@@ -11,7 +11,9 @@ import primitives.Vector;
  */
 public class SpotLight extends PointLight implements LightSource {
 
-    //spot aimed direction
+    /**
+     * spot aimed direction
+     */
     private final Vector direction;
 
     /**
@@ -26,12 +28,6 @@ public class SpotLight extends PointLight implements LightSource {
         this.direction = direction.normalized();
     }
 
-    /**
-     * spot color getter
-     *
-     * @param p given point
-     * @return color at this point
-     */
     @Override
     public Color getIntensity(Point3D p) {
         return super.getIntensity(p).scale(Math.max(0, direction.dotProduct(getL(p))));

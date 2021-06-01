@@ -55,7 +55,7 @@ public class Polygon extends Geometry {
         if (vertices.length == 3)
             return; // no need for more tests for a Triangle
 
-        Vector n = plane.getNormal();
+        Vector n = plane.getNormal(null);
 
         // Subtracting any subsequent points will throw an IllegalArgumentException
         // because of Zero Vector if they are in the same point
@@ -85,9 +85,7 @@ public class Polygon extends Geometry {
     }
 
     @Override
-    public Vector getNormal(Point3D point) {
-        return plane.getNormal();
-    }
+    public Vector getNormal(Point3D point) { return plane.getNormal(null); }
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {

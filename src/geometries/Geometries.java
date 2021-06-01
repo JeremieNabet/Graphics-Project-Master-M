@@ -34,31 +34,31 @@ public class Geometries implements Intersectable {
         Collections.addAll(intersectables, geos);
     }
 
-    /**
-     * allows me to find the intersection points of my Geometries values
-     * if the points are not found, the function returns null
-     *
-     * @param ray
-     * @return list of intersection points
-     */
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> result = null;
-        for (Intersectable item : intersectables) {
-            //get intersections points of a particular item from intersectables
-            List<Point3D> itemPoints = item.findIntersections(ray);
-
-            if (itemPoints != null) {
-                //first time initialize result to new LinkedList
-                if (result == null)
-                    result = new LinkedList<>(itemPoints);
-                else
-                    //add all item points to the resulting list
-                    result.addAll(itemPoints);
-            }
-        }
-        return result;
-    }
+//    /**
+//     * allows me to find the intersection points of my Geometries values
+//     * if the points are not found, the function returns null
+//     *
+//     * @param ray
+//     * @return list of intersection points
+//     */
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+//        List<Point3D> result = null;
+//        for (Intersectable item : intersectables) {
+//            //get intersections points of a particular item from intersectables
+//            List<Point3D> itemPoints = item.findIntersections(ray);
+//
+//            if (itemPoints != null) {
+//                //first time initialize result to new LinkedList
+//                if (result == null)
+//                    result = new LinkedList<>(itemPoints);
+//                else
+//                    //add all item points to the resulting list
+//                    result.addAll(itemPoints);
+//            }
+//        }
+//        return result;
+//    }
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {

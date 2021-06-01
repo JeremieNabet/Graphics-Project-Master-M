@@ -7,31 +7,38 @@ import java.util.*;
 
 /**
  * Class which create the color matrix of the image from the scene
+ *
  * @author jerem and israel
  */
 public class Render {
+    /**
+     * image writer
+     */
     private ImageWriter imageWriter;
-    //    private Scene scene;
+    /**
+     * camera
+     */
     private Camera camera;
+    /**
+     * basic ray tracer
+     */
     private BasicRayTracer basicRayTracer;
 
     /**
-     * ctor
+     * Constructor
      *
      * @param renderBuilder
      */
     public Render(RenderBuilder renderBuilder) {
-        imageWriter = renderBuilder._imageWriter;
-//        _scene = renderBuilder._scene;
-        basicRayTracer = renderBuilder._basicRayTracer;
-        camera = renderBuilder._camera;
+        imageWriter = renderBuilder.imageWriter;
+        basicRayTracer = renderBuilder.basicRayTracer;
+        camera = renderBuilder.camera;
     }
 
     public static class RenderBuilder {
-        private ImageWriter _imageWriter;
-        //        private Scene _scene;
-        private Camera _camera;
-        private BasicRayTracer _basicRayTracer;
+        private ImageWriter imageWriter;
+        private Camera camera;
+        private BasicRayTracer basicRayTracer;
 
         /**
          * imageWriter setter
@@ -40,19 +47,9 @@ public class Render {
          * @return Render
          */
         public RenderBuilder setImageWriter(ImageWriter imageWriter) {
-            this._imageWriter = imageWriter;
+            this.imageWriter = imageWriter;
             return this;
         }
-
-        /**
-         * scene setter
-         * @param scene the given scene
-         * @return Render
-         */
-//        public RenderBuilder setScene(Scene scene) {
-//            this._scene = scene;
-//            return this;
-//        }
 
         /**
          * camera setter
@@ -61,7 +58,7 @@ public class Render {
          * @return Render
          */
         public RenderBuilder setCamera(Camera camera) {
-            this._camera = camera;
+            this.camera = camera;
             return this;
         }
 
@@ -72,7 +69,7 @@ public class Render {
          * @return Render
          */
         public RenderBuilder setRayTracer(BasicRayTracer basicRayTracer) {
-            this._basicRayTracer = basicRayTracer;
+            this.basicRayTracer = basicRayTracer;
             return this;
         }
 
@@ -95,8 +92,6 @@ public class Render {
     public void renderImage() {
         if (imageWriter == null)
             throw new MissingResourceException("imageWriter is null", "Render", "imageWriter");
-//        else if(_scene == null)
-//            throw new MissingResourceException("scene is null","Render","scene");
         else if (camera == null)
             throw new MissingResourceException("camera is null", "Render", "camera");
         else if (basicRayTracer == null)
@@ -105,11 +100,9 @@ public class Render {
         for (int i = 0; i < imageWriter.getNy(); i++) {
             for (int j = 0; j < imageWriter.getNx(); j++) {
                 Ray ray = camera.constructRayThroughPixel(imageWriter.getNx(), imageWriter.getNy(), j, i);
-//                BasicRayTracer basicRayTracer = new BasicRayTracer(_scene);
                 Color pixelColor = basicRayTracer.traceRay(ray);
                 imageWriter.writePixel(j, i, pixelColor);
             }
-            //_imageWriter.writeToImage();
         }
     }
 
@@ -130,7 +123,6 @@ public class Render {
                     imageWriter.writePixel(j, i, color);
                 }
             }
-            //this.writeToImage();
         }
     }
 

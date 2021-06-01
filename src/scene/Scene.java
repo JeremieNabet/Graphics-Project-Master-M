@@ -51,15 +51,25 @@ public class Scene {
      * scene builder class for building the scene
      */
     public static class SceneBuilder {
-        //scene's name
+        /**
+         * scene's name
+         */
         public final String _name;
-        //scene's background
+        /**
+         * scene's background
+         */
         public Color _background = Color.BLACK;
-        //scene's ambient light
+        /**
+         * scene's ambient light
+         */
         public AmbientLight _ambientLight;
-        // List of the shapes in the scene
+        /**
+         * List of the shapes in the scene
+         */
         public Geometries _geometries;
-        //list of light source in the scene
+        /**
+         * list of light source in the scene
+         */
         public List<LightSource> _lights;
 
         /**

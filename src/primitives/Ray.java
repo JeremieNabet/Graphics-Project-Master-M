@@ -111,11 +111,6 @@ public class Ray {
         return p0.equals(ray.p0) && dir.equals(ray.dir);
     }
 
-    /**
-     * Function toString of the class Ray
-     *
-     * @return string
-     */
     @Override
     public String toString() {
         return "Ray{" + "p0=" + p0 + ", dir=" + dir + '}';

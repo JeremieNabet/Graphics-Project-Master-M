@@ -1,5 +1,7 @@
 package primitives;
 
+import static primitives.Util.alignZero;
+
 /**
  * point3D class with 3 coordinates.
  * @author Israel Bellcaiche and Jeremie Nabet
@@ -44,41 +46,44 @@ public class Point3D {
      * @return new moved point
      */
     public Point3D add(Vector v) {
-        return new Point3D((this.x.coord + v.head.x.coord), (this.y.coord + v.head.y.coord),
+        return new Point3D(//
+                (this.x.coord + v.head.x.coord),
+                (this.y.coord + v.head.y.coord),
                 (this.z.coord + v.head.z.coord));
     }
 
     /**
-     * The function subtract 2 points
-     *
-     * @param obj
-     * @return the new Vector by this result
+     * subtract point from the vector.
+     * @param point3D the point whom subtract.
+     * @return vector - point.
      */
-    public Vector subtract(Point3D obj) {
-        return new Vector(this.x.coord - obj.x.coord, this.y.coord - obj.y.coord, this.z.coord - obj.z.coord);
+    public Vector subtract(Point3D point3D) {
+        return new Vector( //
+                alignZero(this.x.coord - point3D.x.coord),
+                alignZero(this.y.coord - point3D.y.coord),
+                alignZero(this.z.coord - point3D.z.coord));
     }
 
     /**
-     * Calculate the distance squared
-     *
-     * @param other
-     * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2
+     *calculates the distance squared between two points
+     * @param point3D point3D.
+     * @return distance squared.
      */
-    public double distanceSquared(Point3D other) {
-        double dx = this.x.coord - other.x.coord;
-        double dy = this.y.coord - other.y.coord;
-        double dz = this.z.coord - other.z.coord;
+    public double distanceSquared(Point3D point3D) {
+        double dx = this.x.coord - point3D.x.coord;
+        double dy = this.y.coord - point3D.y.coord;
+        double dz = this.z.coord - point3D.z.coord;
         return dx * dx + dy * dy + dz * dz;
     }
 
     /**
      * Distance between this point and another point
      *
-     * @param other another point
+     * @param point3D another point
      * @return the calculated distance
      */
-    public double distance(Point3D other) {
-        return Math.sqrt(distanceSquared(other));
+    public double distance(Point3D point3D) {
+        return Math.sqrt(distanceSquared(point3D));
     }
 
     /**
@@ -124,32 +129,32 @@ public class Point3D {
         return "(" + x + "," + y + "," + z + ")";
     }
 
-    /**
-     * This function allows me to know the rotation of the point
-     *
-     * @param axis  axis of rotation
-     * @param theta angle of rotation
-     * @return new point - result of rotating this point
-     */
-    public Point3D rotate(Vector axis, double theta) {
-        double x = this.x.coord;
-        double y = this.y.coord;
-        double z = this.z.coord;
-
-        double u = axis.head.x.coord;
-        double v = axis.head.y.coord;
-        double w = axis.head.z.coord;
-
-        double v1 = u * x + v * y + w * z;
-
-        double thetaRad = Math.toRadians(theta);
-        double cos = Math.cos(thetaRad);
-        double oneMinusCos = 1d - cos;
-        double sin = Math.sin(thetaRad);
-
-        double xPrime = u * v1 * oneMinusCos + x * cos + (v * z - w * y) * sin;
-        double yPrime = v * v1 * oneMinusCos + y * cos + (w * x - u * z) * sin;
-        double zPrime = w * v1 * oneMinusCos + z * cos + (u * y - v * x) * sin;
-        return new Point3D(xPrime, yPrime, zPrime);
-    }
+//    /**
+//     * This function allows me to know the rotation of the point
+//     *
+//     * @param axis  axis of rotation
+//     * @param theta angle of rotation
+//     * @return new point - result of rotating this point
+//     */
+//    public Point3D rotate(Vector axis, double theta) {
+//        double x = this.x.coord;
+//        double y = this.y.coord;
+//        double z = this.z.coord;
+//
+//        double u = axis.head.x.coord;
+//        double v = axis.head.y.coord;
+//        double w = axis.head.z.coord;
+//
+//        double v1 = u * x + v * y + w * z;
+//
+//        double thetaRad = Math.toRadians(theta);
+//        double cos = Math.cos(thetaRad);
+//        double oneMinusCos = 1d - cos;
+//        double sin = Math.sin(thetaRad);
+//
+//        double xPrime = u * v1 * oneMinusCos + x * cos + (v * z - w * y) * sin;
+//        double yPrime = v * v1 * oneMinusCos + y * cos + (w * x - u * z) * sin;
+//        double zPrime = w * v1 * oneMinusCos + z * cos + (u * y - v * x) * sin;
+//        return new Point3D(xPrime, yPrime, zPrime);
+//    }
 }

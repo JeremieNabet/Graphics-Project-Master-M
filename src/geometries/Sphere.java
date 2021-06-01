@@ -58,36 +58,36 @@ public class Sphere extends Geometry {
 
     @Override
     public Vector getNormal(Point3D point3D) {
-        return point3D.subtract(center).normalize();
+        return point3D.subtract(center).normalized();
     }
 
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        Point3D p0 = ray.getP0();
-
-        Vector u;
-        try {
-            u = center.subtract(p0);
-        } catch (IllegalArgumentException e) {
-            return List.of(ray.getPoint(radius));
-        }
-
-        Vector v = ray.getDirection();
-        double tM = alignZero(v.dotProduct(u));
-
-        double dSqr = u.lengthSquared() - tM * tM;
-        double thSqr = alignZero(radiusSqr - dSqr);
-        if (thSqr <= 0)
-            return null; //because there is not intersections : the ray direction is tangent or out of the sphere
-
-        double tH = Math.sqrt(thSqr);
-        double t2 = alignZero(tM + tH);
-        // t1 < t2 ALWAYS
-        if (t2 <= 0) return null; // both t1 and t2 are <=0
-
-        double t1 = alignZero(tM - tH);
-        return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
-    }
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+//        Point3D p0 = ray.getP0();
+//
+//        Vector u;
+//        try {
+//            u = center.subtract(p0);
+//        } catch (IllegalArgumentException e) {
+//            return List.of(ray.getPoint(radius));
+//        }
+//
+//        Vector v = ray.getDirection();
+//        double tM = alignZero(v.dotProduct(u));
+//
+//        double dSqr = u.lengthSquared() - tM * tM;
+//        double thSqr = alignZero(radiusSqr - dSqr);
+//        if (thSqr <= 0)
+//            return null; //because there is not intersections : the ray direction is tangent or out of the sphere
+//
+//        double tH = Math.sqrt(thSqr);
+//        double t2 = alignZero(tM + tH);
+//        // t1 < t2 ALWAYS
+//        if (t2 <= 0) return null; // both t1 and t2 are <=0
+//
+//        double t1 = alignZero(tM - tH);
+//        return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
+//    }
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {

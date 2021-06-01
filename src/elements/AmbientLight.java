@@ -7,10 +7,6 @@ import primitives.Color;
  * light source that affects all objects in the scene equally.
  */
 public class AmbientLight  extends Light {
-    /**
-     * intensity of ambient light color
-     */
-    //final private Color intensity;
 
     public AmbientLight() {
         super(Color.BLACK);
@@ -25,15 +21,5 @@ public class AmbientLight  extends Light {
     public AmbientLight(Color iA, double kA) {
         super(iA.scale(kA));
     }
-
-
-    /**
-     * get intensity color
-     *
-     * @return intensity
-     */
-   // public Color getIntensity() {
- //   return intensity;
-   //  }
 
 }
