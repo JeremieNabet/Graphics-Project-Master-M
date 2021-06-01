@@ -4,71 +4,91 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
-public class Cylinder extends Tube {   // implements Geometry
-    /**
-     * the height of my cylinder
-     */
-    final double height;
-    /**
-     * the base of my cylinder
-     */
-    final Plane base1;
-    /**
-     * the base of my cylinder
-     */
-    final Plane base2;
+/**
+ * cylinder class with height.
+ *
+ * @author jeremie nabet and israel bellaiche
+ */
+public class Cylinder extends Tube {
 
+    /**
+     * cylinder's height.
+     */
+    private double height;
+    /**
+     * cylinder's radius
+     */
+    private double radius;
+    /**
+     * the base of my cylinder
+     */
+    private final Plane base1;
+    /**
+     * the base of my cylinder
+     */
+    private final Plane base2;
     /**
      * Constructor which gives me the basics of my cylinder as well as the direction
      * and the height
-     *
-     * @param radius of the cylinder
-     * @param _axisRay abscess de mon cylinder
-     * @param height of my cylinder
+     * @param axisRay abscess de mon cylinder
+     * @param radius  of the cylinder
+     * @param height  of my cylinder
      */
-    public Cylinder(double radius, Ray _axisRay, double height) {
-        super(_axisRay, radius);
-        this.height = height;
+    public Cylinder(Ray axisRay, double radius, double height) {
+        super(axisRay, radius);
+        this.height = alignZero(height);
+        this.radius = alignZero(radius);
         Vector v = axisRay.getDirection();
-        base1 = new Plane(axisRay.getP0(), v);
-        base2 = new Plane(axisRay.getPoint(this.height), v);
+        this.base1 = new Plane(axisRay.getP0(), v);
+        this.base2 = new Plane(axisRay.getPoint(this.height), v);
     }
 
     /**
-     * Function that allows me to receive all my values normalized
+     * get height.
      *
-     * @param p (an point3D)
-     * @return all my normalized values
+     * @return height
      */
-    @Override
-    public Vector getNormal(Point3D p) {
-        Point3D o = axisRay.getP0();
-        Vector v = axisRay.getDirection();
+    public double getHeight() {
+        return height;
+    }
 
-        // projection of P-O on the ray:
-        double t;
-        try {
-            t = alignZero(p.subtract(o).dotProduct(v));
-        } catch (IllegalArgumentException e) { // P = O
-            return v;
+    /**
+     * Radius getter
+     *
+     * @return radius of my cylinder
+     */
+    public double getRadius() {
+        return radius;
+    }
+
+    /**
+     * get cylinder normal.
+     *
+     * @param point a point
+     * @return cylinder's normal
+     */
+    public Vector getNormal(Point3D point) {
+        Point3D P0 = axisRay.getP0();
+        Vector dir = axisRay.getDirection();
+
+        //point on the base
+        if (isZero(point.subtract(P0).dotProduct(dir))) {
+            return dir;
         }
-
-        // if the point is at a base
-        if (t == 0 || isZero(height - t)) // if it's close to 0, we'll get ZERO vector exception
-            return v;
-
-        o = o.add(v.scale(t));
-        return p.subtract(o).normalize();
+        //point on the top
+        else if (isZero(point.subtract(P0.add(dir.scale(height))).dotProduct(dir))) {
+            return dir;
+        }
+        //point on the surface, the normal is just like tube
+        return super.getNormal(point);
     }
 
-    /**
-     * implemented by Dan zilberstein
-     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
 //        //todo rethink the all thing
@@ -164,5 +184,64 @@ public class Cylinder extends Tube {   // implements Geometry
         if (p2 != null)
             return List.of(p2);
         return null;
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        //the center of the bottom base.
+        Point3D p1 = axisRay.getP0();
+        //the center of the upper base.
+        Point3D p2 = axisRay.getPoint(height);
+        Vector Va = axisRay.getDirection();
+
+        //tube intersections.
+        List<GeoPoint> list = super.findGeoIntersections(ray);
+
+        List<GeoPoint> result = new LinkedList<>();
+
+        //checks that all the intersections are on the finite cylinder.
+        if (list != null) {
+            for (GeoPoint p : list) {
+                if (Va.dotProduct(p.point.subtract(p1)) > 0 && Va.dotProduct(p.point.subtract(p2)) < 0)
+                    result.add(0, p);
+            }
+        }
+
+        //checks the bases intersections.
+        //only less than 2 intersections.
+        if (result.size() < 2) {
+            //bottom base.
+            Plane bottomBase = new Plane(p1, Va);
+            //upper base.
+            Plane upperBase = new Plane(p2, Va);
+            GeoPoint p;
+
+            //bottom base intersections.
+            list = bottomBase.findGeoIntersections(ray);
+
+            if (list != null) {
+                p = list.get(0);
+                //checks the intersections are on the cylinder bottom base.
+                if (p.point.distanceSquared(p1) < radius * radius)
+                    result.add(p);
+            }
+
+            //upper base intersections.
+            list = upperBase.findGeoIntersections(ray);
+
+            if (list != null) {
+                p = list.get(0);
+                //checks the intersections are on the cylinder upper base.
+                if (p.point.distanceSquared(p2) < radius * radius)
+                    result.add(p);
+            }
+        }
+        //no intersections.
+        return result.size() == 0 ? null : result;
+    }
+
+    @Override
+    public String toString() {
+        return "Cylinder{" + "height = " + height + ", axisRay = " + axisRay + ", radius = " + radius + '}';
     }
 }

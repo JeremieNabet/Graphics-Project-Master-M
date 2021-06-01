@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Test rendering a basic image
  */
-class LightTests {
+class LightTest {
     private Scene.SceneBuilder sceneBuilder1 = new Scene.SceneBuilder("Test scene");
     private Scene.SceneBuilder sceneBuilder2 = new Scene.SceneBuilder("Test scene") //
             .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));

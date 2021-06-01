@@ -1,5 +1,6 @@
 package geometries;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import primitives.*;
@@ -83,43 +84,58 @@ public class Polygon extends Geometry {
         }
     }
 
-    /**
-     * function which returns me the value of plane normalize
-     *
-     * @param point point on the surface of geom.body
-     * @return plane.getNormal();
-     */
     @Override
     public Vector getNormal(Point3D point) {
         return plane.getNormal();
     }
 
-    /**
-     * allows me to find the intersection points of my Polygon
-     * if the points are not found, the function returns null
-     *
-     * @param ray
-     * @return list of intersection points
-     */
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        if (plane.findIntersections(ray) == null) {
-            return null;
-        }
-        //TODO
-        return null;
-    }
-
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
+        List<GeoPoint> planeIntersection = plane.findGeoIntersections(ray);
+        Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
+        // check for intersection point
+        if (planeIntersection != null) {
+            //check for intersections with angles using a scalar product between the Ray and the normal
+            // Ray head
+            Point3D P0 = ray.getP0();
+            // ray intersection vector
+            Vector v = plane.findIntersections(ray).get(0).subtract(P0);
+
+            LinkedList<Vector> vectorList = new LinkedList<>();
+            //the vectors between the head of the ray and the vertices of the polygon.
+            for (Point3D point3D : vertices) {
+                vectorList.add(point3D.subtract(P0));
+            }
+
+            LinkedList<Vector> normalList = new LinkedList<>();
+            //the normals from between every two adjacent vectors.
+            for (int i = 0; i < vectorList.size() - 1; i++) {
+                normalList.add(vectorList.get(i).crossProduct(vectorList.get(i + 1)));
+            }
+
+            //last normal from between first and last vector in the list.
+            normalList.add(vectorList.get(vectorList.size() - 1).crossProduct(vectorList.get(0)));
+
+            boolean flag = true;
+            boolean flag1 = true;
+            //check the type of angle between the normal and the ray.
+            for (Vector normal : normalList) {
+                if (alignZero(v.dotProduct(normal)) <= 0) {
+                    flag = false;
+                }
+                if (alignZero(v.dotProduct(normal)) >= 0) {
+                    flag1 = false;
+                }
+            }
+            if (flag || flag1) {
+                return List.of(new GeoPoint(this, planeIntersection.get(0).point));
+            }
+        }
         return null;
     }
 
     @Override
     public String toString() {
-        return super.toString() + " {" +
-                "vertices=" + vertices +
-                ", plane=" + plane +
-                '}';
+        return super.toString() + " {" + "vertices=" + vertices + ", plane=" + plane + '}';
     }
 }

@@ -6,22 +6,29 @@ import java.util.List;
 
 import static primitives.Util.*;
 
+/**
+ * this is the class definitions with it's fields - one point3D for
+ * the center point, and one double type for the radius.
+ *
+ * @author Israel Bellaiche and Jeremie Nabet
+ */
 public class Sphere extends Geometry {
     /**
      * the point center of the sphere
      */
-    final Point3D center;
+    private final Point3D center;
     /**
      * the radius of the sphere
      */
-    final double radius;
+    private final double radius;
     /**
      * the radius in square
      */
-    final double radiusSqr;
+    private final double radiusSqr;
 
     /**
      * Constructor sphere that need point center and radius (double)
+     *
      * @param center center of my sphere
      * @param radius radius of my sphere
      */
@@ -49,25 +56,11 @@ public class Sphere extends Geometry {
         return radius;
     }
 
-    /**
-     * function which returns me the value of Sphere normalized
-     *
-     * @param point3D subtract center
-     * @return the value normalized
-     */
     @Override
     public Vector getNormal(Point3D point3D) {
         return point3D.subtract(center).normalize();
     }
 
-
-    /**
-     * allows me to find the intersection points of my sphere
-     * if the points are not found, the function returns null
-     *
-     * @param ray the ray that enter in the excel table
-     * @return list of intersection points
-     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Point3D p0 = ray.getP0();
@@ -98,14 +91,49 @@ public class Sphere extends Geometry {
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
+        //exit the center point of the sphere.
+        if (getCenter().equals(ray.getP0())) {
+            return List.of(new GeoPoint(this,ray.getPoint(getRadius())));
+        }
+        //from top of the ray to center of the sphere.
+        Vector u = center.subtract(ray.getP0());
+        //ray vector.
+        Vector v = ray.getDirection();
+
+        double tm = alignZero(u.dotProduct(v));
+        double d = alignZero(Math.sqrt(u.lengthSquared()-tm*tm));
+
+        //ray goes out of the sphere.
+        if(d>radius){
+            return  null;
+        }
+
+        double th = alignZero(Math.sqrt(radiusSqr-d*d));
+
+        //p is on the surface of the sphere.
+        if(isZero(th)){
+            return null;
+        }
+
+        double t1=alignZero(tm+th);
+        double t2=alignZero(tm-th);
+
+        //two intersections points.
+        if(t1>0&&t2>0){
+            return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
+        }
+        //one intersection point.
+        if(t1>0){
+            return List.of(new GeoPoint(this,ray.getPoint(t1)));
+        }
+        //one intersection point.
+        if(t2>0){
+            return List.of(new GeoPoint(this,ray.getPoint(t2)));
+        }
         return null;
     }
 
-    /**
-     * function to string that give me the value type about my class
-     *
-     * @return value string about this class
-     */
+
     @Override
     public String toString() {
         return super.toString() + " {" + "o=" + center + ", r=" + radius + '}';

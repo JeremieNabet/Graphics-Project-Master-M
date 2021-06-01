@@ -1,7 +1,8 @@
 package primitives;
 
 /**
- *
+ * point3D class with 3 coordinates.
+ * @author Israel Bellcaiche and Jeremie Nabet
  */
 public class Point3D {
 

@@ -1,9 +1,17 @@
 package geometries;
 
 import primitives.*;
+
 import java.util.List;
+
 import static primitives.Util.*;
 
+/**
+ * class definitions with it's fields - one for the point
+ * and one for the vector.
+ *
+ * @author Jeremie Nabet and Israel Bellaiche
+ */
 public class Plane extends Geometry {
     /**
      * the plane is composed of a point and of vector
@@ -12,7 +20,7 @@ public class Plane extends Geometry {
     /**
      * the vector normal of the plane
      */
-    final Vector normal;
+    private final Vector normal;
 
     /**
      * Constructor 1
@@ -48,6 +56,7 @@ public class Plane extends Geometry {
     /**
      * getNormal from implementation of Geometry interface
      * the same at any point in the plane
+     *
      * @param p dummy point not use for flat geometries
      * @return normal to the plane
      */
@@ -88,7 +97,7 @@ public class Plane extends Geometry {
 
         Vector p0MinusQ0;
         try {
-            p0MinusQ0= point.subtract(p0);
+            p0MinusQ0 = point.subtract(p0);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -101,7 +110,7 @@ public class Plane extends Geometry {
         if (isZero(nV))
             return null;
 
-        double t = alignZero(denominator/nV);
+        double t = alignZero(denominator / nV);
         return t <= 0 ? null : List.of(ray.getPoint(t));
     }
 

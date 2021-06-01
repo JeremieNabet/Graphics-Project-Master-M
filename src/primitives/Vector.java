@@ -72,7 +72,9 @@ public class Vector {
     }
 
     /**
-     * @return
+     * calculates the squared length of the vector.
+     *
+     * @return vector's squared length..
      */
     public double lengthSquared() {
         return (this.head.x.coord) * (this.head.x.coord) //
@@ -161,6 +163,6 @@ public class Vector {
      * @param theta angle of rotation
      */
     public void rotate(Vector axis, double theta) {
-        this.head = this.head.rotate(axis,theta);
+        this.head = this.head.rotate(axis, theta);
     }
 }

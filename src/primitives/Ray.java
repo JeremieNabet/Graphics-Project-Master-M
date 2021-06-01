@@ -5,15 +5,25 @@ import java.util.stream.Collectors;
 
 import static geometries.Intersectable.GeoPoint;
 
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
+/**
+ * Ray class. with one point and one vector.
+ *
+ * @author Jeremie Nabet and Israel Bellaiche
+ */
+
 public class Ray {
     /**
      * the point p0 of the ray
      */
-    final Point3D p0;
+    private final Point3D p0;
     /**
      * the direction vector of the ray
      */
-    final Vector dir;
+    private final Vector dir;
 
     public Ray(Point3D p0, Vector dir) {
         this.p0 = p0;
@@ -47,7 +57,10 @@ public class Ray {
      * @return the all point that is on the Ray
      */
     public Point3D getPoint(double t) {
-        return p0.add(dir.scale(t));
+        if (!isZero(alignZero(t))){
+            return p0.add(dir.scale(alignZero(t)));
+        }
+        return p0;
     }
 
     /**
@@ -66,7 +79,14 @@ public class Ray {
         ).point;
     }
 
-
+    /**
+     * Find the closest Point to list of point origin
+     * Find the point with minimal distance from the
+     * ray head point and return it
+     *
+     * @param geoPointList intersections point List
+     * @return closest point
+     */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointList) {
         if (geoPointList == null) return null;
         GeoPoint minPoint = null;
