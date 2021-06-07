@@ -67,5 +67,20 @@ public class Material {
         this.nShininess = nShininess;
         return this;
     }
+    /**
+     * Kr getter
+     * @return Kr
+     */
+    public double getKr() {
+        return kr;
+    }
+
+    /**
+     * Kt getter
+     * @return Kt
+     */
+    public double getKt() {
+        return kt;
+    }
 
 }

@@ -24,12 +24,31 @@ public class Ray {
      * the direction vector of the ray
      */
     private final Vector dir;
+    /**
+     * Delta
+     */
+    private static final double DELTA =0.1;
 
+    /**
+     * Constructor
+     * @param p0 the p0 point
+     * @param dir the direction's vector
+     */
     public Ray(Point3D p0, Vector dir) {
         this.p0 = p0;
         this.dir = dir.normalized();
     }
-
+    /**
+     * Constructor
+     * @param point3D point
+     * @param lightDirection the direction light
+     * @param n vector n
+     */
+    public Ray(Point3D point3D, Vector lightDirection, Vector n) {
+        Vector delta = n.scale(n.dotProduct(lightDirection)>0?DELTA: -DELTA);
+        p0 = point3D.add(delta);
+        dir = lightDirection.normalized();
+    }
     /**
      * function get p0 of the Ray
      *

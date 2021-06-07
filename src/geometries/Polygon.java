@@ -85,19 +85,24 @@ public class Polygon extends Geometry {
     }
 
     @Override
-    public Vector getNormal(Point3D point) { return plane.getNormal(null); }
+    public Vector getNormal(Point3D point) {
+        return plane.getNormal(null);
+    }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-        List<GeoPoint> planeIntersection = plane.findGeoIntersections(ray);
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        List<GeoPoint> planeIntersection = plane.findGeoIntersections(ray, maxDistance);
         Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
         // check for intersection point
         if (planeIntersection != null) {
+
+
             //check for intersections with angles using a scalar product between the Ray and the normal
+
             // Ray head
             Point3D P0 = ray.getP0();
             // ray intersection vector
-            Vector v = plane.findIntersections(ray).get(0).subtract(P0);
+            Vector v = plane.findGeoIntersections(ray, maxDistance).get(0).point.subtract(P0);
 
             LinkedList<Vector> vectorList = new LinkedList<>();
             //the vectors between the head of the ray and the vertices of the polygon.

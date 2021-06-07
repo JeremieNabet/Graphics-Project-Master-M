@@ -34,45 +34,24 @@ public class Geometries implements Intersectable {
         Collections.addAll(intersectables, geos);
     }
 
-//    /**
-//     * allows me to find the intersection points of my Geometries values
-//     * if the points are not found, the function returns null
-//     *
-//     * @param ray
-//     * @return list of intersection points
-//     */
-//    @Override
-//    public List<Point3D> findIntersections(Ray ray) {
-//        List<Point3D> result = null;
-//        for (Intersectable item : intersectables) {
-//            //get intersections points of a particular item from intersectables
-//            List<Point3D> itemPoints = item.findIntersections(ray);
-//
-//            if (itemPoints != null) {
-//                //first time initialize result to new LinkedList
-//                if (result == null)
-//                    result = new LinkedList<>(itemPoints);
-//                else
-//                    //add all item points to the resulting list
-//                    result.addAll(itemPoints);
-//            }
-//        }
-//        return result;
-//    }
-
+    /**
+     * check ray Geo intersections
+     * @param ray given ray
+     * @return list that includes all the Geo Intersection points
+     */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
         List<GeoPoint> result = null;
-        for (Intersectable item : this.intersectables) {
-            List<GeoPoint> itemPoints = item.findGeoIntersections(ray);
-            if (itemPoints != null) {
-                if (result == null) {
-                    result = new LinkedList<>();
+        for (Intersectable item:this.intersectables) {
+            List<GeoPoint> itemPoints=item.findGeoIntersections(ray,maxDistance);
+            if(itemPoints!=null){
+                if(result==null){
+                    result =new LinkedList<>();
                 }
                 result.addAll(itemPoints);
             }
         }
-        return result;
-    }
+        return result;    }
+
 
 }

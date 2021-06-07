@@ -67,32 +67,8 @@ public class Plane extends Geometry {
         return normal;
     }
 
-//    @Override
-//    public List<Point3D> findIntersections(Ray ray) {
-//        Point3D p0 = ray.getP0();
-//        Vector v = ray.getDirection();
-//
-//        Vector p0MinusQ0;
-//        try {
-//            p0MinusQ0 = point.subtract(p0);
-//        } catch (IllegalArgumentException e) {
-//            return null;
-//        }
-//        double denominator = normal.dotProduct(p0MinusQ0);
-//        if (isZero(denominator)) return null;
-//
-//        //monet
-//        double nV = normal.dotProduct(v);
-//        // ray is lying in the plane axis
-//        if (isZero(nV))
-//            return null;
-//
-//        double t = alignZero(denominator / nV);
-//        return t <= 0 ? null : List.of(ray.getPoint(t));
-//    }
-
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
         Point3D p0 = ray.getP0();
         Vector v = ray.getDirection();
 
@@ -116,8 +92,11 @@ public class Plane extends Geometry {
             return null;
         }
 
-        Point3D p = ray.getPoint(t);
-        return List.of(new GeoPoint(this,p));
+        if(alignZero(t - maxDistance)<=0){
+            Point3D p = ray.getPoint(t);
+            return List.of(new GeoPoint(this,p));
+        }
+        return null;
     }
 
     @Override

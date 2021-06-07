@@ -70,8 +70,14 @@ public class Tube extends Geometry {
         return point.subtract(O).normalize();
     }
 
+    /**
+     * find the intersections of a ray with the tube.
+     *
+     * @param ray
+     * @return all the intersections points with the tube
+     */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
         /*
         The equation for a tube of radius r oriented along a line pa + vat:

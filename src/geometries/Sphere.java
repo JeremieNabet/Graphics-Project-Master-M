@@ -61,36 +61,8 @@ public class Sphere extends Geometry {
         return point3D.subtract(center).normalized();
     }
 
-//    @Override
-//    public List<Point3D> findIntersections(Ray ray) {
-//        Point3D p0 = ray.getP0();
-//
-//        Vector u;
-//        try {
-//            u = center.subtract(p0);
-//        } catch (IllegalArgumentException e) {
-//            return List.of(ray.getPoint(radius));
-//        }
-//
-//        Vector v = ray.getDirection();
-//        double tM = alignZero(v.dotProduct(u));
-//
-//        double dSqr = u.lengthSquared() - tM * tM;
-//        double thSqr = alignZero(radiusSqr - dSqr);
-//        if (thSqr <= 0)
-//            return null; //because there is not intersections : the ray direction is tangent or out of the sphere
-//
-//        double tH = Math.sqrt(thSqr);
-//        double t2 = alignZero(tM + tH);
-//        // t1 < t2 ALWAYS
-//        if (t2 <= 0) return null; // both t1 and t2 are <=0
-//
-//        double t1 = alignZero(tM - tH);
-//        return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
-//    }
-
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
         //exit the center point of the sphere.
         if (getCenter().equals(ray.getP0())) {
             return List.of(new GeoPoint(this,ray.getPoint(getRadius())));
@@ -104,7 +76,7 @@ public class Sphere extends Geometry {
         double d = alignZero(Math.sqrt(u.lengthSquared()-tm*tm));
 
         //ray goes out of the sphere.
-        if(d>radius){
+        if(alignZero(d - getRadius())>=0){
             return  null;
         }
 
@@ -120,14 +92,17 @@ public class Sphere extends Geometry {
 
         //two intersections points.
         if(t1>0&&t2>0){
-            return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
-        }
+            if (alignZero(maxDistance - t1) > 0 && alignZero(maxDistance - t2) > 0) {
+                Point3D P1 = ray.getP0().add(v.scale(t2));
+                Point3D P2 = ray.getP0().add(v.scale(t1));
+                return List.of(new GeoPoint(this, P1), new GeoPoint(this, P2));
+            }        }
         //one intersection point.
-        if(t1>0){
+        if(t1>0 && alignZero(maxDistance-t1)> 0){
             return List.of(new GeoPoint(this,ray.getPoint(t1)));
         }
         //one intersection point.
-        if(t2>0){
+        if(t2>0 && alignZero(maxDistance-t2)> 0){
             return List.of(new GeoPoint(this,ray.getPoint(t2)));
         }
         return null;
