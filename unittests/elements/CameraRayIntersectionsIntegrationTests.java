@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Class that tests integration of rays coming out of a camera
  * and their intersection with the view-plane and the geometric shapes
- *
  */
 public class CameraRayIntersectionsIntegrationTests {
 
