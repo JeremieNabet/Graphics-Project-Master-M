@@ -14,7 +14,6 @@ import java.util.LinkedList;
 /**
  * Tests for reflection and transparency functionality, test for partial shadows
  * (with transparency)
-
  */
 public class ReflectionRefractionTests {
     private Scene.SceneBuilder sceneBuilder = new Scene.SceneBuilder("Test scene");
@@ -181,21 +180,22 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
+
     /**
      * produce a picture of 8 triangle and a sphere in the middle
      * lighted by a spot light
      */
     @Test
     public void ourPicture() {
-        Camera.CameraBuilder cameraBuilder=new Camera.CameraBuilder(
+        Camera.CameraBuilder cameraBuilder = new Camera.CameraBuilder(
                 new Point3D(0, 0, -1000),
                 new Vector(0, 0, 0.010),
                 new Vector(-65, -1, 0))
                 .setViewPlaneSize(200, 200)
                 .setDistance(1000);
-        Camera camera= cameraBuilder.build();
+        Camera camera = cameraBuilder.build();
 
-        Geometries geometries=new Geometries();
+        Geometries geometries = new Geometries();
         geometries.add( //
                 new Triangle(
                         new Point3D(-25, 40, 65), new Point3D(25, 40, 85), new Point3D(0, 0, 20))
@@ -241,8 +241,8 @@ public class ReflectionRefractionTests {
         sceneBuilder.setGeometries(geometries)
                 .setLights(lightSources)
                 .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.25));
-        Scene scene=sceneBuilder.build();
-        ImageWriter imageWriter = new ImageWriter("Our picture",  600, 600);
+        Scene scene = sceneBuilder.build();
+        ImageWriter imageWriter = new ImageWriter("Our picture", 600, 600);
         renderBuilder.setImageWriter(imageWriter).setCamera(camera).setRayTracer(new BasicRayTracer(scene));
         Render render = renderBuilder.build();
         render.renderImage();
