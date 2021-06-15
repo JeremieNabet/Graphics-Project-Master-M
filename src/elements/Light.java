@@ -11,7 +11,7 @@ abstract class Light {
     /**
      * light intensity
      */
-    private final Color intensity;
+    protected final Color intensity;
 
     /**
      * ctor
