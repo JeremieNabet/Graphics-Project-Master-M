@@ -34,11 +34,6 @@ public class Geometries implements Intersectable {
         Collections.addAll(intersectables, geos);
     }
 
-    /**
-     * check ray Geo intersections
-     * @param ray given ray
-     * @return list that includes all the Geo Intersection points
-     */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
         List<GeoPoint> result = null;

@@ -129,32 +129,4 @@ public class Point3D {
         return "(" + x + "," + y + "," + z + ")";
     }
 
-//    /**
-//     * This function allows me to know the rotation of the point
-//     *
-//     * @param axis  axis of rotation
-//     * @param theta angle of rotation
-//     * @return new point - result of rotating this point
-//     */
-//    public Point3D rotate(Vector axis, double theta) {
-//        double x = this.x.coord;
-//        double y = this.y.coord;
-//        double z = this.z.coord;
-//
-//        double u = axis.head.x.coord;
-//        double v = axis.head.y.coord;
-//        double w = axis.head.z.coord;
-//
-//        double v1 = u * x + v * y + w * z;
-//
-//        double thetaRad = Math.toRadians(theta);
-//        double cos = Math.cos(thetaRad);
-//        double oneMinusCos = 1d - cos;
-//        double sin = Math.sin(thetaRad);
-//
-//        double xPrime = u * v1 * oneMinusCos + x * cos + (v * z - w * y) * sin;
-//        double yPrime = v * v1 * oneMinusCos + y * cos + (w * x - u * z) * sin;
-//        double zPrime = w * v1 * oneMinusCos + z * cos + (u * y - v * x) * sin;
-//        return new Point3D(xPrime, yPrime, zPrime);
-//    }
 }

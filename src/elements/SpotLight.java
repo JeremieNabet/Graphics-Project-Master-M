@@ -17,7 +17,7 @@ public class SpotLight extends PointLight implements LightSource {
     private final Vector direction;
 
     /**
-     * ctor
+     * Constructor
      *
      * @param intensity spot intensity
      * @param position  spot position

@@ -14,8 +14,6 @@ import java.util.List;
 /**
  * Class which its role is to look for cuts between the ray and the 3D model of the scene,
  * and calculates the color in the closest intersection
- *
- * @author jeremie nabet and israel bellaiche
  */
 public class BasicRayTracer extends RayTracerBase {
 
@@ -110,11 +108,13 @@ public class BasicRayTracer extends RayTracerBase {
     }
 
     /**
-     * @param geoPoint
-     * @param ray
-     * @param level
-     * @param k
-     * @return
+     * Calculate the global effect
+     *
+     * @param geoPoint geo point
+     * @param ray      the ray about the point
+     * @param level    a level
+     * @param k        the k that we are multiplicative with the kr
+     * @return the calculate global about the effect
      */
     private Color calcGlobalEffects(GeoPoint geoPoint, Ray ray, int level, double k) {
         Color color = Color.BLACK;
