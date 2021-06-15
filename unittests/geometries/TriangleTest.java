@@ -11,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * unittests for triangle class
- *
- * @author Jeremie Nabet and Israel Bellaiche
  */
 class TriangleTest {
     /**

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * unittest for cylinder class.
- * @author elchanan bloom & israel azoulay
+ *
  */
 class CylinderTest {
 

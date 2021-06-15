@@ -10,7 +10,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 /**
  * unittests for sphere class
- * @author elchanan bloom & israel azoulay
  */
 class SphereTest {
     /**

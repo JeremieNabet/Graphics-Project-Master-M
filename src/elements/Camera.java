@@ -7,8 +7,14 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
- * Camera class is it the representation of a real camera
- * and to put yourself in the shoes of a photographer
+ * The Camera of the scene
+ * point - the beginning point of the camera
+ * Vup - vector in the upward direction from the camera
+ * Vto - vector in a straight line from the camera
+ * Vright - vector in the right direction from the camera
+ * viewplaneW - the width of the view plane
+ * viewplaneH - the height of the view plane
+ * distance - the distance between the camera and the view plane
  */
 public class Camera {
 
@@ -17,28 +23,27 @@ public class Camera {
      */
     final private Point3D p0;
     /**
-     * vector up
+     * vector in the upward direction from the camera
      */
     final private Vector vUp;
     /**
-     * vTo vector that exit behind
-     * vector toward
+     * vector in a straight line from the camera
      */
     final private Vector vTo;
     /**
-     * vector right
+     * vector in the right direction from the camera
      */
     final private Vector vRight;
     /**
-     * width of my camera place
+     * the width of the view plane
      */
     private double width;
     /**
-     * height of my camera place
+     * the height of the view plane
      */
     private double height;
     /**
-     * distance of my camera
+     * the distance between the camera and the view plane
      */
     private double distance;
 
@@ -56,11 +61,11 @@ public class Camera {
     }
 
     /**
-     * set view plane size
+     * set the view plane size
      *
-     * @param width  of the camera plane size
-     * @param height of camera plane size
-     * @return the new width and the new height
+     * @param width  - the width of the view plane
+     * @param height - the height of the view plane
+     * @return the camera
      */
     public Camera setViewPlaneSize(double width, double height) {
         this.width = width;
@@ -69,10 +74,10 @@ public class Camera {
     }
 
     /**
-     * Camera setter chaining methods
+     * set the distance between the camera and the view plane
      *
-     * @param distance between a camera and the goal
-     * @return the new distance
+     * @param distance - the distance between the camera and the view plane
+     * @return the camera
      */
     public Camera setDistance(double distance) {
         this.distance = distance;
@@ -81,29 +86,39 @@ public class Camera {
 
 
     /**
-     * This methods calculate the ray
-     * the starting camera and the intercept the view plane and the center
-     * of the pixel's square
+     * construct a ray from the camera through the middle of (i, j) pixel
      *
-     * @param nX row of the pixel
-     * @param nY column of the pixel
-     * @param j  pixel
-     * @param i  pixel
-     * @return the new ray
+     * @param nX - the number of pixels in one row (= the number of pixel columns)
+     * @param nY - the number of pixels in one column (= the number of pixel rows)
+     * @param j  - the column of the pixel
+     * @param i  - the row of the pixel
+     * @return the ray throughout the pixel(i, j)
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
+        //give me the center of the screen
         Point3D pC = p0.add(vTo.scale(distance));
 
         double rY = alignZero(height / nY);
         double rX = alignZero(width / nX);
 
+//          We must find the ray from the eye of the camera that passes in pixels of the scene
+//          for a given Point2D(X,Y).
+//          First we have PC=P0+Vto*screenDistance(the center of the screen).
+//          Then we calculate i = (x - (Nx) / 2) * Rx this  is the number
+//          of pixels we need to move and the X axis. We multiply Vright by it
+//          We do the same thing for j=(y - (Ny) / 2) * Ry but this time it is on the up axis and we
+//          multiply Vup.
+//          We add to PC the difference between Vright and Vup and we get P.
+//          P= PC+ [Vright*i- Vup*j]
+//          The ray is the vector from P0 to P with P0 as POO.
+
         double yI = alignZero(-(i - ((nY - 1) / 2d)) * rY);
         double xJ = alignZero((j - ((nX - 1) / 2d)) * rX);
 
         Point3D pIJ = pC;
-        if (!isZero(xJ))
+        if (!isZero(xJ)) //we don't need to add Xj * Vright to pij because it's equal zero
             pIJ = pIJ.add(vRight.scale(xJ));
-        if (!isZero(yI))
+        if (!isZero(yI)) //we don't need to add Yi * Vup to pij because it's equal zero
             pIJ = pIJ.add(vUp.scale(yI));
 
         Vector vIJ = pIJ.subtract(p0);

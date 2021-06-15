@@ -22,10 +22,6 @@ public class Cylinder extends Tube {
      */
     private double height;
     /**
-     * cylinder's radius
-     */
-    private double radius;
-    /**
      * the base of my cylinder
      */
     private final Plane base1;
@@ -48,25 +44,7 @@ public class Cylinder extends Tube {
         this.base1 = new Plane(axisRay.getP0(), v);
         this.base2 = new Plane(axisRay.getPoint(this.height), v);
     }
-
-    /**
-     * get height.
-     *
-     * @return height
-     */
-    public double getHeight() {
-        return height;
-    }
-
-    /**
-     * Radius getter
-     *
-     * @return radius of my cylinder
-     */
-    public double getRadius() {
-        return radius;
-    }
-
+    
     /**
      * get cylinder normal.
      *

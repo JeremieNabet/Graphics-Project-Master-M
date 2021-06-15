@@ -10,7 +10,7 @@ import static primitives.Util.*;
  * this is the class definitions with it's fields - one Ray,
  * and one double type for the radius.
  *
- * @author JEremie NAbet and Israel bellaiche
+ * @author Jeremie NAbet and Israel bellaiche
  */
 public class Tube extends Geometry {
     /**
@@ -32,7 +32,6 @@ public class Tube extends Geometry {
         this.axisRay = ray;
         this.radius = alignZero(radius);
     }
-
 
     /**
      * the func is for getting the axisRay.
@@ -61,13 +60,13 @@ public class Tube extends Geometry {
     public Vector getNormal(Point3D point) {
         Point3D p0 = axisRay.getP0();
         Vector v = axisRay.getDirection();
-        Vector P0_P = point.subtract(p0);
-        double t = P0_P.dotProduct(v);
+        Vector p0P = point.subtract(p0);
+        double t = p0P.dotProduct(v);
 
-        if (isZero(t)) return P0_P.normalize();
+        if (isZero(t)) return p0P.normalize();
 
-        Point3D O = p0.add(v.scale(t));
-        return point.subtract(O).normalize();
+        Point3D o = p0.add(v.scale(t));
+        return point.subtract(o).normalize();
     }
 
     /**
