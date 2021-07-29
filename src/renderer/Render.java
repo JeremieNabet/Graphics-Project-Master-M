@@ -97,9 +97,11 @@ public class Render {
         else if (basicRayTracer == null)
             throw new MissingResourceException("basicRayTracer is null", "Render", "basicRayTracer");
 
-        for (int i = 0; i < imageWriter.getNy(); i++) {
-            for (int j = 0; j < imageWriter.getNx(); j++) {
-                Ray ray = camera.constructRayThroughPixel(imageWriter.getNx(), imageWriter.getNy(), j, i);
+        int nY = imageWriter.getNy();
+        int nX = imageWriter.getNx();
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
+                Ray ray = camera.constructRayThroughPixel(nX, nY, j, i);
                 Color pixelColor = basicRayTracer.traceRay(ray);
                 imageWriter.writePixel(j, i, pixelColor);
             }
@@ -117,8 +119,10 @@ public class Render {
     public void printGrid(int interval, Color color) {
         if (imageWriter == null)
             throw new MissingResourceException("imageWriter is null", "Render", "imageWriter");
-        for (int i = 0; i < imageWriter.getNy(); i++) {
-            for (int j = 0; j < imageWriter.getNx(); j++) {
+        int nY = imageWriter.getNy();
+        int nX = imageWriter.getNx();
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
                 if (i % interval == 0 || j % interval == 0) {
                     imageWriter.writePixel(j, i, color);
                 }

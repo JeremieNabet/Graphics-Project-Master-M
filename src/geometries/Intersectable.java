@@ -55,20 +55,12 @@ public interface Intersectable {
      * @param ray of the intersection
      * @return list of intersection points
      */
-   default List<Point3D> findIntersections(Ray ray){
-       var geoList = findGeoIntersections(ray);
-       return geoList == null ? null
-               : geoList.stream()
-               .map(gp -> gp.point)
-               .collect(Collectors.toList());
-   }
-    /**
-     * find the Geo intersections of a ray
-     * @param ray given ray
-     * @return all the Geo intersections points with the body
-     */
-    default List<GeoPoint> findGeoIntersections(Ray ray){
-        return findGeoIntersections(ray,Double.POSITIVE_INFINITY);
+    default List<Point3D> findIntersections(Ray ray) {
+        var geoList = findGeoIntersections(ray);
+        return geoList == null ? null
+                : geoList.stream()
+                .map(gp -> gp.point)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -77,7 +69,18 @@ public interface Intersectable {
      * @param ray given ray
      * @return all the Geo intersections points with the body
      */
-    List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance);
+    default List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+    }
+
+    /**
+     * find the Geo intersections of a ray up to a given max distance
+     *
+     * @param ray given ray
+     * @paran maxDistance max distance for the intersections
+     * @return all the Geo intersections points with the body
+     */
+    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 }
 
 

@@ -2,6 +2,7 @@ package elements;
 
 import primitives.Color;
 import primitives.Point3D;
+import primitives.Util;
 import primitives.Vector;
 
 /**
@@ -30,6 +31,8 @@ public class SpotLight extends PointLight implements LightSource {
 
     @Override
     public Color getIntensity(Point3D p) {
-        return super.getIntensity(p).scale(Math.max(0, direction.dotProduct(getL(p))));
+        double ld = Util.alignZero(direction.dotProduct(getL(p)));
+        if (ld <= 0) return Color.BLACK; // the point is not in the direction of the spot
+        return super.getIntensity(p).scale(ld);
     }
 }
