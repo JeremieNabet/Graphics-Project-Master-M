@@ -22,6 +22,7 @@ public class DepthOfFieldTests {
                 .setViewPlaneSize(350, 350)
                 .setDepthOfFiled(50, 0.15, 200)
                 .setNumOfRayForAntiAliasing(150);
+
         scene.setBackground(new Color(java.awt.Color.BLACK));
         scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0));
 

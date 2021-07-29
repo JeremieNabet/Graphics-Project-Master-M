@@ -19,7 +19,9 @@ public class AntiAleas {
     public void AntiAliasing() {
         Camera camera = new Camera(new Point3D(0, 0, 10000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setDistance(9600) //
-                .setViewPlaneSize(1000, 1000).setNumOfRayForAntiAliasing(150);
+                .setViewPlaneSize(1000, 1000)
+                .setNumOfRayForAntiAliasing(150);
+
         Scene scene = new Scene("Anti Aliasing test")//
                 .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
                 .setBackground(new Color(0, 0, 0));
@@ -33,7 +35,7 @@ public class AntiAleas {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new BasicRayTracer(scene))//
+                .setRayTracer(new BasicRayTracer(scene)) .setFlagDOF(true)//
                 //
                 ;
 
@@ -43,7 +45,7 @@ public class AntiAleas {
         camera = new Camera(new Point3D(0, 0, 10000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setDistance(9600) //
                 .setViewPlaneSize(1000, 1000);
-        ImageWriter imageWriter1 = new ImageWriter("base whitout Anti Aliasing", p, p);
+        ImageWriter imageWriter1 = new ImageWriter("base without Anti Aliasing", p, p);
         Render render1 = new Render() //
                 .setImageWriter(imageWriter1) //
                 .setCamera(camera) //

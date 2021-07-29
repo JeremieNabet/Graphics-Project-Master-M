@@ -210,6 +210,8 @@ public class Camera {
         Point3D pij = ray.getPoint(distance / (vTo.dotProduct(ray.getDirection())));
         Point3D f = ray.getPoint((_focalDistance + distance) / (vTo.dotProduct(ray.getDirection())));//focal point
         List<Ray> result = rayRandomBeam(pij, f, _aperture, _numOfRays, vRight, vUp);
+        if (numOfRayForAntiAliasing > 0)
+            result.addAll(constructBeamRayForAntiAliesing(ray, nX, nY));
         result.add(new Ray(pij, ray.getDirection()));
         return result;
     }
@@ -310,42 +312,4 @@ public class Camera {
         return splittedRays;
     }
 
-    /**
-     * construct Ray Through Pixel form location of camera F
-     *
-     * @param nX depend hoe pixel we wont row
-     * @param nY depend hoe pixel we wont column
-     * @param j  Rows
-     * @param i  Columns
-     * @return Ray form location towards the center of pixel
-     */
-    public List<Ray> constructBeamRay(int nX, int nY, int j, int i) {
-        Ray ray = constructRayThroughPixel(nX, nY, j, i);
-        List<Ray> rays = new LinkedList<>();
-        if (numOfRayForAntiAliasing > 0)
-            rays.addAll(constructBeamRayForAntiAliesing(ray, nX, nY));
-
-        rays.add(ray);
-        return rays;
-    }
-    /**
-     * builds a beam of Rays from the area of a pixel through a specific point on the focal plane
-     *
-     * @param nX             - number of cells left to right
-     * @param nY             - number of cells up to down
-     * @param j              - index of width cell
-     * @param i              - index of height cell
-     * @param screenDistance - the distance between the camera and the view plane
-     * @param screenWidth    - width of view plane in pixels
-     * @param screenHeight   - height of view plane in pixels
-     * @return - a list of rays that contains the beam of rays
-     */
-    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, double screenDistance, double screenWidth, double screenHeight) {
-        Ray ray = constructRayThroughPixel(nX, nY, j, i/*, screenDistance, screenWidth, screenHeight*/);
-        Point3D pij = ray.getPoint(screenDistance / (vTo.dotProduct(ray.getDirection())));
-        Point3D f = ray.getPoint((_focalDistance + screenDistance) / (vTo.dotProduct(ray.getDirection())));//focal point
-        List<Ray> result = Ray.rayRandomBeam(pij, f, _aperture, _numOfRays, vRight, vUp);
-        result.add(new Ray(pij, ray.getDirection()));
-        return result;
-    }
 }
