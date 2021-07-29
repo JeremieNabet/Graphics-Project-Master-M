@@ -1,138 +1,165 @@
 package primitives;
 
+import geometries.Intersectable.GeoPoint;
+
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static geometries.Intersectable.GeoPoint;
-
-
-import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
- * Ray class. with one point and one vector.
- *
- * @author Jeremie Nabet and Israel Bellaiche
+ * class Ray is the basic class representing a ray for Cartesian
+ * coordinate system.
  */
-
 public class Ray {
     /**
-     * the point p0 of the ray
+     * DELTA- represents a small move of rays point
+     */
+    private static final double DELTA = 0.1;
+
+    /**
+     * p0 begging point
      */
     private final Point3D p0;
     /**
-     * the direction vector of the ray
+     * dir direction
      */
     private final Vector dir;
-    /**
-     * Delta
-     */
-    private static final double DELTA =0.1;
+
 
     /**
-     * Constructor
-     * @param p0 the p0 point
-     * @param dir the direction's vector
+     * ray class c-tor
+     *
+     * @param p0  point3d
+     * @param dir vector
      */
     public Ray(Point3D p0, Vector dir) {
         this.p0 = p0;
         this.dir = dir.normalized();
     }
+
     /**
-     * Constructor
-     * @param point3D point
-     * @param lightDirection the direction light
-     * @param n vector n
-     */
-    public Ray(Point3D point3D, Vector lightDirection, Vector n) {
-        Vector delta = n.scale(n.dotProduct(lightDirection)>0?DELTA: -DELTA);
-        p0 = point3D.add(delta);
-        dir = lightDirection.normalized();
-    }
-    /**
-     * function get p0 of the Ray
+     * Ray c-tor receives a point and a vector and a normal vector
+     * moves of rays point on normal vector by DELTA
      *
-     * @return p0
+     * @param point
+     * @param dir
+     * @param n
+     */
+    public Ray(Point3D point, Vector dir, Vector n) {
+        Vector delta = n.scale(n.dotProduct(dir) > 0 ? DELTA : -DELTA);
+        Point3D p = point.add(delta);
+        p0 = p;
+        this.dir = dir.normalized();
+
+    }
+
+    /**
+     * getter
+     *
+     * @return point po
      */
     public Point3D getP0() {
         return p0;
     }
 
     /**
-     * function get direction of the Vector
+     * getter
      *
-     * @return dir
+     * @return vector Direction
      */
     public Vector getDirection() {
         return dir;
     }
 
     /**
-     * Calculate all the point on the Ray
-     * Take start point and additional his direction vector multiplication
-     * by scalar
-     *
-     * @param t he scalar - must be a positive value
-     * @return the all point that is on the Ray
+     * @param delta
+     * @return point po * scale
      */
-    public Point3D getPoint(double t) {
-        if (!isZero(alignZero(t))){
-            return p0.add(dir.scale(alignZero(t)));
+    public Point3D getPoint(double delta) {
+        if (isZero(delta)) {
+            return p0;
         }
-        return p0;
+        return p0.add(dir.scale(delta));
     }
 
     /**
-     * Find the closest Point to Ray origin
-     * Find the point with minimal distance from the
-     * ray head point and return it
-     *
-     * @param pointsList intersections point List
-     * @return closest point
+     * @param points
+     * @return the closest geoPoint to the point _p0
      */
-    public Point3D findClosestPoint(List<Point3D> pointsList) {
-        if (pointsList == null)
-            return null;
-        return findClosestGeoPoint( //
-                pointsList.stream().map(p -> new GeoPoint(null, p)).collect(Collectors.toList()) //
-        ).point;
-    }
-
-    /**
-     * Find the closest Point to list of point origin
-     * Find the point with minimal distance from the
-     * ray head point and return it
-     *
-     * @param geoPointList intersections point List
-     * @return closest point
-     */
-    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointList) {
-        if (geoPointList == null) return null;
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
         GeoPoint minPoint = null;
+        if (points == null) {
+            return null;
+        }
         double distance = Double.POSITIVE_INFINITY;
-        for (var geoPoint : geoPointList) {
-            double temp = geoPoint.point.distance(p0);
+        for (GeoPoint geo : points) {
+            double temp = geo.point.distance(p0);
             if (temp < distance) {
                 distance = temp;
-                minPoint = geoPoint;
+                minPoint = geo;
             }
         }
         return minPoint;
     }
 
-    /*************** Admin *****************/
+    /**
+     * @param points intersection points with the ray
+     * @return the closest point to the point _p0
+     */
+    public Point3D findClosestPoint(List<Point3D> points) {
+        Point3D minPoint = null;
+        if (points == null) {
+            return null;
+        }
+        double distance = Double.POSITIVE_INFINITY;
+        for (Point3D p : points) {
+            double temp = p.distance(p0);
+            if (temp < distance) {
+                distance = temp;
+                minPoint = p;
+            }
+        }
+        return minPoint;
+    }
+
+    /**
+     * function that creates a beam of rays in random positions. all the rays point to one point
+     *
+     * @param center    - the center of the base of the beam
+     * @param target    - the target point that all rays point to
+     * @param rad       - the radius of the base of the beam
+     * @param numOfRays - number of rays that will be created
+     * @param vRight    - a vector orthogonal to the original ray
+     * @param vUp       -  a vector orthogonal to the original ray and the right vector
+     * @return - a list that contains all the new rays
+     */
+    public static List<Ray> rayRandomBeam(Point3D center, Point3D target, double rad, int numOfRays, Vector vRight, Vector vUp) {
+        List<Ray> result = new LinkedList<>();
+        for (int k = 0; k < numOfRays; k++) {
+            double x = Math.random() * 2 * rad + rad;
+            double cosX = Math.sqrt(rad - x * x);
+            double y = Math.random() * 2 * cosX + cosX;
+            Point3D pC = center.add(vRight.scale(x));//a point on view plane around the pixel
+            pC = pC.add(vUp.scale(y));
+            Ray focalRay = new Ray(pC, target.subtract(pC));
+            result.add(focalRay);
+        }
+        return result;
+    }
+
+
+    /**
+     * override func checks if two rays are equal
+     *
+     * @param o
+     * @return true if its equal
+     */
     @Override
     public boolean equals(Object o) {
-        if (o == null) return false;
         if (this == o) return true;
-        if (!(o instanceof Ray)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Ray ray = (Ray) o;
         return p0.equals(ray.p0) && dir.equals(ray.dir);
     }
-
-    @Override
-    public String toString() {
-        return "Ray{" + "p0=" + p0 + ", dir=" + dir + '}';
-    }
-
 }

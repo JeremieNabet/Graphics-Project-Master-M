@@ -35,7 +35,7 @@ public class CameraRayIntersectionsIntegrationTests {
      */
     @Test
     public void cameraRaySphereIntegration(){
-        Camera.CameraBuilder cameraBuilder1 = new Camera.CameraBuilder(Point3D.ZERO,
+        Camera.CameraBuilder cameraBuilder1 = new Camera.CameraBuilder(Point3D.PointZERO,
                 new Vector(0,0,-1),
                 new Vector(0,-1,0))
                 .setViewPlaneSize(3,3)
@@ -93,7 +93,7 @@ public class CameraRayIntersectionsIntegrationTests {
     public void cameraRayPlaneIntegration(){
         Camera.CameraBuilder cameraBuilder =
                 new Camera.CameraBuilder(
-                        Point3D.ZERO,
+                        Point3D.PointZERO,
                         new Vector(0,0,-1),
                         new Vector(0,-1,0))
                         .setViewPlaneSize(3,3)
@@ -135,7 +135,7 @@ public class CameraRayIntersectionsIntegrationTests {
     public void cameraRayTriangleIntegration(){
         Camera.CameraBuilder cameraBuilder =
                 new Camera.CameraBuilder(
-                        Point3D.ZERO,
+                        Point3D.PointZERO,
                         new Vector(0,0,-1),
                         new Vector(0,-1,0))
                         .setViewPlaneSize(3,3)

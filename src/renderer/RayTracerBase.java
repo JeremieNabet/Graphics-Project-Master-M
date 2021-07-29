@@ -4,6 +4,8 @@ import primitives.Color;
 import primitives.Ray;
 import scene.Scene;
 
+import java.util.List;
+
 /**
  * allows me to draw my base of my rays
  */
@@ -31,4 +33,6 @@ public abstract class RayTracerBase {
      */
     public abstract Color traceRay(Ray ray);
 
+
+    public abstract Color traceRays(List<Ray> rayList);
 }

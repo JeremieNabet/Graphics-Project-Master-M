@@ -1,89 +1,164 @@
 package primitives;
 
-import static primitives.Util.alignZero;
+import static primitives.Util.random;
 
 /**
- * point3D class with 3 coordinates.
- * @author Israel Bellcaiche and Jeremie Nabet
+ * class Point3D is the basic class representing a point for Cartesian
+ * coordinate system.
  */
 public class Point3D {
-
     /**
-     * x coordinate of the point
+     * Points in 3D space according to the axes
      */
     final Coordinate x;
-    /**
-     * y coordinate of the point
-     */
     final Coordinate y;
-    /**
-     * z coordinate of the point
-     */
     final Coordinate z;
-
     /**
-     * Point of coordinate system center
+     * static filed to get the "zero point"
      */
-    public static final Point3D ZERO = new Point3D(0d, 0d, 0d);
+    public static Point3D PointZERO = new Point3D(0, 0, 0);
+
 
     /**
-     * primary constructor for Point3D
+     * c-tor of point3D class that gets 3 coordinates
      *
-     * @param x coordinate value for X axis
-     * @param y coordinate value for Y axis
-     * @param z coordinate value for Z axis
+     * @param x coordinate for x axis
+     * @param y coordinate for y axis
+     * @param z coordinate for z axis
+     */
+    public Point3D(Coordinate x, Coordinate y, Coordinate z) {
+        this(x.coord, y.coord, z.coord);
+    }
+
+    /**
+     * primary c-tor
+     *
+     * @param x coordinate for x axis
+     * @param y coordinate for y axis
+     * @param z coordinate for z axis
      */
     public Point3D(double x, double y, double z) {
         this.x = new Coordinate(x);
         this.y = new Coordinate(y);
         this.z = new Coordinate(z);
+
     }
 
+
     /**
-     * The function creates a new point as a result of moving this point by a vector
+     * Checks if two points are equal
      *
-     * @param v vector to add to the point
-     * @return new moved point
+     * @param o
+     * @return
      */
-    public Point3D add(Vector v) {
-        return new Point3D(//
-                (this.x.coord + v.head.x.coord),
-                (this.y.coord + v.head.y.coord),
-                (this.z.coord + v.head.z.coord));
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point3D point3D = (Point3D) o;
+        return x.equals(point3D.x) && y.equals(point3D.y) && z.equals(point3D.z);
     }
 
     /**
-     * subtract point from the vector.
-     * @param point3D the point whom subtract.
-     * @return vector - point.
-     */
-    public Vector subtract(Point3D point3D) {
-        return new Vector( //
-                alignZero(this.x.coord - point3D.x.coord),
-                alignZero(this.y.coord - point3D.y.coord),
-                alignZero(this.z.coord - point3D.z.coord));
-    }
-
-    /**
-     *calculates the distance squared between two points
-     * @param point3D point3D.
-     * @return distance squared.
+     * @param point3D
+     * @return distanceSquared of a point
      */
     public double distanceSquared(Point3D point3D) {
-        double dx = this.x.coord - point3D.x.coord;
-        double dy = this.y.coord - point3D.y.coord;
-        double dz = this.z.coord - point3D.z.coord;
-        return dx * dx + dy * dy + dz * dz;
+        final double x1 = x.coord;
+        final double y1 = y.coord;
+        final double z1 = z.coord;
+        final double x2 = point3D.x.coord;
+        final double y2 = point3D.y.coord;
+        final double z2 = point3D.z.coord;
+
+        return ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) + (z2 - z1) * (z2 - z1));
     }
 
     /**
-     * Distance between this point and another point
-     *
-     * @param point3D another point
-     * @return the calculated distance
+     * @param point3D
+     * @return distance
      */
     public double distance(Point3D point3D) {
         return Math.sqrt(distanceSquared(point3D));
+    }
+
+    /**
+     * @param vector
+     * @return the sum of point and a vector
+     */
+    public Point3D add(Vector vector) {
+        return new Point3D(
+                this.x.coord + vector.head.x.coord,
+                this.y.coord + vector.head.y.coord,
+                this.z.coord + vector.head.z.coord);
+    }
+
+    /**
+     * @param point3D
+     * @return subtract between point and vector
+     */
+    public Vector subtract(Point3D point3D) {
+        if (point3D.equals(this)) {
+            throw new IllegalArgumentException("cannot create Vector to Point(0,0,0)");
+        }
+        return new Vector(
+                x.coord - point3D.x.coord,
+                y.coord - point3D.y.coord,
+                z.coord - point3D.z.coord
+        );
+    }
+
+    /**
+     * Function to the center of the square,<br>
+     * which receives a square,<br>
+     * and returns a random point on the square
+     *
+     * @param dir    The normal exiting the square,<br>
+     *               together with the radius or height and length representing the
+     *               square,
+     * @param width  of the square
+     * @param height of the square
+     * @return Returns a random point on the square
+     */
+    public Point3D randomPointOnRectangle(Vector dir, double width, double height) {
+        Vector firstNormal = dir.createOrthogonalVector();
+        Vector secondNormal = firstNormal.crossProduct(dir).normalize();
+        Point3D randomCirclePoint = this;
+        double r;
+        double wHalf = width / 2;
+        r = random(0, wHalf);
+        double x = random(-r, r);
+        double hHalf = height / 2;
+        r = random(0, hHalf);
+        double y = random(-r, r);
+        if (x != 0)
+            randomCirclePoint = randomCirclePoint.add(firstNormal.scale(x));
+        if (y != 0)
+            randomCirclePoint = randomCirclePoint.add(secondNormal.scale(y));
+        return randomCirclePoint;
+    }
+
+    /**
+     * find the Absolute minimum Coordinate
+     *
+     * @return if Coordinate x is minimum return 'x'<br>
+     * if Coordinate y is minimum return 'y'<br>
+     * if Coordinate z is minimum return 'z'<br>
+     * if all Coordinates are equal return 'x'
+     */
+    public char findAbsoluteMinimumCoordinate() {
+        double minimum = this.x.coord < 0 ? -this.x.coord : this.x.coord; // abs(x)
+        char index = 'x';
+        double y = this.y.coord < 0 ? -this.y.coord : this.y.coord; // abs(y)
+        if (y < minimum) {
+            minimum = y;
+            index = 'y';
+        }
+        double z = this.z.coord < 0 ? -this.z.coord : this.z.coord; // abs(z)
+        if (z < minimum) {
+            index = 'z';
+        }
+        return index;
     }
 
     /**
@@ -112,21 +187,4 @@ public class Point3D {
     public double getZ() {
         return z.coord;
     }
-
-
-    /*************** Admin *****************/
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) return false;
-        if (this == o) return true;
-        if (!(o instanceof Point3D)) return false;
-        Point3D p = (Point3D) o;
-        return x.equals(p.x) && y.equals(p.y) && z.equals(p.z);
-    }
-
-    @Override
-    public String toString() {
-        return "(" + x + "," + y + "," + z + ")";
-    }
-
 }

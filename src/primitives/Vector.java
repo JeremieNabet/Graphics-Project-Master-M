@@ -1,150 +1,184 @@
 package primitives;
 
-/**
- * Vector class implements a 3-dimensional vector in Cartesian Coordinate System
- */
+import java.util.Objects;
+
+import  static primitives.Point3D.PointZERO;
+
 public class Vector {
-    /**
-     * The head point about the vector
-     */
     Point3D head;
 
     /**
-     * primary constructor for Vector class
-     * first constructor, we receive 3 double
+     * primary used c-tor
+     * @param head point3d
+     */
+    public Vector(Point3D head) {
+
+        if (head.equals(PointZERO)) {
+            throw new IllegalArgumentException("head cannot be Point(0,0,0)");
+        }
+        this.head = head;
+    }
+
+    /**
+     * c-tor for x, y, z coordinates
+     * @param x coordinate for x axis
+     * @param y coordinate for y axis
+     * @param z coordinate for z axis
      */
     public Vector(double x, double y, double z) {
-        this(new Point3D(x, y, z));
+        this(new Point3D( x,y,z));
+    }
+
+    public Vector(Coordinate x, Coordinate y, Coordinate z) {
+        this(new Point3D(x,y,z));
+    }
+
+    public Point3D getHead() {
+        return new Point3D(head.x, head.y, head.z);
     }
 
     /**
-     * second constructor, we receive on point 3D
-     * that is not the vector 0
-     */
-    public Vector(Point3D p) {
-        if (Point3D.ZERO.equals(p))
-            throw new IllegalArgumentException("Zero vector is not allowed");
-        this.head = p;
-    }
-
-    /**
-     * we use to the function add of the point 3D who compose the vector that we received
      *
      * @param vector
-     * @return
+     * @return sum of two vectors
      */
     public Vector add(Vector vector) {
-        return new Vector(this.head.add(vector));
+        return new Vector(
+                this.head.x.coord + vector.head.x.coord,
+                this.head.y.coord + vector.head.y.coord,
+                this.head.z.coord + vector.head.z.coord);
     }
 
     /**
-     * we use to the function subtract of the point 3D who compose the vector that we received
      *
      * @param vector
-     * @return
+     * @return subtract between two vectors
      */
     public Vector subtract(Vector vector) {
-        return this.head.subtract(vector.head);
+        return new Vector(
+                this.head.x.coord - vector.head.x.coord,
+                this.head.y.coord - vector.head.y.coord,
+                this.head.z.coord - vector.head.z.coord);
     }
 
     /**
-     * if vector b is collineary with our vector than exception
+     *
+     * @param scalar
+     * @return double a scalar with a vector
      */
-    public Vector crossProduct(Vector vector) {
-        return new Vector((this.head.y.coord * vector.head.z.coord) - (this.head.z.coord * vector.head.y.coord)
-                , (this.head.z.coord * vector.head.x.coord) - (this.head.x.coord * vector.head.z.coord),
-                (this.head.x.coord * vector.head.y.coord) - (this.head.y.coord * vector.head.x.coord));
+    public Vector scale(double scalar) {
+        if(scalar * this.head.x.coord==0&&scalar * this.head.y.coord==0&&scalar * this.head.z.coord==0){
+            int wt;
+        }
+        return new Vector(
+                scalar * this.head.x.coord,
+                scalar * this.head.y.coord,
+                scalar * this.head.z.coord);
     }
 
     /**
-     * This function allows me to multiply the coordinates of
-     * the vector received
-     * with the vector I have, and add them together
-     * Xa*Xb+Ya*Yb+Za*Zb
      *
      * @param vector
-     * @return the product (double)
+     * @return dotProduct between two vectors
      */
-    public double dotProduct(Vector vector) {
-        return ((this.head.x.coord * vector.head.x.coord) + //
-                (this.head.y.coord * vector.head.y.coord) + //
-                (this.head.z.coord * vector.head.z.coord));
+    public Double dotProduct(Vector vector) {
+        return  (vector.head.x.coord * this.head.x.coord+
+                vector.head.y.coord * this.head.y.coord+
+                vector.head.z.coord * this.head.z.coord);
     }
 
     /**
-     * calculates the squared length of the vector.
      *
-     * @return vector's squared length..
+     * @param vector
+     * @return crossProduct between two vectors
+     */
+    public Vector crossProduct(Vector vector) {
+        return new Vector(
+                this.head.y.coord * vector.head.z.coord - this.head.z.coord * vector.head.y.coord,
+                this.head.z.coord * vector.head.x.coord - this.head.x.coord * vector.head.z.coord,
+                this.head.x.coord * vector.head.y.coord - this.head.y.coord * vector.head.x.coord);
+    }
+
+    /**
+     *
+     * @return length Squared of vector
      */
     public double lengthSquared() {
-        return (this.head.x.coord) * (this.head.x.coord) //
-                + (this.head.y.coord) * (this.head.y.coord) //
-                + (this.head.z.coord) * (this.head.z.coord);
+        return this.head.distanceSquared(PointZERO);
     }
 
     /**
-     * the length about the vector
      *
-     * @return te length
+     * @return length of vector
      */
     public double length() {
-        return Math.sqrt(lengthSquared());
+        return Math.sqrt(this.lengthSquared());
     }
 
     /**
-     * A normalize operation that
      *
-     * @return this
+     * @return thw class vector after normal
      */
     public Vector normalize() {
-        double len = length();
-        head = new Point3D(this.head.x.coord / len, this.head.y.coord / len, this.head.z.coord / len);
+        double length = this.length();
+        head = new Point3D(
+                (this.head.x.coord) / length,
+                (this.head.y.coord) / length,
+                (this.head.z.coord) / length);
         return this;
     }
 
     /**
-     * we return a new vector that is multiplicative all
-     * coordinate of the point 3 D  of our vector
-     */
-    public Vector scale(double scalar) {
-        return new Vector( //
-                (scalar * this.head.x.coord), //
-                (scalar * this.head.y.coord), //
-                (scalar * this.head.z.coord));
-    }
-
-    /**
-     * A normalized operation that
      *
-     * @return a new vector
+     * @return the normal
      */
     public Vector normalized() {
-        return new Vector(this.head).normalize();
+        double length = this.length();
+        return new Vector(
+                (this.head.x.coord) / length,
+                (this.head.y.coord) / length,
+                (this.head.z.coord) / length);
     }
-
 
     /**
-     * function getHead to have the the head about the vector
+     * override func checks if two vectors are equal
      *
-     * @return head
+     * @param o
+     * @return true if its equal
      */
-    public Point3D getHead() {
-        return head;
-    }
-
-    /*************** Admin *****************/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null) return false;
-        if (!(o instanceof Vector)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Vector vector = (Vector) o;
         return head.equals(vector.head);
     }
 
     @Override
-    public String toString() {
-        return "Vector{" + "head=" + head + '}';
+    public int hashCode() {
+        return Objects.hash(head);
     }
 
+    /**
+     * This function return a Vertical Vector to "this" vector <br>
+     * (this) most be normalized!!!
+     *
+     * @return normal vector Vertical to this
+     */
+    public Vector createOrthogonalVector() {
+        double x = head.x.coord, y = head.y.coord, z = head.z.coord;
+        switch (head.findAbsoluteMinimumCoordinate()) {
+            case 'x': {
+                return new Vector(0, -z, y).normalize();
+            }
+            case 'y': {
+                return new Vector(-z, 0, x).normalize();
+            }
+            case 'z': {
+                return new Vector(y, -x, 0).normalize();
+            }
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + head.findAbsoluteMinimumCoordinate());
+        }
+    }
 }

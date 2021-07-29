@@ -33,7 +33,7 @@ class RayTest {
                 "ERROR - TC02: Zero-point. bad calculate for target point");
     }
 
-    Ray ray = new Ray(Point3D.ZERO, new Vector(0, 0, 1));
+    Ray ray = new Ray(Point3D.PointZERO, new Vector(0, 0, 1));
 
     /**
      * Test method for {@link primitives.Ray#findClosestPoint(List)}.

@@ -3,6 +3,10 @@ package elements;
 
 import primitives.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import static primitives.Ray.rayRandomBeam;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -46,11 +50,25 @@ public class Camera {
      * the distance between the camera and the view plane
      */
     private double distance;
+    /**
+     * Also serves as a Boolean variable whether or not this image improvement<br>
+     * num Of Ray For Anti Aliasing sharping the Edges
+     */
+    private int numOfRayForAntiAliasing = 0;
+
+    /*
+     *  focalDistance - the distance of the  focus.
+     *  aperture      - the radius of the aperture.
+     *  numOfRays     - number of rays that will be in the beam from every pixels area (in addition to the original ray).
+     */
+    private double _focalDistance;
+    private double _aperture;
+    private int _numOfRays;
 
     /**
      * ctor
      */
-    private Camera(CameraBuilder builder) {
+    public Camera(CameraBuilder builder) {
         p0 = builder._p0;
         vTo = builder._vTo;
         vUp = builder._vUp;
@@ -58,6 +76,36 @@ public class Camera {
         height = builder._height;
         width = builder._width;
         distance = builder._distance;
+    }
+
+    /**
+     * @param p0  location of the camera
+     * @param vUp y
+     * @param vTo z
+     */
+    public Camera(Point3D p0, Vector vTo, Vector vUp) {
+        this.p0 = p0;
+        this.vUp = vUp.normalized();
+        this.vTo = vTo.normalized();
+        if (!isZero(vUp.dotProduct(vTo))) {
+            throw new IllegalArgumentException("Vectors are not ortogonal.");
+        }
+        this.vRight = this.vTo.crossProduct(this.vUp);
+    }
+
+    /**
+     * setter of Depth of filed. if Depth of filed function is called the camera will be focused for a specific distance.
+     * if Depth of filed will not be called the camera will be focused on the whole scene equally.
+     *
+     * @param focalDistance - the distance of the  focus.
+     * @param aperture      - the radius of the aperture.
+     * @param numOfRays     - number of rays that will be in the beam from every pixels area (in addition to the original ray).
+     */
+    public Camera setDepthOfFiled(double focalDistance, double aperture, int numOfRays) {
+        _focalDistance = focalDistance;
+        _aperture = aperture;
+        _numOfRays = numOfRays;
+        return this;
     }
 
     /**
@@ -126,9 +174,47 @@ public class Camera {
     }
 
     /**
-     * WE need to check if Dan accept this class
-     * because we found this on Eliezer's github
+     * @param numOfRayForAntiAlias the number of ray
      */
+    public Camera setNumOfRayForAntiAliasing(int numOfRayForAntiAlias) {
+        if (numOfRayForAntiAliasing < 0)
+            throw new IllegalArgumentException("num Of Ray For Anti Aliasing cant be less then 0!");
+        this.numOfRayForAntiAliasing = numOfRayForAntiAlias;
+        return this;
+
+    }
+
+    public double getAperture() {
+        return _aperture;
+    }
+
+    public int getNumOfRays() {
+        return _numOfRays;
+    }
+
+    public double getFocalDistance() {
+        return _focalDistance;
+    }
+
+    /**
+     * builds a beam of Rays from the area of a pixel through a specific point on the focal plane
+     *
+     * @param nX             - number of cells left to right
+     * @param nY             - number of cells up to down
+     * @param j              - index of width cell
+     * @param i              - index of height cell
+     * @return - a list of rays that contains the beam of rays
+     */
+    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
+        Ray ray = constructRayThroughPixel(nX, nY, j, i);
+        Point3D pij = ray.getPoint(distance / (vTo.dotProduct(ray.getDirection())));
+        Point3D f = ray.getPoint((_focalDistance + distance) / (vTo.dotProduct(ray.getDirection())));//focal point
+        List<Ray> result = rayRandomBeam(pij, f, _aperture, _numOfRays, vRight, vUp);
+        result.add(new Ray(pij, ray.getDirection()));
+        return result;
+    }
+
+
     public static class CameraBuilder {
         final private Point3D _p0;
         final private Vector _vTo;
@@ -193,60 +279,73 @@ public class Camera {
             return this;
         }
 
-        /**
-         * Upwards vector getter
-         *
-         * @return upwards vector
-         */
-        public Vector getVUp() {
-            return _vUp;
+    }
+
+    /**
+     * construct beam of Ray Through Pixel form location of camera F
+     *
+     * @param ray for center ray
+     * @param nX  depend hoe pixel we wont row
+     * @param nY  depend hoe pixel we wont column
+     * @return List<Ray> form radius For Anti Aliesing towards the center of
+     * pixel<br>
+     */
+    public List<Ray> constructBeamRayForAntiAliesing(Ray ray, int nX, int nY) {
+        List<Ray> splittedRays = new LinkedList<>();
+        Point3D centerCirclePoint = null;
+        double t = distance / (vTo.dotProduct(ray.getDirection()));
+        double distance = p0.distance(ray.getPoint(t));
+        try {
+            centerCirclePoint = ray.getPoint(distance);
+        } catch (Exception e) {
+            centerCirclePoint = p0;
         }
-
-        /**
-         * vto vector getter
-         *
-         * @return vto vector
-         */
-        public Vector getVTo() {
-            return _vTo;
+        Point3D randomCirclePoint = null;
+        Vector dir = ray.getDirection();
+        for (int i = 0; i < numOfRayForAntiAliasing; i++) {
+            randomCirclePoint = centerCirclePoint.randomPointOnRectangle(dir, width / nX, height / nY);
+            Vector v = randomCirclePoint.subtract(p0);
+            splittedRays.add(new Ray(p0, v));
         }
+        return splittedRays;
+    }
 
-        /**
-         * right vector getter
-         *
-         * @return right vector
-         */
-        public Vector getVRight() {
-            return _vRight;
-        }
+    /**
+     * construct Ray Through Pixel form location of camera F
+     *
+     * @param nX depend hoe pixel we wont row
+     * @param nY depend hoe pixel we wont column
+     * @param j  Rows
+     * @param i  Columns
+     * @return Ray form location towards the center of pixel
+     */
+    public List<Ray> constructBeamRay(int nX, int nY, int j, int i) {
+        Ray ray = constructRayThroughPixel(nX, nY, j, i);
+        List<Ray> rays = new LinkedList<>();
+        if (numOfRayForAntiAliasing > 0)
+            rays.addAll(constructBeamRayForAntiAliesing(ray, nX, nY));
 
-        /**
-         * width vector getter
-         *
-         * @return width vector
-         */
-        public double getWidth() {
-            return _width;
-        }
-
-        /**
-         * height vector getter
-         *
-         * @return height vector
-         */
-        public double getHeight() {
-            return _height;
-        }
-
-        /**
-         * distance vector getter
-         *
-         * @return distance vector
-         */
-        public double getDistance() {
-            return _distance;
-        }
-
-
+        rays.add(ray);
+        return rays;
+    }
+    /**
+     * builds a beam of Rays from the area of a pixel through a specific point on the focal plane
+     *
+     * @param nX             - number of cells left to right
+     * @param nY             - number of cells up to down
+     * @param j              - index of width cell
+     * @param i              - index of height cell
+     * @param screenDistance - the distance between the camera and the view plane
+     * @param screenWidth    - width of view plane in pixels
+     * @param screenHeight   - height of view plane in pixels
+     * @return - a list of rays that contains the beam of rays
+     */
+    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, double screenDistance, double screenWidth, double screenHeight) {
+        Ray ray = constructRayThroughPixel(nX, nY, j, i/*, screenDistance, screenWidth, screenHeight*/);
+        Point3D pij = ray.getPoint(screenDistance / (vTo.dotProduct(ray.getDirection())));
+        Point3D f = ray.getPoint((_focalDistance + screenDistance) / (vTo.dotProduct(ray.getDirection())));//focal point
+        List<Ray> result = Ray.rayRandomBeam(pij, f, _aperture, _numOfRays, vRight, vUp);
+        result.add(new Ray(pij, ray.getDirection()));
+        return result;
     }
 }

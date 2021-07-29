@@ -1,87 +1,66 @@
 package primitives;
 
 /**
- * material class for shapes
- *
- * @author Jeremie Nabet and Israel Bellaiche
+ * class Material
  */
 public class Material {
-    public double kd;
-    public double ks;
-    public double kr;
-    public double kt;
-    /**
-     * How glossy the shape is
-     */
-    public int nShininess;
+    public double kD=0;
+    public double kS=0;
+    public int nShininess=0;
+    public double kT=0;
+    public double kR=0;
+
+
 
     /**
-     * Kd setter
-     *
-     * @param kd the kD given
-     * @return this
+     * setter
+     * @param kD
+     * @return material
      */
-    public Material setKd(double kd) {
-        this.kd = kd;
+    public Material setKd(double kD) {
+        this.kD = kD;
         return this;
     }
 
     /**
-     * @param ks the kS given
-     * @return this (for chaining)
+     * setter
+     * @param kS
+     * @return material
      */
-    public Material setKs(double ks) {
-        this.ks = ks;
-        return this;
+    public Material setKs(double kS) {
+        this.kS = kS;
+        return  this;
     }
 
     /**
-     * kd setter
-     *
-     * @param kr the kD given
-     * @return this
+     * setter
+     * @param nShininess
+     * @return material
      */
-    public Material setKr(double kr) {
-        this.kr = kr;
-        return this;
-    }
-
-    /**
-     * kd setter
-     *
-     * @param kt the kD given
-     * @return this
-     */
-    public Material setKt(double kt) {
-        this.kt = kt;
-        return this;
-    }
-
-
-    /**
-     * glossy shape setter
-     *
-     * @param nShininess given nShininess
-     * @return this
-     */
-    public Material setNShininess(int nShininess) {
+    public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
         return this;
     }
+
     /**
-     * Kr getter
-     * @return Kr
+     * setter
+     * @param kT
+     * @return material
      */
-    public double getKr() {
-        return kr;
+    public Material setKt(double kT) {
+        this.kT = kT;
+        return this;
     }
 
     /**
-     * Kt getter
-     * @return Kt
+     * setter
+     * @param kR
+     * @return material
      */
-    public double getKt() {
-        return kt;
+    public Material setKr(double kR) {
+        this.kR = kR;
+        return  this;
     }
+
 
 }

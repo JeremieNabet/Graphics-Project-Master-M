@@ -35,6 +35,19 @@ public class Scene {
     public List<LightSource> lights;
 
     /**
+     * c-tor
+     *
+     * @param name
+     */
+    public Scene(String name) {
+        this.ambientLight = new AmbientLight();
+        this.background = Color.BLACK;
+        this.name = name;
+        this.lights = new LinkedList<>();
+        this.geometries = new Geometries();
+    }
+
+    /**
      * Constructor
      *
      * @param sceneBuilder
@@ -43,7 +56,7 @@ public class Scene {
         this.name = sceneBuilder._name;
         this.background = sceneBuilder._background;
         this.ambientLight = sceneBuilder._ambientLight;
-        this.geometries = sceneBuilder._geometries;
+        this.geometries = sceneBuilder.geometries;
         this.lights = sceneBuilder._lights;
     }
 
@@ -66,11 +79,12 @@ public class Scene {
         /**
          * List of the shapes in the scene
          */
-        public Geometries _geometries;
+        public Geometries geometries = null;
         /**
          * list of light source in the scene
          */
         public List<LightSource> _lights;
+
 
         /**
          * Constructor
@@ -83,7 +97,6 @@ public class Scene {
             this._name = name;
             this._lights = new LinkedList<>();
         }
-
         /**
          * background setter
          *
@@ -94,7 +107,6 @@ public class Scene {
             this._background = background;
             return this;
         }
-
         /**
          * ambientLight setter
          *
@@ -105,7 +117,6 @@ public class Scene {
             this._ambientLight = ambientLight;
             return this;
         }
-
         /**
          * geometries setter
          *
@@ -113,7 +124,7 @@ public class Scene {
          * @return Scene
          */
         public SceneBuilder setGeometries(Geometries geometries) {
-            this._geometries = geometries;
+            this.geometries = geometries;
             return this;
         }
 
@@ -136,6 +147,26 @@ public class Scene {
         public Scene build() {
             return new Scene(this);
         }
+    }
+    /**
+     * background setter
+     *
+     * @param background the given background
+     * @return Scene
+     */
+    public Scene setBackground(Color background) {
+        this.background = background;
+        return this;
+    }
+    /**
+     * ambientLight setter
+     *
+     * @param ambientLight the given ambientLight
+     * @return Scene
+     */
+    public Scene setAmbientLight(AmbientLight ambientLight) {
+       this.ambientLight = ambientLight;
+      return this;
     }
 
 }
