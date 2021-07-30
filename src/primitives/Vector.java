@@ -2,13 +2,14 @@ package primitives;
 
 import java.util.Objects;
 
-import  static primitives.Point3D.PointZERO;
+import static primitives.Point3D.PointZERO;
 
 public class Vector {
     Point3D head;
 
     /**
      * primary used c-tor
+     *
      * @param head point3d
      */
     public Vector(Point3D head) {
@@ -21,16 +22,17 @@ public class Vector {
 
     /**
      * c-tor for x, y, z coordinates
+     *
      * @param x coordinate for x axis
      * @param y coordinate for y axis
      * @param z coordinate for z axis
      */
     public Vector(double x, double y, double z) {
-        this(new Point3D( x,y,z));
+        this(new Point3D(x, y, z));
     }
 
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
-        this(new Point3D(x,y,z));
+        this(new Point3D(x, y, z));
     }
 
     public Point3D getHead() {
@@ -38,7 +40,6 @@ public class Vector {
     }
 
     /**
-     *
      * @param vector
      * @return sum of two vectors
      */
@@ -50,7 +51,6 @@ public class Vector {
     }
 
     /**
-     *
      * @param vector
      * @return subtract between two vectors
      */
@@ -62,12 +62,11 @@ public class Vector {
     }
 
     /**
-     *
      * @param scalar
      * @return double a scalar with a vector
      */
     public Vector scale(double scalar) {
-        if(scalar * this.head.x.coord==0&&scalar * this.head.y.coord==0&&scalar * this.head.z.coord==0){
+        if (scalar * this.head.x.coord == 0 && scalar * this.head.y.coord == 0 && scalar * this.head.z.coord == 0) {
             int wt;
         }
         return new Vector(
@@ -77,18 +76,16 @@ public class Vector {
     }
 
     /**
-     *
      * @param vector
      * @return dotProduct between two vectors
      */
     public Double dotProduct(Vector vector) {
-        return  (vector.head.x.coord * this.head.x.coord+
-                vector.head.y.coord * this.head.y.coord+
+        return (vector.head.x.coord * this.head.x.coord +
+                vector.head.y.coord * this.head.y.coord +
                 vector.head.z.coord * this.head.z.coord);
     }
 
     /**
-     *
      * @param vector
      * @return crossProduct between two vectors
      */
@@ -100,7 +97,6 @@ public class Vector {
     }
 
     /**
-     *
      * @return length Squared of vector
      */
     public double lengthSquared() {
@@ -108,7 +104,6 @@ public class Vector {
     }
 
     /**
-     *
      * @return length of vector
      */
     public double length() {
@@ -116,7 +111,6 @@ public class Vector {
     }
 
     /**
-     *
      * @return thw class vector after normal
      */
     public Vector normalize() {
@@ -129,7 +123,6 @@ public class Vector {
     }
 
     /**
-     *
      * @return the normal
      */
     public Vector normalized() {

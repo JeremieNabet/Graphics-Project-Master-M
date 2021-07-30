@@ -46,7 +46,7 @@ public class DepthOfFieldTests {
                             .setEmission(new Color(0, 20, 0)) //
                             .setMaterial(new Material().setKd(1).setKs(1).setShininess(100)), //
 
-                    new Sphere(new Point3D(100 + -i * 100, -115,  i * 200), 15) //
+                    new Sphere(new Point3D(100 + -i * 100, -115, i * 200), 15) //
                             .setEmission(new Color(0, 0, 20)) //
                             .setMaterial(new Material().setKd(1).setKs(1).setShininess(100))//
 
@@ -54,14 +54,11 @@ public class DepthOfFieldTests {
             );
 
 
-
-
         }
 
 
-
         scene.lights.add(new DirectionalLight(new Color(50, 50, 50), new Vector(50, 180, 600)));
-        scene.lights.add(new DirectionalLight(new Color(20,0,20), new Vector(50, 180, 600)));
+        scene.lights.add(new DirectionalLight(new Color(20, 0, 20), new Vector(50, 180, 600)));
 
 
         Render render1 = new Render()

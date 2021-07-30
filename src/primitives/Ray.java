@@ -137,9 +137,9 @@ public class Ray {
     public static List<Ray> rayRandomBeam(Point3D center, Point3D target, double rad, int numOfRays, Vector vRight, Vector vUp) {
         List<Ray> result = new LinkedList<>();
         for (int k = 0; k < numOfRays; k++) {
-            double x = Math.random() * 2 * rad + rad;
+            double x = Math.random() * 2 * rad - rad;
             double cosX = Math.sqrt(rad - x * x);
-            double y = Math.random() * 2 * cosX + cosX;
+            double y = Math.random() * 2 * cosX - cosX;
             Point3D pC = center.add(vRight.scale(x));//a point on view plane around the pixel
             pC = pC.add(vUp.scale(y));
             Ray focalRay = new Ray(pC, target.subtract(pC));

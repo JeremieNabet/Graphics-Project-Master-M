@@ -82,39 +82,38 @@ public class ReflectionRefractionTests {
      */
 
     @Test
-    public void picture()
-    {
+    public void picture() {
 
-        Camera camera=new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera = new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0))
                 .setViewPlaneSize(200, 200).setDistance(1000);
         //scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
         scene.geometries.add(
 
                 new Sphere(new Point3D(-50, -70, 45), 30) //
-                        .setEmission(new Color(0,0,20)) //
+                        .setEmission(new Color(0, 0, 20)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(-50, -70, 45), 20) //
-                        .setEmission(new Color(0,0,20)) //
+                        .setEmission(new Color(0, 0, 20)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(0, -10, 20), 30) //
-                        .setEmission(new Color(0,20,0)) //
+                        .setEmission(new Color(0, 20, 0)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(0, -10, 20), 20) //
-                        .setEmission(new Color(0,20,0)) //
+                        .setEmission(new Color(0, 20, 0)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(50, 50, 45), 30) //
-                        .setEmission(new Color(20,0,0)) //
+                        .setEmission(new Color(20, 0, 0)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(50, 50, 45), 20) //
-                        .setEmission(new Color(20,0,0)) //
+                        .setEmission(new Color(20, 0, 0)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Plane(new Point3D(0, 0, 120), new Vector(0, 0, 1)) //
                         .setEmission(new Color(java.awt.Color.BLACK)) //
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(1200).setKt(0.8)) //
         );
 
-        scene.lights.add(new DirectionalLight(new Color(java.awt.Color.WHITE), new Vector(-1,0.3,1)));//
+        scene.lights.add(new DirectionalLight(new Color(java.awt.Color.WHITE), new Vector(-1, 0.3, 1)));//
 
         ImageWriter imageWriter = new ImageWriter("picture", 600, 600);
         Render render = new Render() //
@@ -132,37 +131,36 @@ public class ReflectionRefractionTests {
      */
 
     @Test
-    public void pictureMove()
-    {
-        Camera camera=new Camera(new Point3D(300, -10, -1800), new Vector(-0.1, 0, 0.8), new Vector(0, -1, 0))
+    public void pictureMove() {
+        Camera camera = new Camera(new Point3D(300, -10, -1800), new Vector(-0.1, 0, 0.8), new Vector(0, -1, 0))
                 .setViewPlaneSize(200, 200).setDistance(1000);
 
         scene.geometries.add(
 
                 new Sphere(new Point3D(-50, -70, 45), 30) //
-                        .setEmission(new Color(0,0,20)) //
+                        .setEmission(new Color(0, 0, 20)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(-50, -70, 45), 20) //
-                        .setEmission(new Color(0,0,20)) //
+                        .setEmission(new Color(0, 0, 20)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(0, -10, 20), 30) //
-                        .setEmission(new Color(0,20,0)) //
+                        .setEmission(new Color(0, 20, 0)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(0, -10, 20), 20) //
-                        .setEmission(new Color(0,20,0)) //
+                        .setEmission(new Color(0, 20, 0)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(50, 50, 45), 30) //
-                        .setEmission(new Color(20,0,0)) //
+                        .setEmission(new Color(20, 0, 0)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Sphere(new Point3D(50, 50, 45), 20) //
-                        .setEmission(new Color(20,0,0)) //
+                        .setEmission(new Color(20, 0, 0)) //
                         .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(100).setKt(0.6)), //
                 new Plane(new Point3D(0, 0, 120), new Vector(0, 0, 1)) //
                         .setEmission(new Color(java.awt.Color.BLACK)) //
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(1200).setKt(0.8)) //
         );
 
-        scene.lights.add(new DirectionalLight(new Color(java.awt.Color.WHITE), new Vector(-1,0.3,1)));//
+        scene.lights.add(new DirectionalLight(new Color(java.awt.Color.WHITE), new Vector(-1, 0.3, 1)));//
 
         ImageWriter imageWriter = new ImageWriter("pictureMove", 600, 600);
         Render render = new Render() //

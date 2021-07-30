@@ -28,7 +28,6 @@ public class BasicRayTracer extends RayTracerBase {
     private static final double INITIAL_K = 1.0;
 
 
-
     public BasicRayTracer(Scene scene) {
         super(scene);
     }
@@ -56,6 +55,7 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Calculate the average of a color in a point
+     *
      * @param rays-the beam of ray of the specific pixel
      * @return color
      */
@@ -70,12 +70,12 @@ public class BasicRayTracer extends RayTracerBase {
     }
 
 
-
     /**
      * call to the recursive func calcColor
      * returns the color
+     *
      * @param closestPoint-The closest point to the head of the ray
-     * @param ray-the ray of the specific pixel
+     * @param ray-the          ray of the specific pixel
      * @return color
      */
     private Color calcColor(GeoPoint closestPoint, Ray ray) {
@@ -88,8 +88,8 @@ public class BasicRayTracer extends RayTracerBase {
      * Fill environmental lighting color of the scene by call to calcLocalEffects and calcGlobalEffects
      *
      * @param intersection-The closest point to the head of the ray
-     * @param ray-the ray of the specific pixel
-     * @param level-the level of the recursion
+     * @param ray-the          ray of the specific pixel
+     * @param level-the        level of the recursion
      * @param k
      * @return
      */
@@ -107,7 +107,7 @@ public class BasicRayTracer extends RayTracerBase {
      * 𝒌𝑨 ∙ 𝑰𝑨 + 𝑰𝑬 +∑(𝒌𝑫∙|𝒍𝒊 ∙ 𝒏| + 𝒌𝑺 (∙ 𝒎𝒂𝒙 (𝟎, −𝒗 ∙ 𝒓))∙𝒏𝒔𝒉)∙ 𝑰𝑳𝒊 ∙𝑺𝒊
      *
      * @param geopoint-The closest point to the head of the ray
-     * @param ray-the ray of the specific pixel
+     * @param ray-the      ray of the specific pixel
      * @param k
      * @return
      */
@@ -148,12 +148,12 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * calculates the specular light on geometry
      *
-     * @param ks-the coefficient of specular
-     * @param l-color's direction
-     * @param n-geometry's normal
-     * @param v-ray's direction
+     * @param ks-the               coefficient of specular
+     * @param l-color's            direction
+     * @param n-geometry's         normal
+     * @param v-ray's              direction
      * @param nShininess-Shininess of the point
-     * @param lightIntensity-the intensity of the light at the point
+     * @param lightIntensity-the   intensity of the light at the point
      * @return
      */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, double nShininess, Color lightIntensity) {
@@ -168,9 +168,9 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * calculates the diffusion of the light on the touched area
      *
-     * @param kd-the coefficient of diffusive
-     * @param l-color's direction
-     * @param n-geometry's normal
+     * @param kd-the             coefficient of diffusive
+     * @param l-color's          direction
+     * @param n-geometry's       normal
      * @param lightIntensity-the intensity of the light at the point
      * @return the color
      */
@@ -183,8 +183,9 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * Calculate shadow at point by by finding all the point that this ray meets in the scene,
      * and if there are no points then there is a shadow
-     *@param light-the light source of the scene
-     * @param l-color's direction
+     *
+     * @param light-the    light source of the scene
+     * @param l-color's    direction
      * @param n-geometry's normal
      * @param geopoint-The closest point to the head of the ray
      * @return true or false if there is a shadow
@@ -209,11 +210,12 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Calculate shadow at point
-     * @param light-the light source of the scene
-     * @param l-color's direction
+     *
+     * @param light-the    light source of the scene
+     * @param l-color's    direction
      * @param n-geometry's normal
      * @param geopoint-the closest point to the head of the ray
-     * @return  true or false if there is a shadow
+     * @return true or false if there is a shadow
      */
     private boolean unshaded2(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
         Vector lightDirection = l.scale(-1); // from point to light source
@@ -231,8 +233,8 @@ public class BasicRayTracer extends RayTracerBase {
      * Calculate the  Reflection and transparency by calling for funcs constructReflectedRay and  constructRefractedRay
      * 𝒌𝑹 ∙ 𝑰𝑹 + 𝒌𝑻 ∙𝑰𝑻
      *
-     * @param gp-he closest point to the head of the ray
-     * @param v-ray's direction
+     * @param gp-he     closest point to the head of the ray
+     * @param v-ray's   direction
      * @param level-the level of the recursion
      * @param k
      * @return color
@@ -256,7 +258,7 @@ public class BasicRayTracer extends RayTracerBase {
      * called by calcGlobalEffect for Calculating the Reflection and transparency
      *
      * @param ray-refraction ray
-     * @param level-the level of the recursion
+     * @param level-the      level of the recursion
      * @param kx
      * @param kkx
      * @return
@@ -270,8 +272,8 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * constructs the refraction ray
      *
-     * @param point-the closest point to the head of the ray
-     * @param v-ray's direction
+     * @param point-the    closest point to the head of the ray
+     * @param v-ray's      direction
      * @param n-geometry's normal
      * @return ray
      */
@@ -282,8 +284,9 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * Calculation of a reflected ray
      * 𝒓 = 𝒗 − 𝟐 ∙ (𝒗 ∙ 𝒏 )∙𝒏
-     * @param point-the closest point to the head of the ray
-     * @param v-ray's direction
+     *
+     * @param point-the    closest point to the head of the ray
+     * @param v-ray's      direction
      * @param n-geometry's normal
      * @return ray
      */
@@ -308,8 +311,9 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Calculate the shadowing
-     * @param light-the light source of the scene
-     * @param l-color's direction
+     *
+     * @param light-the    light source of the scene
+     * @param l-color's    direction
      * @param n-geometry's normal
      * @param geopoint-the closest point to the head of the ray
      * @return Shadow coefficient
@@ -329,9 +333,6 @@ public class BasicRayTracer extends RayTracerBase {
         }
         return ktr;
     }
-
-
-
 
 
 }

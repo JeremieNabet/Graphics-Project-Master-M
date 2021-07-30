@@ -21,6 +21,7 @@ public class Triangle extends Polygon {
         super(pointA, pointB, pointC);
     }
 
+
     @Override
     public String toString() {
         return "Triangle{" + "vertices=" + vertices + ", plane=" + plane + '}';

@@ -97,6 +97,7 @@ public class Scene {
             this._name = name;
             this._lights = new LinkedList<>();
         }
+
         /**
          * background setter
          *
@@ -107,6 +108,7 @@ public class Scene {
             this._background = background;
             return this;
         }
+
         /**
          * ambientLight setter
          *
@@ -117,6 +119,7 @@ public class Scene {
             this._ambientLight = ambientLight;
             return this;
         }
+
         /**
          * geometries setter
          *
@@ -148,6 +151,7 @@ public class Scene {
             return new Scene(this);
         }
     }
+
     /**
      * background setter
      *
@@ -158,6 +162,7 @@ public class Scene {
         this.background = background;
         return this;
     }
+
     /**
      * ambientLight setter
      *
@@ -165,8 +170,8 @@ public class Scene {
      * @return Scene
      */
     public Scene setAmbientLight(AmbientLight ambientLight) {
-       this.ambientLight = ambientLight;
-      return this;
+        this.ambientLight = ambientLight;
+        return this;
     }
 
 }

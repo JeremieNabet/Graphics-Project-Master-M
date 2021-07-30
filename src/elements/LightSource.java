@@ -28,6 +28,7 @@ public interface LightSource {
 
     /**
      * To have the distance beetween a point
+     *
      * @param point3D the point
      * @return the distance
      */

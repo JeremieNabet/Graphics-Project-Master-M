@@ -35,18 +35,19 @@ public class Geometries implements Intersectable {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         List<GeoPoint> result = null;
-        for (Intersectable item:this.intersectables) {
-            List<GeoPoint> itemPoints=item.findGeoIntersections(ray,maxDistance);
-            if(itemPoints!=null){
-                if(result==null){
-                    result =new LinkedList<>();
+        for (Intersectable item : this.intersectables) {
+            List<GeoPoint> itemPoints = item.findGeoIntersections(ray, maxDistance);
+            if (itemPoints != null) {
+                if (result == null) {
+                    result = new LinkedList<>();
                 }
                 result.addAll(itemPoints);
             }
         }
-        return result;    }
+        return result;
+    }
 
 
 }

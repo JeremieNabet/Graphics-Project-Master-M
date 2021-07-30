@@ -29,9 +29,11 @@ public class Cylinder extends Tube {
      * the base of my cylinder
      */
     private final Plane base2;
+
     /**
      * Constructor which gives me the basics of my cylinder as well as the direction
      * and the height
+     *
      * @param axisRay abscess de mon cylinder
      * @param radius  of the cylinder
      * @param height  of my cylinder
@@ -44,7 +46,7 @@ public class Cylinder extends Tube {
         this.base1 = new Plane(axisRay.getP0(), v);
         this.base2 = new Plane(axisRay.getPoint(this.height), v);
     }
-    
+
     /**
      * get cylinder normal.
      *

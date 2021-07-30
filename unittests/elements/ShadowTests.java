@@ -21,7 +21,6 @@ public class ShadowTests {
     /**
      * Produce a picture of a sphere and triangle with point light and shade
      */
-
     @Test
     public void sphereTriangleInitial1() {
         scene.geometries.add( //

@@ -4,16 +4,16 @@ package primitives;
  * class Material
  */
 public class Material {
-    public double kD=0;
-    public double kS=0;
-    public int nShininess=0;
-    public double kT=0;
-    public double kR=0;
-
+    public double kD = 0;
+    public double kS = 0;
+    public int nShininess = 0;
+    public double kT = 0;
+    public double kR = 0;
 
 
     /**
      * setter
+     *
      * @param kD
      * @return material
      */
@@ -24,16 +24,18 @@ public class Material {
 
     /**
      * setter
+     *
      * @param kS
      * @return material
      */
     public Material setKs(double kS) {
         this.kS = kS;
-        return  this;
+        return this;
     }
 
     /**
      * setter
+     *
      * @param nShininess
      * @return material
      */
@@ -44,6 +46,7 @@ public class Material {
 
     /**
      * setter
+     *
      * @param kT
      * @return material
      */
@@ -54,12 +57,13 @@ public class Material {
 
     /**
      * setter
+     *
      * @param kR
      * @return material
      */
     public Material setKr(double kR) {
         this.kR = kR;
-        return  this;
+        return this;
     }
 
 

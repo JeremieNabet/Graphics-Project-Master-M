@@ -21,7 +21,6 @@ public class AntiAleas {
                 .setDistance(9600) //
                 .setViewPlaneSize(1000, 1000)
                 .setNumOfRayForAntiAliasing(150);
-
         Scene scene = new Scene("Anti Aliasing test")//
                 .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
                 .setBackground(new Color(0, 0, 0));

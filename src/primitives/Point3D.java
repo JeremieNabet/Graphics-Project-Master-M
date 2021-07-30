@@ -107,7 +107,6 @@ public class Point3D {
                 z.coord - point3D.z.coord
         );
     }
-
     /**
      * Function to the center of the square,<br>
      * which receives a square,<br>

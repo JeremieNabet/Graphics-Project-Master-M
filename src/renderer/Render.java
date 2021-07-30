@@ -266,8 +266,7 @@ public class Render {
                         castRay(nX, nY, pixel.col, pixel.row);
                 });
             }
-        }
-        else {
+        } else {
             for (int i = threadsCount - 1; i >= 0; --i) {
                 threads[i] = new Thread(() -> {
                     Pixel pixel = new Pixel();

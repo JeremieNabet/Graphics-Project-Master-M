@@ -1,4 +1,5 @@
 package elements;
+
 import org.junit.jupiter.api.Test;
 import geometries.*;
 import primitives.*;
@@ -112,7 +113,6 @@ class LightsTests {
                 .setKl(0.0005).setKq(0.0005));
 
 
-
         ImageWriter imageWriter = new ImageWriter("lightTrianglesPoint", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
@@ -120,10 +120,6 @@ class LightsTests {
                 .setRayTracer(new BasicRayTracer(scene2));
         render.renderImage();
         render.writeToImage();
-
-
-
-
 
 
     }
@@ -145,8 +141,6 @@ class LightsTests {
                 .setRayTracer(new BasicRayTracer(scene2));
         render.renderImage();
         render.writeToImage();
-
-
 
 
     }

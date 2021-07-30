@@ -32,7 +32,6 @@ class RayTest {
                 ray2.getPoint(0),
                 "ERROR - TC02: Zero-point. bad calculate for target point");
     }
-
     Ray ray = new Ray(Point3D.PointZERO, new Vector(0, 0, 1));
 
     /**

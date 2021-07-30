@@ -77,8 +77,8 @@ public interface Intersectable {
      * find the Geo intersections of a ray up to a given max distance
      *
      * @param ray given ray
-     * @paran maxDistance max distance for the intersections
      * @return all the Geo intersections points with the body
+     * @paran maxDistance max distance for the intersections
      */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 }

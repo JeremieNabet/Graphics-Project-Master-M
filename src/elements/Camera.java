@@ -199,10 +199,10 @@ public class Camera {
     /**
      * builds a beam of Rays from the area of a pixel through a specific point on the focal plane
      *
-     * @param nX             - number of cells left to right
-     * @param nY             - number of cells up to down
-     * @param j              - index of width cell
-     * @param i              - index of height cell
+     * @param nX - number of cells left to right
+     * @param nY - number of cells up to down
+     * @param j  - index of width cell
+     * @param i  - index of height cell
      * @return - a list of rays that contains the beam of rays
      */
     public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
